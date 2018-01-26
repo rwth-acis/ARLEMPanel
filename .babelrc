@@ -1,0 +1,16 @@
+{
+  "presets": [
+    ["env",{"modules":false}]
+  ],
+  "ignore": [
+    "node_modules/*"
+  ],
+  "plugins": [
+    ["transform-object-rest-spread",
+      {
+        "useBuiltIns": true
+      }
+    ],
+    "transform-flow-strip-types"
+  ]
+}

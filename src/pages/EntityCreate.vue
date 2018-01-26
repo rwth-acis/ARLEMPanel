@@ -1,0 +1,45 @@
+<template>
+    <!-- Entity Create -->
+    <div class="md-layout md-gutter">
+        <div class="md-layout-item md-size-20">
+            <tabs :component="component" :display="display" @changeTab='tabChange'></tabs>
+        </div>
+        <div class="md-layout-item md-size-60">
+            <keep-alive><component :is="component" @saved="savedEntity"></component></keep-alive>
+        </div>
+        <div class="md-layout-item">
+            <div v-for="item in items">
+                {{ item.text }}
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+  import Tabs from 'theme/components/Tabs.vue'
+  import TabComponents from 'theme/components/TabComponents.vue'
+
+    export default {
+        components: {
+          'tabs': Tabs,
+          'tab-contents': TabComponents
+        },
+        props: ['display','component'],
+        mounted() {
+            console.log("Entity create form loaded within '" + display + "' section")
+        },
+        data :function () {
+            return {
+                items: []
+            }
+        },
+        methods: {
+            tabChange: function(_component){
+                this.component = _component
+            },
+            savedEntity: function(_entity){
+                this.items.push(_entity)
+            }
+        }
+    }
+</script>

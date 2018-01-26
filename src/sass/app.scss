@@ -1,0 +1,26 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:100,600|Anonymous+Pro:400,700");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+// Variables
+@import "variables";
+@import "_configurations";
+
+// Material Design
+//@import url("https://code.getmdl.io/1.3.0/material.teal-pink.min.css");
+@import "~vue-material/dist/theme/engine"; // Import the theme engine
+
+@include md-register-theme("default", (
+        primary: md-get-palette-color(teal, 500), // The primary color of your application
+        accent: md-get-palette-color(blue, 500) // The accent or secondary color
+));
+
+@import "~vue-material/dist/theme/all"; // Apply the theme
+
+// Logins
+//@import "login";
+
+@import "partials/backend_base";
+
+//@import "styles";
