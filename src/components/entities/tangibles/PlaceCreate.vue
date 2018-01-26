@@ -3,9 +3,9 @@
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Tangible Place Create Mounted.')
-        }
+  export default {
+    mounted () {
+      console.log('Tangible Place Create Mounted.')
     }
+  }
 </script>

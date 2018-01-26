@@ -1,11 +1,11 @@
 <template>
-    <!-- Configurable App Create -->
+    <!-- App Place Create -->
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Configurable App Create Mounted.')
-        }
+  export default {
+    mounted () {
+      console.log('App Place Create Mounted.')
     }
+  }
 </script>

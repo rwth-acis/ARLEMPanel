@@ -1,11 +1,11 @@
 <template>
-    <!-- Configurable Device Create -->
+    <!-- Device Place Create -->
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Configurable Device Create Mounted.')
-        }
+  export default {
+    mounted () {
+      console.log('Device Place Create Mounted.')
     }
+  }
 </script>

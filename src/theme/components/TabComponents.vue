@@ -3,10 +3,10 @@
 </template>
 
 <script>
-    export default {
-        props: ['component'],
-        mounted() {
+  export default {
+    props: ['component'],
+    mounted () {
 
-        }
     }
+  }
 </script>

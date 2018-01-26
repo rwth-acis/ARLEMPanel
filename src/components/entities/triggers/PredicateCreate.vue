@@ -3,9 +3,9 @@
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Trigger Predicate Create Mounted.')
-        }
+  export default {
+    mounted () {
+      console.log('Trigger Predicate Create Mounted.')
     }
+  }
 </script>

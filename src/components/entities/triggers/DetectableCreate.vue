@@ -3,9 +3,9 @@
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Trigger Detectable Create Mounted.')
-        }
+  export default {
+    mounted () {
+      console.log('Trigger Detectable Create Mounted.')
     }
+  }
 </script>
