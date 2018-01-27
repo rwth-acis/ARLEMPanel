@@ -6,23 +6,22 @@
     </div>
     <div class="md-layout-item">
       <ul class="nav">
-        <li><a href="/dashboard">Dashboard</a></li>
+        <li><router-link :to="{ name: 'member.dashboard' }">Dashboard</router-link></li>
         <li>
-          <a href="/workplaces">Workplaces</a>
+          <router-link :to="{ name: 'workplace.list' }">Workplaces</router-link>
           <ul>
-            <li><a href="/tangibles">Tangibles</a></li>
-            <li><a href="/configurables">Configurables</a></li>
-            <li><a href="/triggers">Triggers</a></li>
-            <li><a href="/sensors">Sensors</a></li>
+            <li><router-link :to="{ name: 'tangible.list' }">Tangibles</router-link></li>
+            <li><router-link :to="{ name: 'configurable.list' }">Configurables</router-link></li>
+            <li><router-link :to="{ name: 'trigger.list' }">Triggers</router-link></li>
+            <li><router-link :to="{ name: 'sensor.list' }">Sensors</router-link></li>
           </ul>
         </li>
-        <li><a href="/activities">Activities</a></li>
-        <li><a href="#">Learners</a></li>
+        <li><router-link :to="{ name: 'activity.list' }">Activities</router-link></li>
+        <li><router-link :to="{ name: 'learner.list' }">Learners</router-link></li>
         <li>
           <span>Account</span>
           <ul>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Setting</a></li>
+            <li><router-link :to="{ name: 'member.settings' }">Settings</router-link></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
         </li>

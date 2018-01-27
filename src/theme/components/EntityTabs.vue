@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-button v-for="tab in tabs" href="/tangibles" :class="activeTabClass(tab.url)">{{ tab.text }}</md-button>
+    <md-button v-for="tab in tabs"><router-link :to="{ name: tab.url }">{{ tab.text }}</router-link></md-button>
   </div>
 </template>
 <script>
@@ -11,23 +11,23 @@
         tabs: [
           {
             text: 'Workplaces',
-            url: 'workplaces'
+            url: 'workplace.list'
           },
           {
             text: 'Tangibles',
-            url: 'tangibles'
+            url: 'tangible.list'
           },
           {
             text: 'Configurables',
-            url: 'configurables'
+            url: 'configurable.list'
           },
           {
             text: 'Triggers',
-            url: 'triggers'
+            url: 'trigger.list'
           },
           {
             text: 'Sensors',
-            url: 'sensors'
+            url: 'sensor.list'
           }
         ]
       }

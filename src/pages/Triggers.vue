@@ -1,9 +1,9 @@
 <template>
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
-        <page-header title="Workplaces" description="Workplaces are the main part of ARLME Panel" buttonText="Create Activity" buttonUrl="#"></page-header>
-        <entity-tab entity="workplaces"></entity-tab>
-        <data-grid url="/api/url" model="workplaces" createLink="/workplaces/create"></data-grid>
+        <page-header title="Triggers" description="Triggers are the main part of ARLME Panel" buttonText="Create Activity" buttonUrl="#"></page-header>
+        <entity-tab entity="triggers"></entity-tab>
+        <data-grid url="/api/url" model="triggers" createLink="/trigger/create"></data-grid>
       </div>
     </div>
 </template>

@@ -3,7 +3,6 @@
     <md-app>
       <md-app-toolbar class="md-primary">
         <navigation></navigation>
-        <page-header></page-header>
       </md-app-toolbar>
       <md-app-content>
         <router-view></router-view>
@@ -14,12 +13,10 @@
 <script>
   import Loader from 'theme/components/Loader.vue'
   import Navigation from 'theme/components/Navigation.vue'
-  import Header from 'theme/components/Header.vue'
   export default {
     components: {
       'loader': Loader,
-      'navigation': Navigation,
-      'page-header': Header
+      'navigation': Navigation
     }
   }
 </script>

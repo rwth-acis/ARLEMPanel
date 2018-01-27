@@ -1,56 +1,49 @@
 <template>
-    <div class="md-layout md-gutter">
-        <div class="md-layout-item">
-            <h1 class="md-display-4">{{ current.model }}</h1>
-            <h3 class="md-display-1">{{ current.description }}</h3>
-        </div>
-        <div class="md-layout-item md-size-25">
-            <a :href="current.button.url" class="md-elevation-17 big-button">{{ current.button.text }}</a>
-        </div>
+  <div class="md-layout md-gutter md-primary">
+    <div class="md-layout-item">
+      <h1 class="md-display-4">{{ title }}</h1>
+      <h3 class="md-display-1">{{ description }}</h3>
     </div>
+    <div v-if="buttonText" class="md-layout-item md-size-25">
+      <a :href="buttonUrl" class="md-elevation-17 big-button">{{ buttonText }}</a>
+    </div>
+  </div>
 </template>
 
 <script>
-    // import router from 'vue-router'
-    export default {
-      data: function () {
-        return {
-          current: {
-            model: '',
-            description: '',
-            button: {
-              url: '',
-              text: ''
-            }
-          },
-          headers: {
-            'workplace.list.get': {
-              model: 'Workplaces',
-              description: 'A workplace refers to the specific physical environment and context in which users are learning using tangible real-world objects together with virtual objects.',
-              button: {
-                url: 'workplaces/create',
-                text: 'Create Workplace'
-              }
-            }
-          }
-        }
-      },
-      mounted () {
-        this.current = this.headers[this.$router.currentRoute.name]
-      }
+  export default {
+    props: ['title', 'description', 'buttonUrl', 'buttonText'],
+    mounted () {
+
     }
+  }
 </script>
 
 <style scoped>
-    .md-display-4 {
-        display:block
-    }
-    .md-display-1 {
-        margin-top:0;
-        margin-bottom:30px;
-        white-space: inherit;
-    }
-    .md-layout-item {
-        position:relative;
-    }
+  .md-primary {
+    background:var(--md-theme-default-primary);
+    margin-top: -16px;
+    margin-left: -18px;
+    margin-right: -18px;
+    padding: 20px;
+  }
+
+  .md-display-4 {
+    display:block;
+    margin: 0;
+    color: white;
+    font-size: 60px;
+    display: block;
+    line-height: 1em;
+  }
+  .md-display-1 {
+    color: white;
+    margin-top:0;
+    margin-bottom:30px;
+    white-space: inherit;
+  }
+  .md-layout-item {
+    position:relative;
+    padding: 0;
+  }
 </style>
