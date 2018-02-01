@@ -41,8 +41,9 @@
       flip: function (_class) {
         this.$emit('flip', _class)
       },
-      signIn: async function () {
-
+      signIn: function () {
+        window.localStorage.setItem('token', 'teri maa ka')
+        window.location.reload()
       }
     },
     mounted () {

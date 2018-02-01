@@ -42,7 +42,7 @@ const router = new VueRouter({
     { path: '/sensor/create', component: EntityCreate, name: 'sensor.create' },
     { path: '/activites', component: Activities, name: 'activity.list' },
     { path: '/learners', component: Learners, name: 'learner.list' },
-    { path: '/', component: Authentication, name: 'authentication' },
+    { path: '/', component: (window.localStorage.getItem('token') && window.localStorage.getItem('token') !== '' ? Dashboard : Authentication), name: 'authentication' },
     { path: '*', component: NotFound, name: 'notfound' }
 
   ]

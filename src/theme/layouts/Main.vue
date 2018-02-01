@@ -30,6 +30,11 @@
     components: {
       'loader': Loader,
       'navigation': Navigation
+    },
+    created () {
+      if (window.localStorage.getItem('token') && window.localStorage.getItem('token') !== '') {
+        this.isLoggedIn = true
+      }
     }
   }
 </script>

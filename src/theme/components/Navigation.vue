@@ -22,7 +22,7 @@
           <span>Account</span>
           <ul>
             <li><router-link :to="{ name: 'member.settings' }">Settings</router-link></li>
-            <li><a href="/logout">Logout</a></li>
+            <li><a @click="logout()">Logout</a></li>
           </ul>
         </li>
       </ul>
@@ -34,6 +34,12 @@
   export default {
     components: {
       'main-search': MainSearch
+    },
+    methods: {
+      logout () {
+        window.localStorage.removeItem('token')
+        window.location.reload()
+      }
     }
   }
 </script>
