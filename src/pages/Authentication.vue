@@ -1,0 +1,39 @@
+<template>
+    <div class="md-layout md-gutter">
+      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-blue.min.css" />
+      <div class="md-layout-item">
+        <section class="container">
+          <div id="cube" :class="pageClass">
+            <sign-in v-on:flip='flipCard'></sign-in>
+            <sign-up v-on:flip='flipCard'></sign-up>
+            <forget-password v-on:flip='flipCard'></forget-password>
+          </div>
+        </section>
+      </div>
+    </div>
+</template>
+<script>
+  import SignInForm from 'components/auth/SignInForm.vue'
+  import SignUpForm from 'components/auth/SignUpForm.vue'
+  import ForgetForm from 'components/auth/ForgetForm.vue'
+  export default {
+    data: function () {
+      return {
+        pageClass: 'show-front'
+      }
+    },
+    components: {
+      'sign-in': SignInForm,
+      'sign-up': SignUpForm,
+      'forget-password': ForgetForm
+    },
+    methods: {
+      flipCard: function (_class) {
+        this.pageClass = _class
+      }
+    }
+  }
+</script>
+<style lang="scss">
+  @import "../sass/login.scss";
+</style>

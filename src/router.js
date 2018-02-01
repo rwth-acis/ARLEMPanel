@@ -2,10 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueMaterial from 'vue-material'
 
+import Authentication from 'pages/Authentication.vue'
+
 import Dashboard from './pages/Dashboard.vue'
 import Settings from './pages/Settings.vue'
 import EntityCreate from 'pages/EntityCreate.vue'
-import EntityList from 'pages/EntityList.vue'
+// import EntityList from 'pages/EntityList.vue'
 
 import Workplaces from 'pages/Workplaces.vue'
 import Tangibles from 'pages/Tangibles.vue'
@@ -40,7 +42,7 @@ const router = new VueRouter({
     { path: '/sensor/create', component: EntityCreate, name: 'sensor.create' },
     { path: '/activites', component: Activities, name: 'activity.list' },
     { path: '/learners', component: Learners, name: 'learner.list' },
-    { path: '/', component: EntityList, name: 'workplace.list' },
+    { path: '/', component: Authentication, name: 'authentication' },
     { path: '*', component: NotFound, name: 'notfound' }
 
   ]
