@@ -34,6 +34,7 @@
 </template>
 
 <script>
+  import workplaceServices from 'services/workplace.services.js'
   const toLower = text => {
     return text.toString().toLowerCase()
   }
@@ -156,7 +157,10 @@
       }
     },
     created () {
-      this.searched = this.users
+      workplaceServices.getList({}).then(response => {
+        console.log(response)
+        // this.searched = this.users
+      })
     }
   }
 </script>

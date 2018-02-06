@@ -14,8 +14,14 @@ axios.defaults.baseURL = 'http://localhost:8000'
 axios.interceptors.response.use(undefined, function (error) {
   if (error.response.status > 200) {
     store.dispatch('showSnackBar', error.response.data.message)
-    console.log(error.response.data.message)
   }
+})
+axios.interceptors.request.use(function (config) {
+  const token = window.localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ` + token
+  }
+  return config
 })
 
 export { app, router, store }

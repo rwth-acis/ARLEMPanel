@@ -24,8 +24,8 @@ const actions = {
   signIn (context, credentials) {
     return new Promise((resolve) => {
       authService.patchSignIn(credentials.email, credentials.password)
-        .then((data) => {
-          context.commit('signIn', data)
+        .then((response) => {
+          context.commit('signIn', response)
           resolve()
         })
     })
@@ -57,9 +57,10 @@ const mutations = {
     }
     state.isAuthenticated = false
   },
-  signIn (state, token) {
+  signIn (state, response) {
     if (window !== 'undefined') {
-      window.localStorage.setItem('token', token)
+      console.log(response.data.api_token)
+      window.localStorage.setItem('token', response.data.api_token)
     }
     state.isAuthenticated = true
   }

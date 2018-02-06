@@ -1,10 +1,15 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://127.0.0.1:8080'
-
 const workplaceServices = {
   getList (searchObject) {
-
+    return new Promise((resolve) => {
+      axios.get(`workplaces`).then(response => {
+        console.log(response)
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   },
 
   getSingle (id) {
