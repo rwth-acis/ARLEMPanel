@@ -1,10 +1,17 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://127.0.0.1:8080'
-
 const authServices = {
   postSignIn (email, password) {
-
+    return new Promise((resolve) => {
+      axios.patch(`signin`, {
+        'email': email,
+        'password': password
+      }).then(response => {
+        resolve(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    })
   },
 
   postSignUp (name, email, password) {

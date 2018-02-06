@@ -48,7 +48,9 @@ const config = {
       'pages': path.resolve(__dirname, '../src/pages/'),
       'components': path.resolve(__dirname, '../src/components/'),
       'theme': path.resolve(__dirname, '../src/theme/'),
-      'entities': path.resolve(__dirname, '../src/components/entities/')
+      'entities': path.resolve(__dirname, '../src/components/entities/'),
+      'services': path.resolve(__dirname, '../src/services'),
+      'modules': path.resolve(__dirname, '../src/vuex')
     }
   }
 }

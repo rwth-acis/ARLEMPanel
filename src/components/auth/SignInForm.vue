@@ -7,11 +7,11 @@
       </div>
       <div class="mdl-card__supporting-text">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input type="email" class="mdl-textfield__input" />
+          <input type="email" class="mdl-textfield__input" v-model="email" />
           <label class="mdl-textfield__label" for="email">Email</label>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" type="password"/>
+          <input class="mdl-textfield__input" type="password" v-model="password" />
           <label class="mdl-textfield__label" for="password">Password</label>
         </div>
       </div>
@@ -30,6 +30,7 @@
   </figure>
 </template>
 <script>
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     data: function () {
       return {
@@ -37,17 +38,28 @@
         password: ''
       }
     },
+    computed: {
+      ...mapGetters(['isAuthenticated'])
+    },
     methods: {
+      ...mapActions({
+        logout: 'logout'
+      }),
       flip: function (_class) {
         this.$emit('flip', _class)
       },
       signIn: function () {
-        window.localStorage.setItem('token', 'teri maa ka')
-        window.location.reload()
+        this.$store.dispatch('login', {email: this.email, password: this.password}).then(() => {
+          this.email = ''
+          this.password = ''
+          this.$router.push('/dashboard')
+        })
       }
     },
     mounted () {
-      console.log('Sign In Mounted.')
+      if (this.isAuthenticated === true) {
+        this.$router.push('/dashboard')
+      }
     }
   }
 </script>
