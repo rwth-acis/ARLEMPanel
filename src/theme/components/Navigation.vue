@@ -1,7 +1,7 @@
 <template>
   <div class="md-layout md-gutter header">
     <div class="md-layout-item md-size-50">
-      <img src="http://127.0.0.1:8000/images/logo_small.png" style="float:left" />
+      <img src="http://localhost:8000/images/logo_small.png" style="float:left" />
       <main-search style="float:left"></main-search>
     </div>
     <div class="md-layout-item">
@@ -37,7 +37,7 @@
     },
     methods: {
       signOut: function () {
-        this.$store.dispatch('logout').then(() => {
+        this.$store.dispatch('signOut').then(() => {
           this.$router.push('/')
         })
       }

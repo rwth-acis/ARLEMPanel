@@ -12,7 +12,7 @@
     </template>
     <template v-if="!isAuthenticated">
       <div class="mdl-layout mdl-js-layout">
-        <img src="http://127.0.0.1:8000/images/logo.png" class="logo" />
+        <img src="http://localhost:8000/images/logo.png" class="logo" />
         <router-view></router-view>
       </div>
     </template>

@@ -10,16 +10,20 @@
   </div>
   <div class="mdl-card__supporting-text">
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input type="email" class="mdl-textfield__input" />
-    <label class="mdl-textfield__label" for="email">Email</label>
+      <input type="text" class="mdl-textfield__input" v-model="name" />
+      <label class="mdl-textfield__label" for="name" >Name</label>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="password" />
-    <label class="mdl-textfield__label" for="password">Password</label>
+      <input type="email" class="mdl-textfield__input" v-model="email" />
+      <label class="mdl-textfield__label" for="email">Email</label>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="password" />
-    <label class="mdl-textfield__label" for="password2">Password repeat</label>
+      <input class="mdl-textfield__input" type="password"  v-model="password" />
+      <label class="mdl-textfield__label" for="password">Password</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="password" v-model="repassword" />
+      <label class="mdl-textfield__label" for="password2">Password repeat</label>
     </div>
   </div>
   <div class="mdl-card__actions">
@@ -33,12 +37,26 @@
 
 <script>
   export default {
+    data: function () {
+      return {
+        name: '',
+        email: '',
+        password: '',
+        repassword: ''
+      }
+    },
     methods: {
       flip: function (_class) {
         this.$emit('flip', _class)
       },
       signUp: function () {
-        this.$emit('flip', 'show-front')
+        this.$store.dispatch('signUp', {name: this.name, email: this.email, password: this.password, repassword: this.repassword}).then(() => {
+          this.name = ''
+          this.email = ''
+          this.password = ''
+          this.repassword = ''
+          this.$emit('flip', 'show-front')
+        })
       }
     },
     mounted () {

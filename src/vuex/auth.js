@@ -15,17 +15,35 @@ const getters = {
 }
 
 const actions = {
-  logout (context) {
+  signOut (context) {
     return new Promise((resolve) => {
-      context.commit('logout')
+      context.commit('signOut')
       resolve()
     })
   },
-  login (context, credentials) {
+  signIn (context, credentials) {
     return new Promise((resolve) => {
-      authService.postSignIn(credentials.email, credentials.password)
+      authService.patchSignIn(credentials.email, credentials.password)
         .then((data) => {
-          context.commit('login', data)
+          context.commit('signIn', data)
+          resolve()
+        })
+    })
+  },
+  signUp (context, user) {
+    return new Promise((resolve) => {
+      authService.postSignUp(user.name, user.email, user.password)
+        .then((response) => {
+          context.dispatch('showSnackBar', response.data)
+          resolve()
+        })
+    })
+  },
+  forget (context, email) {
+    return new Promise((resolve) => {
+      authService.postForgetPassword(email)
+        .then((response) => {
+          context.dispatch('showSnackBar', response.data)
           resolve()
         })
     })
@@ -33,13 +51,13 @@ const actions = {
 }
 
 const mutations = {
-  logout (state) {
+  signOut (state) {
     if (window !== 'undefined') {
       window.localStorage.removeItem('token')
     }
     state.isAuthenticated = false
   },
-  login (state, token) {
+  signIn (state, token) {
     if (window !== 'undefined') {
       window.localStorage.setItem('token', token)
     }

@@ -8,8 +8,8 @@
     </div>
     <div class="mdl-card__supporting-text">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input class="mdl-textfield__input" type="email"/>
-      <label class="mdl-textfield__label" for="email">E-Mail</label>
+        <input class="mdl-textfield__input" type="email" v-model="email"/>
+        <label class="mdl-textfield__label" for="email">E-Mail</label>
       </div>
     </div>
     <div class="mdl-card__actions">
@@ -23,12 +23,20 @@
 
 <script>
   export default {
+    data: function () {
+      return {
+        email: ''
+      }
+    },
     methods: {
       flip: function (_class) {
         this.$emit('flip', _class)
       },
       sendForget: function () {
-        this.$emit('flip', 'show-front')
+        this.$store.dispatch('forget', this.email).then(() => {
+          this.email = ''
+          this.$emit('flip', 'show-front')
+        })
       }
     },
     mounted () {

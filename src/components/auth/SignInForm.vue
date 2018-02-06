@@ -30,7 +30,7 @@
   </figure>
 </template>
 <script>
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters } from 'vuex'
   export default {
     data: function () {
       return {
@@ -42,14 +42,11 @@
       ...mapGetters(['isAuthenticated'])
     },
     methods: {
-      ...mapActions({
-        logout: 'logout'
-      }),
       flip: function (_class) {
         this.$emit('flip', _class)
       },
       signIn: function () {
-        this.$store.dispatch('login', {email: this.email, password: this.password}).then(() => {
+        this.$store.dispatch('signIn', {email: this.email, password: this.password}).then(() => {
           this.email = ''
           this.password = ''
           this.$router.push('/dashboard')
