@@ -1,4 +1,4 @@
-import authService from 'services/auth.services.js'
+import authService from './tangible.services.js'
 const state = {
   isAuthenticated: false,
   user: {}

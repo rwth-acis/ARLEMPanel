@@ -26,10 +26,14 @@ const actions = {
 const mutations = {
   showSnackBar (state, messages) {
     var msgList = ''
-    for (var message in messages) {
-      if (messages.hasOwnProperty(message)) {
-        msgList += messages[message] + '<br />'
+    if ((typeof messages === 'object') && (messages !== null)) {
+      for (var message in messages) {
+        if (messages.hasOwnProperty(message)) {
+          msgList += messages[message] + '<br />'
+        }
       }
+    } else {
+      msgList += messages
     }
     state.sbarMessage = msgList
     state.sbarActive = true

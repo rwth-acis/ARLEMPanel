@@ -8,7 +8,7 @@
       <keep-alive><component :is="component" @saved="savedEntity"></component></keep-alive>
     </div>
     <div class="md-layout-item">
-      <div v-for="item in items">
+      <div v-for="item in items" :key="item.id">
         {{ item.text }}
       </div>
     </div>
@@ -48,11 +48,7 @@
       'app-create': AppCreate,
       'device-create': DeviceCreate
     },
-    mounted () {
-      // console.log(Entity create form loaded within '" + display + "' section")
-      this.parseComponent(this.$router.currentRoute.name)
-      console.log(this.component)
-    },
+
     data: function () {
       return {
         items: [],

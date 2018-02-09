@@ -13,9 +13,9 @@
     </div>
 </template>
 <script>
-  import SignInForm from 'components/auth/SignInForm.vue'
-  import SignUpForm from 'components/auth/SignUpForm.vue'
-  import ForgetForm from 'components/auth/ForgetForm.vue'
+  import SignInForm from './SignInForm.vue'
+  import SignUpForm from './SignUpForm.vue'
+  import ForgetForm from './ForgetForm.vue'
   export default {
     data: function () {
       return {
@@ -35,5 +35,5 @@
   }
 </script>
 <style lang="scss">
-  @import "../sass/login.scss";
+  @import "../../sass/login.scss";
 </style>

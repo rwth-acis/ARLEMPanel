@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import AppLayout from './theme/layouts/Main.vue'
 import router from './router'
-import store from './vuex/index.js'
+import store from './store'
 import axios from 'axios'
+
+console.log(store)
 
 const app = new Vue({
   router,
