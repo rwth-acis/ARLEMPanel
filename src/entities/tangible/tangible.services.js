@@ -31,6 +31,20 @@ const tangibleServices = {
     })
   },
 
+  postPlaceCreate (objThing) {
+    return new Promise((resolve) => {
+      axios.post(`tangible/place/create`, {
+        'id_name': objThing.id,
+        'name': objThing.name,
+        'detectable': objThing.detectable
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
   postThingCreate (objThing) {
     return new Promise((resolve) => {
       axios.post(`tangible/thing/create`, {

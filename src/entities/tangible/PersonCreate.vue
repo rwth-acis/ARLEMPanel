@@ -2,7 +2,7 @@
 <template>
   <!-- Tangible Person Create -->
   <div>
-    <h3 class="md-display-1" style="margin:15px 0;">New Person</h3>
+    <h3 class="md-display-1" style="margin:15px 0;">Create Person</h3>
     <form novalidate  @submit.prevent="validateUser">
       <div class="md-layout md-gutter">
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
