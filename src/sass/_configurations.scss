@@ -5,6 +5,10 @@
   background: $brand-primary;
   color: #fff;
 }
-.md-content.md-table-content {
-  min-height: 600px;
+.md-table {
+  display: block;
+}
+.md-app-content .md-card {
+  margin-right: 20px!important;
+  margin-left: 20px!important;
 }

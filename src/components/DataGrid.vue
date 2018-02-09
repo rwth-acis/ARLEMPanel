@@ -158,7 +158,6 @@
     },
     created () {
       workplaceServices.getList({}).then(response => {
-        console.log(response)
         // this.searched = this.users
       })
     }

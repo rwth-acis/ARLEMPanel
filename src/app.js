@@ -4,8 +4,6 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
-console.log(store)
-
 const app = new Vue({
   router,
   ...AppLayout,

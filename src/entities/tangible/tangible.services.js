@@ -31,6 +31,22 @@ const tangibleServices = {
     })
   },
 
+  postThingCreate (objThing) {
+    return new Promise((resolve) => {
+      axios.post(`tangible/thing/create`, {
+        'id_name': objThing.id,
+        'name': objThing.name,
+        'urn': objThing.urn,
+        'poi': objThing.pois,
+        'detectable': objThing.detectable
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
   putEdit (objWorkplace, listItems) {
 
   },
