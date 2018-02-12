@@ -23,7 +23,7 @@
       this.value = this.model
       if (this.url && this.url !== '') {
         axios.get(this.url).then((response) => {
-          this.items = response.data.data.data
+          this.items = response.data.data
         })
       } else {
         this.items = this.customItems

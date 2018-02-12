@@ -1,6 +1,5 @@
 <template>
     <div class="md-layout md-gutter">
-      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-blue.min.css" />
       <div class="md-layout-item">
         <section class="container">
           <div id="cube" :class="pageClass">

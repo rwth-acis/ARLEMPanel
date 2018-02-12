@@ -19,25 +19,25 @@
   import Tabs from 'theme/components/Tabs.vue'
   import TabComponents from 'theme/components/TabComponents.vue'
 
-  import WorkplaceCreate from 'entityComponent/workplaces/WorkplaceCreate.vue'
+  // import WorkplaceCreate from 'entityComponent/workplaces/WorkplaceCreate.vue'
 
-  import PersonCreate from 'entityComponent/tangibles/PersonCreate.vue'
-  import PlaceCreate from 'entityComponent/tangibles/PlaceCreate.vue'
-  import ThingCreate from 'entityComponent/tangibles/ThingCreate.vue'
+  import PersonCreate from 'entities/tangible/PersonCreate.vue'
+  import PlaceCreate from 'entities/tangible/PlaceCreate.vue'
+  import ThingCreate from 'entities/tangible/ThingCreate.vue'
 
-  import DetectableCreate from 'entityComponent/triggers/DetectableCreate.vue'
-  import PredicateCreate from 'entityComponent/triggers/PredicateCreate.vue'
-  import WarningCreate from 'entityComponent/triggers/WarningCreate.vue'
-  import HazardCreate from 'entityComponent/triggers/HazardCreate.vue'
+  import DetectableCreate from 'entities/trigger/DetectableCreate.vue'
+  import PredicateCreate from 'entities/trigger/PredicateCreate.vue'
+  import WarningCreate from 'entities/trigger/WarningCreate.vue'
+  import HazardCreate from 'entities/trigger/HazardCreate.vue'
 
-  import AppCreate from 'entityComponent/configurables/AppCreate.vue'
-  import DeviceCreate from 'entityComponent/configurables/DeviceCreate.vue'
+  import AppCreate from 'entities/configurable/AppCreate.vue'
+  import DeviceCreate from 'entities/configurable/DeviceCreate.vue'
 
   export default {
     components: {
       'tabs': Tabs,
       'tab-contents': TabComponents,
-      'workplace-create': WorkplaceCreate,
+      // 'workplace-create': WorkplaceCreate,
       'person-create': PersonCreate,
       'place-create': PlaceCreate,
       'thing-create': ThingCreate,

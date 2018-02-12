@@ -1,49 +1,52 @@
 <template>
-  <!-- Sign Up -->
-  <figure class="left">
-  <div class="mdl-card mdl-shadow--6dp">
-  <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
-    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" v-on:click='flip("show-front")'>
-    <i class="material-icons">arrow_back</i>
-    </a>
-    <h2 class="mdl-card__title-text">Sign up</h2>
-  </div>
-  <div class="mdl-card__supporting-text">
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input type="text" class="mdl-textfield__input" v-model="name" />
-      <label class="mdl-textfield__label" for="name" >Name</label>
-    </div>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input type="email" class="mdl-textfield__input" v-model="email" />
-      <label class="mdl-textfield__label" for="email">Email</label>
-    </div>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input class="mdl-textfield__input" type="password"  v-model="password" />
-      <label class="mdl-textfield__label" for="password">Password</label>
-    </div>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input class="mdl-textfield__input" type="password" v-model="repassword" />
-      <label class="mdl-textfield__label" for="password2">Password repeat</label>
-    </div>
-  </div>
-  <div class="mdl-card__actions">
-    <div class="mdl-grid">
-    <button v-on:click='signUp()' class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Sign up</button>
-    </div>
-  </div>
-  </div>
+  <figure class="bottom">
+    <md-card>
+      <md-card-header>
+        <div class="md-title">
+          Sign Up
+        </div>
+      </md-card-header>
+      <form novalidate  @submit.prevent="validate">
+        <md-card-content>
+          <div class="md-layout md-gutter">
+            <input-field label="Name" :model.sync="form.name" error="Please enter the name"></input-field>
+          </div>
+          <div class="md-layout md-gutter">
+            <input-field label="Email" :model.sync="form.email" error="Please enter the email"></input-field>
+          </div>
+          <div class="md-layout md-gutter">
+            <input-field label="Password" type="pass" :model.sync="form.password" error="Please enter the password"></input-field>
+          </div>
+          <a v-on:click='flip("show-front")' class="mdl-color-text--primary">Sign in!</a>
+
+        </md-card-content>
+        <md-card-actions>
+          <md-button type="submit" class="md-raised md-primary md-full-button">Submit</md-button>
+        </md-card-actions>
+      </form>
+    </md-card>
   </figure>
 </template>
 
 <script>
+  import { validationMixin } from 'vuelidate'
+  import InputField from 'components/InputField.vue'
+  import InputSelect from 'components/InputSelect.vue'
+  import { required } from 'vuelidate/lib/validators'
   export default {
+    mixins: [validationMixin],
     data: function () {
       return {
-        name: '',
-        email: '',
-        password: '',
-        repassword: ''
+        form: {
+          name: '',
+          email: '',
+          password: ''
+        }
       }
+    },
+    components: {
+      'input-field': InputField,
+      'input-select': InputSelect
     },
     methods: {
       flip: function (_class) {
@@ -57,10 +60,48 @@
           this.repassword = ''
           this.$emit('flip', 'show-front')
         })
+      },
+      getValidationClass (fieldName) {
+        const field = this.$v.form[fieldName]
+
+        if (field) {
+          return {
+            'md-invalid': field.$invalid && field.$dirty
+          }
+        }
+      },
+
+      clearForm () {
+        this.$v.$reset()
+        this.form = {
+          name: null,
+          email: null,
+          password: null
+        }
+      },
+
+      validate () {
+        this.$v.$touch()
+        if (!this.$v.$invalid) {
+          this.signIn()
+        }
       }
     },
     mounted () {
       console.log('Sign Up.')
+    },
+    validations: {
+      form: {
+        name: {
+          required
+        },
+        email: {
+          required
+        },
+        password: {
+          required
+        }
+      }
     }
   }
 </script>

@@ -1,42 +1,49 @@
 <template>
-  <!-- Sign In -->
   <figure class="front">
-    <div class="mdl-card mdl-shadow--6dp">
-      <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
-        <h2 class="mdl-card__title-text">Sign In</h2>
-      </div>
-      <div class="mdl-card__supporting-text">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input type="email" class="mdl-textfield__input" v-model="email" />
-          <label class="mdl-textfield__label" for="email">Email</label>
+    <md-card>
+      <md-card-header>
+        <div class="md-title">
+          Sign In
         </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" type="password" v-model="password" />
-          <label class="mdl-textfield__label" for="password">Password</label>
-        </div>
-      </div>
-      <div class="mdl-card__actions">
-        <div class="mdl-grid">
-          <button v-on:click='signIn()' class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Login</button>
-        </div>
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--12-col">
-            <a v-on:click='flip("show-left")' class="mdl-color-text--primary">Sign up!</a>
-            <a v-on:click='flip("show-bottom")' class="mdl-color-text--primary" style="float: right">Lost Password?</a>
+      </md-card-header>
+      <form novalidate  @submit.prevent="validate">
+        <md-card-content>
+          <div class="md-layout md-gutter">
+            <input-field label="Email" :cssClass="getValidationClass('email')" :model.sync="form.email" error="Please enter the email"></input-field>
           </div>
-        </div>
-      </div>
-    </div>
+          <div class="md-layout md-gutter">
+            <input-field label="Password" :cssClass="getValidationClass('password')" type="password" :model.sync="form.password" error="Please enter the password"></input-field>
+          </div>
+          <a v-on:click='flip("show-bottom")' class="mdl-color-text--primary">Sign up!</a>
+          <a v-on:click='flip("show-left")' class="mdl-color-text--primary" style="float: right">Lost Password?</a>
+        </md-card-content>
+        <md-card-actions>
+          <md-button type="submit" class="md-raised md-primary md-full-button">Submit</md-button>
+        </md-card-actions>
+      </form>
+    </md-card>
   </figure>
 </template>
 <script>
   import { mapGetters } from 'vuex'
+  import { validationMixin } from 'vuelidate'
+  import InputField from 'components/InputField.vue'
+  import InputSelect from 'components/InputSelect.vue'
+  import { required } from 'vuelidate/lib/validators'
+
   export default {
+    mixins: [validationMixin],
     data: function () {
       return {
-        email: '',
-        password: ''
+        form: {
+          email: null,
+          password: null
+        }
       }
+    },
+    components: {
+      'input-field': InputField,
+      'input-select': InputSelect
     },
     computed: {
       ...mapGetters(['isAuthenticated'])
@@ -46,16 +53,50 @@
         this.$emit('flip', _class)
       },
       signIn: function () {
-        this.$store.dispatch('signIn', {email: this.email, password: this.password}).then(() => {
+        this.$store.dispatch('signIn', this.form).then(() => {
           this.email = ''
           this.password = ''
           this.$router.push('/dashboard')
         })
+      },
+      getValidationClass (fieldName) {
+        const field = this.$v.form[fieldName]
+
+        if (field) {
+          return {
+            'md-invalid': field.$invalid && field.$dirty
+          }
+        }
+      },
+
+      clearForm () {
+        this.$v.$reset()
+        this.form = {
+          email: null,
+          password: null
+        }
+      },
+
+      validate () {
+        this.$v.$touch()
+        if (!this.$v.$invalid) {
+          this.signIn()
+        }
       }
     },
     mounted () {
       if (this.isAuthenticated === true) {
         this.$router.push('/dashboard')
+      }
+    },
+    validations: {
+      form: {
+        email: {
+          required
+        },
+        password: {
+          required
+        }
       }
     }
   }

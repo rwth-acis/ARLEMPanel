@@ -2,11 +2,11 @@
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
         <page-header title="Workplaces" description="Workplaces are the main part of ARLME Panel" buttonText="Create Workplace" buttonUrl="/workplace/create"></page-header>
-        <entity-tab entity="workplaces"></entity-tab>
+        <entity-tab entity="Workplaces"></entity-tab>
         <md-table v-model="searched" :md-sort.sync="currentSort" :md-sort-order.sync="currentSortOrder" :md-sort-fn="customSort"  md-card @md-selected="onSelect">
         <md-table-toolbar>
           <div class="md-toolbar-section-start">
-            <h1 class="md-title">{{ model }}</h1>
+            <h1 class="md-title">Workplaces</h1>
           </div>
           <md-field md-clearable class="md-toolbar-section-end">
             <md-input placeholder="Search by name..." v-model="search" @input="searchOnTable" />

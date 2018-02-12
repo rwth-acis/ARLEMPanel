@@ -9,7 +9,7 @@
       </div>
 
       <div class="md-layout md-gutter">
-        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="triggers?type=detectable"></input-select>
+        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="triggers?type=detectable&all=true"></input-select>
       </div>
       <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save Place</md-button>
     </form>

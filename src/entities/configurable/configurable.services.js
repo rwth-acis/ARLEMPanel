@@ -11,6 +11,32 @@ const configurableServices = {
     })
   },
 
+  postAppCreate (objApp) {
+    return new Promise((resolve) => {
+      axios.post(`configurable/app/create`, {
+        'name': objApp.name,
+        'manifest': objApp.manifest
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
+  postDeviceCreate (objApp) {
+    return new Promise((resolve) => {
+      axios.post(`configurable/device/create`, {
+        'name': objApp.name,
+        'type': objApp.type
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
   getSingle (id) {
 
   },

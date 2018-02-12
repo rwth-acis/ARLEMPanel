@@ -34,7 +34,6 @@
       'hazard-create': HazardCreate
     },
     mounted () {
-      this.parseComponent(this.$router.currentRoute.name)
       console.log(this.component)
     },
     data: function () {

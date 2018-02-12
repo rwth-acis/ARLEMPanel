@@ -2,11 +2,11 @@
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
         <page-header title="Configurables" description="Configurables are the physical objects present within the workplace. These objects are used / required to complete the activity." buttonText="Create Configurable" buttonUrl="/configurable/create"></page-header>
-        <entity-tab entity="configurables"></entity-tab>
+        <entity-tab entity="Configurables"></entity-tab>
         <md-table v-model="searched" :md-sort.sync="currentSort" :md-sort-order.sync="currentSortOrder" :md-sort-fn="customSort"  md-card @md-selected="onSelect">
         <md-table-toolbar>
           <div class="md-toolbar-section-start">
-            <h1 class="md-title">{{ model }}</h1>
+            <h1 class="md-title">Configurables</h1>
           </div>
           <md-field md-clearable class="md-toolbar-section-end">
             <md-input placeholder="Search by name..." v-model="search" @input="searchOnTable" />
@@ -31,10 +31,6 @@
           <md-table-cell md-label="Category" md-sort-by="category">{{ item.category }}</md-table-cell>
           <md-table-cell md-label="Author" md-sort-by="author">{{ item.author.name }}</md-table-cell>
           <md-table-cell md-label="Created" md-sort-by="created">{{ item.created }}</md-table-cell>
-          <md-table-cell md-label="Action">
-            <md-icon>edit</md-icon>
-            <md-icon>delete</md-icon>
-          </md-table-cell>
         </md-table-row>
       </md-table>
       </div>

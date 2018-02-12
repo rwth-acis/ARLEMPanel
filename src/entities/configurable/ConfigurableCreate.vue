@@ -5,7 +5,7 @@
       <tabs :component="component" :display="display" @changeTab="tabChange"></tabs>
     </div>
     <div class="md-layout-item md-size-60">
-      <keep-alive><component :is="component" @saved="savedEntity"></component></keep-alive>
+      <keep-alive><component :independent="true" :is="component" @saved="savedEntity"></component></keep-alive>
     </div>
     <div class="md-layout-item">
       <div v-for="item in items" :key="item.id">
@@ -31,7 +31,6 @@
       'device-create': DeviceCreate
     },
     mounted () {
-      this.parseComponent(this.$router.currentRoute.name)
       console.log(this.component)
     },
     data: function () {

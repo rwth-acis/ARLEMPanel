@@ -10,7 +10,7 @@
       </div>
       <div class="md-layout md-gutter">
         <input-field label="Email" type="email" :cssClass="getValidationClass('mbox')" :model.sync="form.mbox" error="Please enter a valid email"></input-field>
-        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="triggers?type=detectable"></input-select>
+        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="triggers?type=detectable&all=true"></input-select>
       </div>
       <div class="md-layout md-gutter">
         <input-field label="Persona" :cssClass="getValidationClass('persona')" :model.sync="form.persona" error="Please enter a valid persona"></input-field>

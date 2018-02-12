@@ -2,7 +2,7 @@
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
         <page-header title="Tangibles" description="Tangibles are the physical objects present within the workplace. These objects are used / required to complete the activity." buttonText="Create Tangible" buttonUrl="/tangible/create"></page-header>
-        <entity-tab entity="tangibles"></entity-tab>
+        <entity-tab entity="Tangibles"></entity-tab>
         <md-table v-model="searched" :md-sort.sync="currentSort" :md-sort-order.sync="currentSortOrder" :md-sort-fn="customSort"  md-card @md-selected="onSelect">
         <md-table-toolbar>
           <div class="md-toolbar-section-start">

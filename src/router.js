@@ -4,9 +4,9 @@ import VueMaterial from 'vue-material'
 
 import Authentication from 'entities/auth/AuthForm.vue'
 
-import Dashboard from './pages/Dashboard.vue'
-import Settings from './pages/Settings.vue'
-import EntityCreate from 'pages/EntityCreate.vue'
+// import Dashboard from './pages/Dashboard.vue'
+// import Settings from './pages/Settings.vue'
+// import EntityCreate from 'pages/EntityCreate.vue'
 // import EntityList from 'pages/EntityList.vue'
 
 import Workplaces from 'entities/workplace/Workplaces.vue'
@@ -24,11 +24,11 @@ import ConfigurableCreate from 'entities/configurable/ConfigurableCreate.vue'
 
 import Sensors from 'entities/sensor/Sensors.vue'
 
-import Activities from 'pages/Activities.vue'
+// import Activities from 'pages/Activities.vue'
 
-import Learners from 'pages/Learners.vue'
+// import Learners from 'pages/Learners.vue'
 
-import NotFound from 'pages/NotFound.vue'
+// import NotFound from 'pages/NotFound.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueMaterial)
@@ -37,8 +37,8 @@ const router = new VueRouter({
   mode: 'history',
   scrollBehavior: (to, from, savedPosition) => ({y: 0}),
   routes: [
-    { path: '/dashboard', component: Dashboard, name: 'member.dashboard' },
-    { path: '/settings', component: Settings, name: 'member.settings' },
+    // { path: '/dashboard', component: Dashboard, name: 'member.dashboard' },
+    // { path: '/settings', component: Settings, name: 'member.settings' },
     { path: '/workplaces', component: Workplaces, name: 'workplace.list' },
     { path: '/workplace/create', component: WorkplaceCreate, name: 'workplace.create' },
     { path: '/tangibles', component: Tangibles, name: 'tangible.list' },
@@ -48,11 +48,11 @@ const router = new VueRouter({
     { path: '/configurables', component: Configurables, name: 'configurable.list' },
     { path: '/configurable/create', component: ConfigurableCreate, name: 'configurable.create' },
     { path: '/sensors', component: Sensors, name: 'sensor.list' },
-    { path: '/sensor/create', component: EntityCreate, name: 'sensor.create' },
-    { path: '/activites', component: Activities, name: 'activity.list' },
-    { path: '/learners', component: Learners, name: 'learner.list' },
-    { path: '/', component: Authentication, name: 'authentication' },
-    { path: '*', component: NotFound, name: 'notfound' }
+    // { path: '/sensor/create', component: EntityCreate, name: 'sensor.create' },
+    // { path: '/activites', component: Activities, name: 'activity.list' },
+    // { path: '/learners', component: Learners, name: 'learner.list' },
+    { path: '/', component: Authentication, name: 'authentication' }
+    // { path: '*', component: NotFound, name: 'notfound' }
 
   ]
 })
