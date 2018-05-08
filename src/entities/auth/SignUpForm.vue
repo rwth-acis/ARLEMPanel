@@ -15,7 +15,7 @@
             <input-field label="Email" :model.sync="form.email" error="Please enter the email"></input-field>
           </div>
           <div class="md-layout md-gutter">
-            <input-field label="Password" type="pass" :model.sync="form.password" error="Please enter the password"></input-field>
+            <input-field label="Password" type="password" :model.sync="form.password" error="Please enter the password"></input-field>
           </div>
           <a v-on:click='flip("show-front")' class="mdl-color-text--primary">Sign in!</a>
 
@@ -53,11 +53,8 @@
         this.$emit('flip', _class)
       },
       signUp: function () {
-        this.$store.dispatch('signUp', {name: this.name, email: this.email, password: this.password, repassword: this.repassword}).then(() => {
-          this.name = ''
-          this.email = ''
-          this.password = ''
-          this.repassword = ''
+        this.$store.dispatch('signUp', this.form).then(() => {
+          this.clearForm()
           this.$emit('flip', 'show-front')
         })
       },
@@ -83,7 +80,7 @@
       validate () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
-          this.signIn()
+          this.signUp()
         }
       }
     },
@@ -105,3 +102,10 @@
     }
   }
 </script>
+<style scoped>
+.md-card-header {
+    background: var(--md-theme-default-primary);
+    color: white;
+}
+</style>
+

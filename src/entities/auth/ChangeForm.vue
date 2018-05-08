@@ -10,3 +10,10 @@
         }
     }
 </script>
+<style scoped>
+.md-card-header {
+    background: var(--md-theme-default-primary);
+    color: white;
+}
+</style>
+

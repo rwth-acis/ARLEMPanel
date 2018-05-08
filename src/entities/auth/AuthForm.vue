@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <img src="http://localhost:8000/images/logo.png" class="logo" />
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
         <section class="container">
@@ -10,6 +12,7 @@
         </section>
       </div>
     </div>
+  </div>
 </template>
 <script>
   import SignInForm from './SignInForm.vue'
@@ -33,6 +36,6 @@
     }
   }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   @import "../../sass/login.scss";
 </style>

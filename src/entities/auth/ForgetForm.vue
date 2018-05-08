@@ -71,7 +71,7 @@
       validate () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
-          this.signIn()
+          this.sendForget()
         }
       }
     },
@@ -84,3 +84,9 @@
     }
   }
 </script>
+<style scoped>
+  .md-card-header {
+    background: var(--md-theme-default-primary);
+    color: white;
+  }
+</style>

@@ -2,24 +2,45 @@
   <!-- Entity Create -->
   <div class="md-layout md-gutter">
     <div class="md-layout-item md-size-20">
-      <tabs :component="component" :display="display" @changeTab="tabChange"></tabs>
+      <tabs :component="tab" :display="display" @changeTab="tabChange"></tabs>
     </div>
-    <div class="md-layout-item md-size-60">
-      <keep-alive><component :is="component" @saved="savedEntity"></component></keep-alive>
+    <div class="md-layout-item md-size-50">
+      <h2 class="md-display-2">Create Workplace</h2>
+      <workplace-create @saved="savedWorkplace"></workplace-create>
+      <template v-if="component !== ''">
+        <keep-alive><component :is="component"></component></keep-alive>
+      </template>
+      <template v-if="component !== ''">
+        <div style="text-align:center">
+          <md-button class="md-raised md-primary" @click="saveWorkplace" style="width:250px;height:50px;">Save Workplace</md-button>
+        </div>
+      </template>
     </div>
     <div class="md-layout-item">
-      <div v-for="item in items" :key="item.id">
-        {{ item.text }}
-      </div>
+      <h2 class="md-display-1">Added Entities</h2>
+      <div>
+        <md-list>
+          <md-list-item v-for="(item, index) in items" :key="item.id">
+            <div>
+              <span class="md-list-item-text">{{ item.type }}</span>
+              <h6 class="md-title">{{ item.name }}</h6>
+            </div>
+            <md-button @click="removeWorkplaceItem(index)" class="md-fab md-mini">
+              <md-icon>delete</md-icon>
+            </md-button>
+          </md-list-item>
+        </md-list>
+        </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import Tabs from 'theme/components/Tabs.vue'
   import TabComponents from 'theme/components/TabComponents.vue'
 
-  // import WorkplaceCreate from 'entityComponent/workplaces/WorkplaceCreate.vue'
+  import WorkplaceCreate from './WorkplaceCreateBasic.vue'
 
   import PersonCreate from 'entities/tangible/PersonCreate.vue'
   import PlaceCreate from 'entities/tangible/PlaceCreate.vue'
@@ -37,7 +58,7 @@
     components: {
       'tabs': Tabs,
       'tab-contents': TabComponents,
-      // 'workplace-create': WorkplaceCreate,
+      'workplace-create': WorkplaceCreate,
       'person-create': PersonCreate,
       'place-create': PlaceCreate,
       'thing-create': ThingCreate,
@@ -51,17 +72,30 @@
 
     data: function () {
       return {
-        items: [],
+        workplace: {name: null, category: null},
         display: 'all',
-        component: 'workplace-create'
+        component: '',
+        tab: 'workplace-create'
       }
+    },
+    computed: {
+      ...mapGetters(['items'])
     },
     methods: {
       tabChange: function (_component) {
-        this.component = _component
+        this.tab = _component
+        if (_component !== 'workplace-create') {
+          this.component = _component
+        } else {
+          this.component = ''
+        }
       },
-      savedEntity: function (_entity) {
-        this.items.push(_entity)
+      saveWorkplace () {
+        this.$router.push('/workplaces')
+      },
+      savedWorkplace: function (_entity) {
+        this.workplace = _entity
+        this.component = this.tab = 'person-create'
       },
       parseComponent: function (route) {
         if (route === 'workplace-create') {
@@ -77,7 +111,21 @@
           this.component = 'app-create'
           this.display = 'configurable'
         }
+      },
+      removeWorkplaceItem (index) {
+        this.$store.dispatch('removeWorkplaceItem', index)
       }
+    },
+    created () {
+      document.title = 'Create Workplaces @ ARLEM Panel'
     }
   }
 </script>
+<style lang="scss" scoped>
+  .md-list-item {
+      height: 50px;
+  }
+  h6 {
+    margin: 0;
+  }
+</style>

@@ -4,7 +4,7 @@ import VueMaterial from 'vue-material'
 
 import Authentication from 'entities/auth/AuthForm.vue'
 
-// import Dashboard from './pages/Dashboard.vue'
+import Dashboard from 'entities/member/Dashboard.vue'
 // import Settings from './pages/Settings.vue'
 // import EntityCreate from 'pages/EntityCreate.vue'
 // import EntityList from 'pages/EntityList.vue'
@@ -37,7 +37,7 @@ const router = new VueRouter({
   mode: 'history',
   scrollBehavior: (to, from, savedPosition) => ({y: 0}),
   routes: [
-    // { path: '/dashboard', component: Dashboard, name: 'member.dashboard' },
+    { path: '/dashboard', component: Dashboard, name: 'member.dashboard' },
     // { path: '/settings', component: Settings, name: 'member.settings' },
     { path: '/workplaces', component: Workplaces, name: 'workplace.list' },
     { path: '/workplace/create', component: WorkplaceCreate, name: 'workplace.create' },

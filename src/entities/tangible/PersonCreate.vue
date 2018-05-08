@@ -2,7 +2,8 @@
 <template>
   <!-- Tangible Person Create -->
   <div>
-    <h3 class="md-display-1" style="margin:15px 0;">Create Person</h3>
+    <h3 class="md-display-3" v-if="independent" style="margin:15px 0;">Create Person</h3>
+    <h4 class="md-display-1" v-if="!independent" style="margin:15px 0;">Add Person</h4>
     <form novalidate  @submit.prevent="validateUser">
       <div class="md-layout md-gutter">
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
@@ -62,8 +63,8 @@
               this.$router.push('/tangibles')
             } else {
               this.$store.dispatch('addWorkplaceItem', {
-                'id': response.object.id,
-                'name': response.object.name,
+                'id': response.data.object.id,
+                'name': response.data.object.name,
                 'type': 'person'
               })
             }
@@ -73,6 +74,7 @@
       },
 
       clearForm () {
+        console.log('sdfasdf')
         this.$v.$reset()
         this.form = {
           name: null,

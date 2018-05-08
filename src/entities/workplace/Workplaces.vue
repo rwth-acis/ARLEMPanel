@@ -15,7 +15,7 @@
         <md-table-empty-state
             md-label="No workplace found"
             :md-description="`No workplace found for this '${search}' query. Try a different search term or create a new Workplace.`">
-          <md-button class="md-primary md-raised" @click="newLink">Create New {{ model }}</md-button>
+          <md-button class="md-primary md-raised" @click="newLink">Create New Workplace</md-button>
         </md-table-empty-state>
         <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
           <div class="md-toolbar-section-start">{{ getAlternateLabel(count) }}</div>
@@ -87,6 +87,7 @@
       }
     },
     created () {
+      document.title = 'Workplaces @ ARLEM Panel'
       workplaceServices.getList({}).then(response => {
         for (var key in response.data.data[0]) {
           console.log(key)

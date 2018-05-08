@@ -1,7 +1,8 @@
 <template>
   <!-- Workplace Create Mounted -->
   <div>
-    <h3 class="md-display-1" style="margin:15px 0;">Create Thing</h3>
+    <h3 class="md-display-3" v-if="independent" style="margin:15px 0;">Create Thing</h3>
+    <h4 class="md-display-1" v-if="!independent" style="margin:15px 0;">Add Thing</h4>
     <form novalidate  @submit.prevent="validate">
       <div class="md-layout md-gutter">
         <input-field label="ID" :cssClass="getValidationClass('id')" :model.sync="form.id" error="Please enter the ID"></input-field>
@@ -13,7 +14,7 @@
         <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="triggers?type=detectable&all=true"></input-select>
       </div>
 
-      <poi-create @add="appendPOI"></poi-create>
+      <poi-create @add="appendPOI" :poi.sync="form.pois"></poi-create>
 
       <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save Thing</md-button>
     </form>
@@ -64,8 +65,8 @@
               this.$router.push('/tangibles')
             } else {
               this.$store.dispatch('addWorkplaceItem', {
-                'id': response.object.id,
-                'name': response.object.name,
+                'id': response.data.object.id,
+                'name': response.data.object.name,
                 'type': 'thing'
               })
             }

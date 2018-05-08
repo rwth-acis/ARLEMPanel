@@ -53,6 +53,7 @@
 <script>
   import InputField from 'components/InputField.vue'
   export default {
+    props: ['poi'],
     components: {
       'input-field': InputField
     },
@@ -66,8 +67,19 @@
           z: 0
         },
         showDialog: false,
-        items: [],
         selected: []
+      }
+    },
+    computed: {
+      items: {
+        // getter
+        get: function () {
+          return this.poi
+        },
+        // setter
+        set: function (newValue) {
+          this.$emit('update:poi', newValue)
+        }
       }
     },
     methods: {

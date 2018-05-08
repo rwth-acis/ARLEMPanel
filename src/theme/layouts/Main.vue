@@ -12,7 +12,6 @@
     </template>
     <template v-if="!isAuthenticated">
       <div class="mdl-layout mdl-js-layout">
-        <img src="http://localhost:8000/images/logo.png" class="logo" />
         <router-view></router-view>
       </div>
     </template>

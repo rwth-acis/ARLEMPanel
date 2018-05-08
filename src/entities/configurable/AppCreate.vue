@@ -1,7 +1,8 @@
 <template>
   <!-- Workplace Create Mounted -->
   <div>
-    <h3 class="md-display-1" style="margin:15px 0;">Create App</h3>
+    <h3 class="md-display-3" v-if="independent" style="margin:15px 0;">Create App</h3>
+    <h4 class="md-display-1" v-if="!independent" style="margin:15px 0;">Add App</h4>
     <form novalidate  @submit.prevent="validate">
       <div class="md-layout md-gutter">
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
@@ -51,8 +52,8 @@
               this.$router.push('/configurables')
             } else {
               this.$store.dispatch('addWorkplaceItem', {
-                'id': response.object.name,
-                'name': response.object.name,
+                'id': response.data.object.id,
+                'name': response.data.object.name,
                 'type': 'app'
               })
             }

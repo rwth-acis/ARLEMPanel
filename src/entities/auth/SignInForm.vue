@@ -85,6 +85,7 @@
       }
     },
     mounted () {
+      document.title = 'ARLEM Panel'
       if (this.isAuthenticated === true) {
         this.$router.push('/dashboard')
       }
@@ -101,3 +102,10 @@
     }
   }
 </script>
+<style scoped>
+.md-card-header {
+    background: var(--md-theme-default-primary);
+    color: white;
+}
+</style>
+

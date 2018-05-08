@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import AuthModule from 'entities/auth/auth.module'
+import workplaceModule from 'entities/workplace/workplace.module'
 import snackbarModule from './theme/snackbar'
 
 Vue.use(Vuex)
@@ -8,7 +9,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
     AuthModule,
-    snackbarModule
+    snackbarModule,
+    workplaceModule
   }
 })
 
