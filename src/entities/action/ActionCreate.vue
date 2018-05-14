@@ -7,10 +7,17 @@
           <input-field label="ID" :model.sync="actions[currentAction].id" error="Please enter a valid ID"></input-field>
           <input-field label="Name" :model.sync="actions[currentAction].name" error="Please enter the name"></input-field>
       </div>       
+      <div class="md-layout md-gutter">
+          <input-select label="View Port" :model.sync="actions[currentAction].viewport" error="Please choose a workplace" url="viewport/select"></input-select>
+          <input-field label="Instruction Title" :model.sync="actions[currentAction].instructionTitle" error="Please enter a valid Instruction Title"></input-field>
+      </div>       
+      <div class="md-layout md-gutter">
+        <input-area label="Instruction Details" :model.sync="actions[currentAction].instructionDescription" error="Please enter a valid Instruction Details"></input-area>
+      </div>
       <div>
         <div class="tile-cover" v-for="(tab, index) in actions[currentAction].triggers" :key="index">
           <i class="material-icons close" v-if="index > 1" @click="deleteTile(index)">close</i>
-          <tile class="tile" :icon="tab.icon" :text="tab.text" :extraClass="activeTabClass(currentTrigger, index)" v-on:click.native="changeTab(tab.component, index)"></tile>
+          <tile class="tile" :icon="triggerModeIcons[tab.mode]" :text="tab.text" :extraClass="activeTabClass(currentTrigger, index)" v-on:click.native="changeTab(tab.component, index)"></tile>
         </div>
         <div class="tile-cover">
           <tile class="tile" icon="add" text="Add Trigger" v-on:click.native="addTrigger(actions[currentAction].triggers.length)"></tile>
@@ -42,7 +49,7 @@
       'action-trigger-create': TriggerCreate
     },
     computed: {
-      ...mapGetters(['actions', 'currentAction', 'currentTrigger'])
+      ...mapGetters(['actions', 'currentAction', 'currentTrigger', 'triggerModeIcons'])
     },
 
     methods: {

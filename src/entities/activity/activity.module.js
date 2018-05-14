@@ -1,10 +1,28 @@
 const state = {
+  basics: {
+    name: '',
+    workplace: '',
+    language: '',
+    description: '',
+    actions: []
+  },
   actions: [],
   currentAction: null,
-  currentTrigger: null
+  currentTrigger: null,
+  triggerModeIcons: {
+    '1': 'arrow_forward_ios',
+    '2': 'arrow_back_ios',
+    '3': 'mouse',
+    '4': 'filter_tilt_shift',
+    '5': 'memory'
+  }
 }
 
 const getters = {
+  basics: (state) => {
+    return state.basics
+  },
+
   actions: (state) => {
     return state.actions
   },
@@ -23,6 +41,10 @@ const getters = {
     } else {
       return []
     }
+  },
+
+  triggerModeIcons: (state) => {
+    return state.triggerModeIcons
   }
 }
 
@@ -84,11 +106,11 @@ const mutations = {
   addTrigger (state, action) {
     state.currentTrigger = state.actions[state.currentAction].triggers.length
     state.actions[state.currentAction].triggers.push({
-      icon: 'add_alert',
+      mode: 3,
       text: 'Trigger',
       component: 'action-trigger-create',
-      category: 'action',
-      operations: []
+      operations: [],
+      isValid: true
     })
   },
 

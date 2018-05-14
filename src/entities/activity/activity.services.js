@@ -10,6 +10,16 @@ const activityServices = {
         }
       })
     })
+  },
+
+  post (createObject) {
+    return new Promise((resolve) => {
+      axios.post(`activity`, createObject).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   }
 }
 

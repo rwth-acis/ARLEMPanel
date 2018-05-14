@@ -36,4 +36,8 @@
     font-size: 4em;
     display:block;
   }
+  .md-danger {
+    background: rgb(240, 113, 120)!important;
+    box-shadow: 0 0px 0px 0 rgba(0,0,0,.14);
+  }
 </style>

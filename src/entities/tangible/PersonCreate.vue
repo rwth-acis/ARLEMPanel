@@ -74,7 +74,6 @@
       },
 
       clearForm () {
-        console.log('sdfasdf')
         this.$v.$reset()
         this.form = {
           name: null,

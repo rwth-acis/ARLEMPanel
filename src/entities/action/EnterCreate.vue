@@ -2,14 +2,12 @@
   <!-- Tangible Person Create -->
   <div>
     <form novalidate  @submit.prevent="validateUser">
+      <div class="md-layout md-gutter">
+        <div class="md-layout-item md-size-50">
+          <input-select label="Remove Self" :model.sync="actions[currentAction].triggers[currentTrigger].remove" :customItems="yesno"></input-select>
+        </div>
+      </div>      
       <operations></operations>
-      <div class="md-layout md-gutter">
-        <input-select label="Remove Self" :model.sync="actions[currentAction].triggers[currentTrigger].remove" :customItems="yesno"></input-select>
-        <input-field label="Instruction Title" :model.sync="actions[currentAction].triggers[currentTrigger].title" error="Please enter a valid Instruction Title"></input-field>
-      </div>
-      <div class="md-layout md-gutter">
-        <input-area label="Instruction Details" :model.sync="actions[currentAction].triggers[currentTrigger].details" error="Please enter a valid Instruction Details"></input-area>
-      </div>
     </form>
   </div>
 </template>

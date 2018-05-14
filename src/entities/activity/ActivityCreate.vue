@@ -6,7 +6,7 @@
       <h3 style="margin:15px 0;text-align: center">Activity Actions</h3>
         <div class="tile-cover" v-for="(action, index) in actions" :key="index">
           <i class="material-icons close" @click="removeAction(index)">close</i>
-          <tile class="tile"  :text="action.id ? action.id : 'Unnamed'" :extraClass="currentAction === index ? 'md-primary' : ''" v-on:click.native="switchAction(index)" showClose="removeAction"></tile>
+          <tile class="tile"  :text="action.id ? action.id : 'Unnamed'" :extraClass="currentAction === index ? 'md-primary' : action.isValid === false ? 'md-danger' : ''" v-on:click.native="switchAction(index)" showClose="removeAction"></tile>
         </div>
       <tile class="tile" text="Add Action" icon="add" v-on:click.native="addAction()"></tile>
     </div>
@@ -14,7 +14,7 @@
       <h1 class="md-display-3" style="margin:15px 0;">Create Activity</h1>
       <keep-alive><component :is="component"></component></keep-alive>
       <div style="text-align:center">
-        <md-button class="md-raised md-primary" @click="saveActivity(actions)" style="width:250px;height:50px;">Save Activity</md-button>
+        <md-button class="md-raised md-primary" @click="saveActivity(basics, actions)" style="width:250px;height:50px;">Save Activity</md-button>
       </div>
     </div>
   </div>
@@ -25,6 +25,7 @@
   import Tile from 'theme/components/Tile.vue'
   import ActivityBasic from './ActivityCreateBasic.vue'
   import ActionCreate from 'entities/action/ActionCreate.vue'
+  import activityServices from './activity.services'
   
   export default {
     components: {
@@ -40,7 +41,7 @@
     },
 
     computed: {
-      ...mapGetters(['actions', 'currentAction'])
+      ...mapGetters(['actions', 'currentAction', 'basics'])
     },
 
     created () {
@@ -63,20 +64,27 @@
       addAction () {
         this.component = 'action-create'
         this.$store.dispatch('addAction', {
+          id: '',
+          name: '',
+          remove: '',
+          instructionTitle: '',
+          instructionDescription: '',
+          viewport: 0,
+          isValid: true,
           triggers: [
             {
-              icon: 'arrow_forward_ios',
               text: 'Enter',
               component: 'action-enter-create',
-              category: 'action',
-              operations: []
+              operations: [],
+              mode: 1,
+              isValid: true
             },
             {
-              icon: 'arrow_back_ios',
               text: 'Exit',
               component: 'action-exit-create',
-              category: 'action',
-              operations: []
+              operations: [],
+              mode: 2,
+              isValid: true
             }
           ]
         })
@@ -94,8 +102,13 @@
         return index === this.currentAction && this.component === 'activity-basic' ? 'md-primary' : ''
       },
 
-      saveActivity (_actions) {
-        console.log(_actions)
+      saveActivity (_basics, _actions) {
+        _basics.actions = _actions
+        activityServices.post(_basics)
+          .then((response) => {
+            this.$store.dispatch('showSnackBar', String(response.data.message))
+            this.$router.push('/activites')
+          })
       }
     }
   }
