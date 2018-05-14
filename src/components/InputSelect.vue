@@ -19,6 +19,15 @@
         value: ''
       }
     },
+    watch: {
+      url: function (newVal, oldVal) {
+        if (newVal && newVal !== '') {
+          axios.get(newVal).then((response) => {
+            this.items = response.data.data
+          })
+        }
+      }
+    },
     created () {
       this.value = this.model
       if (this.url && this.url !== '') {

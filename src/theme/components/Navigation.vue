@@ -1,7 +1,7 @@
 <template>
   <div class="md-layout md-gutter header">
     <div class="md-layout-item md-size-50">
-      <img src="http://localhost:8000/images/logo_small.png" style="float:left" />
+      <img src="http://localhost:8080/images/logo_small.png" style="float:left" />
       <main-search style="float:left"></main-search>
     </div>
     <div class="md-layout-item">

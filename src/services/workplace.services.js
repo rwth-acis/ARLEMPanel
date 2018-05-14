@@ -4,7 +4,6 @@ const workplaceServices = {
   getList (searchObject) {
     return new Promise((resolve) => {
       axios.get(`workplaces`).then(response => {
-        console.log(response)
         if (response) {
           resolve(response.data)
         }

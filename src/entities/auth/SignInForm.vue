@@ -107,5 +107,8 @@
     background: var(--md-theme-default-primary);
     color: white;
 }
+.md-card {
+    overflow: hidden;
+}
 </style>
 

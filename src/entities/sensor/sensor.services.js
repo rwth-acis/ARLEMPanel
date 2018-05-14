@@ -15,8 +15,19 @@ const sensorServices = {
 
   },
 
-  postCreate (objWorkplace, listItems) {
-
+  postCreate (objSensor, listItems) {
+    return new Promise((resolve) => {
+      axios.post(`sensor/create`, {
+        'name': objSensor.name,
+        'uri': objSensor.uri,
+        'username': objSensor.username,
+        'password': objSensor.password
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   },
 
   putEdit (objWorkplace, listItems) {

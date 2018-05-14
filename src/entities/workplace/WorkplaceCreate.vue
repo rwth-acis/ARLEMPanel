@@ -1,6 +1,6 @@
 <template>
   <!-- Entity Create -->
-  <div class="md-layout md-gutter">
+  <div class="md-layout md-gutter main-screen">
     <div class="md-layout-item md-size-20">
       <tabs :component="tab" :display="display" @changeTab="tabChange"></tabs>
     </div>
@@ -16,23 +16,31 @@
         </div>
       </template>
     </div>
-    <div class="md-layout-item">
+    <div class="md-layout-item md-size-30 selected-entities">
       <h2 class="md-display-1">Added Entities</h2>
-      <div>
+        
+        <md-autocomplete md-layout="box" v-model="value" :md-options="countries" @md-changed="getCountries" @md-opened="getCountries" @md-selected="addWorkplaceItem">
+          <label>Search Entities</label>
+          <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item.name }}<br /><small>{{ item.type }}</small></template>
+          <template slot="md-autocomplete-empty" slot-scope="{ term }">No entities found. </template>
+        </md-autocomplete>
         <md-list>
           <md-list-item v-for="(item, index) in items" :key="item.id">
-            <div>
-              <span class="md-list-item-text">{{ item.type }}</span>
-              <h6 class="md-title">{{ item.name }}</h6>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-size-70">
+                <span class="md-list-item-text">{{ item.type }}</span>
+                <h6 class="md-title">{{ item.name }}</h6>
+              </div>
+              <div class="md-layout-item md-size-30">
+                <md-button @click="removeWorkplaceItem(index)" class="md-fab md-mini">
+                  <md-icon>delete</md-icon>
+                </md-button>
+              </div>
             </div>
-            <md-button @click="removeWorkplaceItem(index)" class="md-fab md-mini">
-              <md-icon>delete</md-icon>
-            </md-button>
           </md-list-item>
         </md-list>
-        </div>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -53,6 +61,8 @@
 
   import AppCreate from 'entities/configurable/AppCreate.vue'
   import DeviceCreate from 'entities/configurable/DeviceCreate.vue'
+
+  import workplaceServices from './workplace.services.js'
 
   export default {
     components: {
@@ -75,13 +85,27 @@
         workplace: {name: null, category: null},
         display: 'all',
         component: '',
-        tab: 'workplace-create'
+        tab: 'workplace-create',
+        value: null,
+        countryList: [],
+        countries: []
       }
     },
     computed: {
       ...mapGetters(['items'])
     },
     methods: {
+      getCountries (searchTerm) {
+        this.countries = []
+        if (searchTerm && searchTerm !== '') {
+          workplaceServices.getEntityList(searchTerm).then(response => {
+            if (response.data.total && response.data.total > 0) {
+              this.countries = response.data.data
+            }
+          })
+        }
+      },
+
       tabChange: function (_component) {
         this.tab = _component
         if (_component !== 'workplace-create') {
@@ -91,7 +115,15 @@
         }
       },
       saveWorkplace () {
-        this.$router.push('/workplaces')
+        workplaceServices.postCreate({
+          name: this.workplace.name,
+          category: this.workplace.category,
+          items: this.items
+        })
+          .then((response) => {
+            this.$store.dispatch('showSnackBar', String(response.data.message))
+            this.$router.push('/workplaces')
+          })
       },
       savedWorkplace: function (_entity) {
         this.workplace = _entity
@@ -112,6 +144,14 @@
           this.display = 'configurable'
         }
       },
+      addWorkplaceItem (Item) {
+        this.value = ''
+        this.$store.dispatch('addWorkplaceItem', {
+          'id': Item.id,
+          'name': Item.name,
+          'type': Item.type
+        })
+      },
       removeWorkplaceItem (index) {
         this.$store.dispatch('removeWorkplaceItem', index)
       }
@@ -127,5 +167,14 @@
   }
   h6 {
     margin: 0;
+  }
+  .md-display-1 {
+    margin-bottom: 0;
+  }
+  .selected-entities {
+    background: #efefef;
+  }
+  .main-screen {
+    margin-top: -16px;
   }
 </style>

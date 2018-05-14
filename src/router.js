@@ -23,8 +23,11 @@ import Configurables from 'entities/configurable/Configurables.vue'
 import ConfigurableCreate from 'entities/configurable/ConfigurableCreate.vue'
 
 import Sensors from 'entities/sensor/Sensors.vue'
+import SensorsCreate from 'entities/sensor/SensorCreate.vue'
 
 // import Activities from 'pages/Activities.vue'
+import Activities from 'entities/activity/Activities.vue'
+import ActivityCreate from 'entities/activity/ActivityCreate.vue'
 
 // import Learners from 'pages/Learners.vue'
 
@@ -48,8 +51,9 @@ const router = new VueRouter({
     { path: '/configurables', component: Configurables, name: 'configurable.list' },
     { path: '/configurable/create', component: ConfigurableCreate, name: 'configurable.create' },
     { path: '/sensors', component: Sensors, name: 'sensor.list' },
-    // { path: '/sensor/create', component: EntityCreate, name: 'sensor.create' },
-    // { path: '/activites', component: Activities, name: 'activity.list' },
+    { path: '/sensor/create', component: SensorsCreate, name: 'sensor.create' },
+    { path: '/activites', component: Activities, name: 'activity.list' },
+    { path: '/activity/create', component: ActivityCreate, name: 'activity.list' },
     // { path: '/learners', component: Learners, name: 'learner.list' },
     { path: '/', component: Authentication, name: 'authentication' }
     // { path: '*', component: NotFound, name: 'notfound' }
