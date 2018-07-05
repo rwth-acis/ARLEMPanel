@@ -16,7 +16,7 @@ Vue.filter('capitalize', function (value) {
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
-axios.defaults.baseURL = 'http://localhost:8080'
+axios.defaults.baseURL = 'http://127.0.0.1:8080'
 axios.interceptors.response.use(undefined, function (error) {
   if (error.response.status > 200) {
     store.dispatch('showSnackBar', error.response.data.message)

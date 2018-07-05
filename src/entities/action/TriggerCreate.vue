@@ -18,6 +18,7 @@
         <input-select v-if="actions[currentAction].triggers[currentTrigger].mode == '5'" label="Sensor" :model.sync="actions[currentAction].triggers[currentTrigger].entity" :url="'sensor/select'"></input-select>
         <input-field  v-if="actions[currentAction].triggers[currentTrigger].mode == '5'" label="Options" :model.sync="actions[currentAction].triggers[currentTrigger].options"></input-field>
       </div>
+      <operations></operations>
     </form>
   </div>
 </template>
@@ -59,7 +60,8 @@
         operationType: [
           {id: 'place', name: 'Place'},
           {id: 'person', name: 'Person'},
-          {id: 'thing', name: 'Thing'}
+          {id: 'thing', name: 'Thing'},
+          {id: 'module', name: 'Module'}
         ]
       }
     }

@@ -18,6 +18,7 @@ const sensorServices = {
   postCreate (objSensor, listItems) {
     return new Promise((resolve) => {
       axios.post(`sensor/create`, {
+        'id': objSensor.id,
         'name': objSensor.name,
         'uri': objSensor.uri,
         'username': objSensor.username,

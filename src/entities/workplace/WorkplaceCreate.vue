@@ -62,6 +62,8 @@
   import AppCreate from 'entities/configurable/AppCreate.vue'
   import DeviceCreate from 'entities/configurable/DeviceCreate.vue'
 
+  import SensorCreate from 'entities/sensor/SensorCreate.vue'
+
   import workplaceServices from './workplace.services.js'
 
   export default {
@@ -77,7 +79,8 @@
       'warning-create': WarningCreate,
       'hazard-create': HazardCreate,
       'app-create': AppCreate,
-      'device-create': DeviceCreate
+      'device-create': DeviceCreate,
+      'sensor-create': SensorCreate
     },
 
     data: function () {
@@ -142,6 +145,9 @@
         } else if (route === 'configurable-create') {
           this.component = 'app-create'
           this.display = 'configurable'
+        } else if (route === 'sensor-create') {
+          this.component = 'sensor-create'
+          this.display = 'sensor'
         }
       },
       addWorkplaceItem (Item) {

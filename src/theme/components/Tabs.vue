@@ -99,7 +99,7 @@
           {
             icon: 'fingerprint',
             text: 'Add Sensor',
-            component: 'predicate-create',
+            component: 'sensor-create',
             category: 'sensor'
           }
         ]
