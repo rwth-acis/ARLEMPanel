@@ -1,0 +1,49 @@
+sequelize model:generate --name authorIdId --attributes name:string,email:string,password:string,token:sting
+
+sequelize model:generate --name place --attributes id_name:string,name:string,detectableId:integer,authorIdId:integer
+
+sequelize model:generate --name person --attributes name:string,twitter:string,mbox:string,persona:string,detectableId:integer,authorIdId:integer
+
+sequelize model:generate --name thing --attributes id_name:string,name:string,urn:string,detectableId:integer,authorIdId:integer
+
+sequelize model:generate --name poi --attributes name:string,thing:integer,x:decimal,y:decimal,z:decimal,relativeTo:integer
+
+sequelize model:generate --name app --attributes name:string,manifest:string,type:integer,authorIdId:integer
+
+sequelize model:generate --name appType --attributes name:string
+
+sequelize model:generate --name device --attributes name:string,type:integer,authorIdId:integer
+
+sequelize model:generate --name deviceType --attributes name:string
+
+sequelize model:generate --name detectableId --attributes sensor:integer,type:string,url:string,message_id:integer,authorIdId:integer
+
+sequelize model:generate --name hazard --attributes name:string,authorIdId:integer
+
+sequelize model:generate --name hazardPrimitive --attributes hazard:integer,primitive:integer
+
+sequelize model:generate --name module --attributes name:string,authorIdId:integer
+
+sequelize model:generate --name predicate --attributes name:string,authorIdId:integer
+
+sequelize model:generate --name predicatePrimitive --attributes predicate:integer,primitive:integer,tmp:integer
+
+sequelize model:generate --name primitive --attributes name:string,overlay:int,type:string,symbol:string,size:string,url:string,option:stringauthorIdId:integer
+
+sequelize model:generate --name primitiveType --attributes name:string
+
+sequelize model:generate --name resource --attributes entity:int,entity_type:string,workplace:int,authorIdId:int
+
+sequelize model:generate --name sensor --attributes id_name:string,name:string,url:string,username:string,password:string,type:string,authorIdId:integer
+
+sequelize model:generate --name viewport --attributes name:string
+
+sequelize model:generate --name warning --attributes name:string,authorIdId:integer
+
+sequelize model:generate --name warningPrimitive --attributes warning:integer,primitive:integer
+
+sequelize model:generate --name workplace --attributes name:string,type:string,authorIdId:integer
+
+sequelize model:generate --name workplaceActivity --attributes workplace_id:integer,activities_id:integer
+
+
