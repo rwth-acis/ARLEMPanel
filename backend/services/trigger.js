@@ -1,9 +1,9 @@
-const tangible = require('../models').tangible
+const trigger = require('../models').trigger
 const validationMiddleware = require('../helpers/validationMiddleware')
 
 module.exports = (app) => {
-  app.get('/api/tangible', validationMiddleware.validate(), (req, res) => {
-    tangible.findAll({ order: [['createdAt', 'DESC']] }).then((objects) => {
+  app.get('/api/trigger', validationMiddleware.validate(), (req, res) => {
+    trigger.findAll({ order: [['createdAt', 'DESC']] }).then((objects) => {
       if (objects === null) {
         res.json([])
       } else {

@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-  var configurable = sequelize.define('configurables', {
+  var configurable = sequelize.define('configurable', {
     name: DataTypes.STRING,
-    manifest: DataTypes.STRING,
-    type: DataTypes.INTEGER,
-    author: DataTypes.INTEGER
+    type: DataTypes.STRING,
+    category: DataTypes.STRING,
+    authorId: DataTypes.INTEGER
   }, {})
   configurable.associate = (models) => {
     // associations can be defined here

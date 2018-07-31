@@ -8,17 +8,18 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      name: {
+        type: Sequelize.STRING
+      },
       sensor: {
         type: Sequelize.INTEGER
       },
       type: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'module'
       },
       url: {
         type: Sequelize.STRING
-      },
-      message_id: {
-        type: Sequelize.INTEGER
       },
       authorId: {
         type: Sequelize.INTEGER

@@ -11,8 +11,8 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      typeId: {
-        type: Sequelize.INTEGER
+      type: {
+        type: Sequelize.STRING
       },
       authorId: {
         type: Sequelize.INTEGER
@@ -26,26 +26,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     }).then(() => {
-      queryInterface.addConstraint('devices', ['typeId'], {
-        type: 'foreign key',
-        name: 'devices_author_fk_constraint',
-        references: {
-          table: 'authors',
-          field: 'id'
-        },
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
-      })
-      queryInterface.addConstraint('devices', ['type'], {
-        type: 'foreign key',
-        name: 'devices_types_fk_constraint',
-        references: {
-          table: 'deviceTypes',
-          field: 'id'
-        },
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
-      })
+
     })
   },
   down: (queryInterface, Sequelize) => {

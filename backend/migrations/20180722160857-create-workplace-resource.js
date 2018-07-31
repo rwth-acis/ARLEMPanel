@@ -1,15 +1,21 @@
 'use strict'
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('hazards', {
+    return queryInterface.createTable('workplaceResources', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      entityId: {
+        type: Sequelize.INTEGER
+      },
+      entityType: {
         type: Sequelize.STRING
+      },
+      workplaceId: {
+        type: Sequelize.INTEGER
       },
       authorId: {
         type: Sequelize.INTEGER
@@ -23,9 +29,9 @@ module.exports = {
         type: Sequelize.DATE
       }
     }).then(() => {
-      queryInterface.addConstraint('hazards', ['authorId'], {
+      queryInterface.addConstraint('workplaceResources', ['authorId'], {
         type: 'foreign key',
-        name: 'hazards_author_fk_constraint',
+        name: 'workplaceresources_author_fk_constraint',
         references: {
           table: 'authors',
           field: 'id'
@@ -36,6 +42,6 @@ module.exports = {
     })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('hazards')
+    return queryInterface.dropTable('workplaceResources')
   }
 }

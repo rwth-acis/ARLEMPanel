@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   var module = sequelize.define('module', {
     name: DataTypes.STRING,
-    author: DataTypes.INTEGER
+    authorId: DataTypes.INTEGER
   }, {})
   module.associate = (models) => {
     // associations can be defined here

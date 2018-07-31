@@ -1,7 +1,7 @@
 'use strict'
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('persons', {
+    return queryInterface.createTable('people', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -35,7 +35,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     }).then(() => {
-      queryInterface.addConstraint('persons', ['authorId'], {
+      queryInterface.addConstraint('people', ['authorId'], {
         type: 'foreign key',
         name: 'persons_author_fk_constraint',
         references: {
@@ -45,7 +45,7 @@ module.exports = {
         onDelete: 'cascade',
         onUpdate: 'cascade'
       })
-      queryInterface.addConstraint('persons', ['detectableId'], {
+      queryInterface.addConstraint('people', ['detectableId'], {
         type: 'foreign key',
         name: 'places_detectables_fk_constraint',
         references: {
@@ -58,6 +58,6 @@ module.exports = {
     })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('person')
+    return queryInterface.dropTable('people')
   }
 }

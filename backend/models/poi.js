@@ -2,11 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   var poi = sequelize.define('poi', {
     name: DataTypes.STRING,
-    thing: DataTypes.INTEGER,
+    thingId: DataTypes.INTEGER,
     x: DataTypes.DECIMAL,
     y: DataTypes.DECIMAL,
-    z: DataTypes.DECIMAL,
-    relativeTo: DataTypes.INTEGER
+    z: DataTypes.DECIMAL
   }, {})
   poi.associate = (models) => {
     // associations can be defined here

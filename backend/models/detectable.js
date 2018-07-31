@@ -4,8 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     sensor: DataTypes.INTEGER,
     type: DataTypes.STRING,
     url: DataTypes.STRING,
-    message_id: DataTypes.INTEGER,
-    author: DataTypes.INTEGER
+    authorId: DataTypes.INTEGER
   }, {})
   detectable.associate = (models) => {
     // associations can be defined here

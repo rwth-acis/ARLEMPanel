@@ -11,7 +11,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      thing: {
+      thingId: {
         type: Sequelize.INTEGER
       },
       x: {
@@ -22,9 +22,6 @@ module.exports = {
       },
       z: {
         type: Sequelize.DECIMAL
-      },
-      relativeTo: {
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

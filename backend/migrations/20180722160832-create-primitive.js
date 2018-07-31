@@ -9,21 +9,29 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
-      overlay: {
-        type: Sequelize.INTEGER
+      category: {
+        type: Sequelize.STRING,
+        defaultValue: 'predicates'
       },
       type: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: 'visual'
       },
       symbol: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'default'
       },
       size: {
-        type: Sequelize.STRING
+        type: Sequelize.DECIMAL
       },
       url: {
+        type: Sequelize.STRING
+      },
+      option: {
         type: Sequelize.STRING
       },
       authorId: {
@@ -43,16 +51,6 @@ module.exports = {
         name: 'primitives_author_fk_constraint',
         references: {
           table: 'authors',
-          field: 'id'
-        },
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
-      })
-      queryInterface.addConstraint('primitives', ['type'], {
-        type: 'foreign key',
-        name: 'primitives_type_fk_constraint',
-        references: {
-          table: 'primitiveTypes',
           field: 'id'
         },
         onDelete: 'cascade',

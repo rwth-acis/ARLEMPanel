@@ -14,8 +14,8 @@ module.exports = {
       manifest: {
         type: Sequelize.STRING
       },
-      typeId: {
-        type: Sequelize.INTEGER
+      type: {
+        type: Sequelize.STRING
       },
       authorId: {
         type: Sequelize.INTEGER
@@ -34,16 +34,6 @@ module.exports = {
         name: 'apps_author_fk_constraint',
         references: {
           table: 'authors',
-          field: 'id'
-        },
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
-      })
-      queryInterface.addConstraint('apps', ['typeId'], {
-        type: 'foreign key',
-        name: 'apps_types_fk_constraint',
-        references: {
-          table: 'appTypes',
           field: 'id'
         },
         onDelete: 'cascade',

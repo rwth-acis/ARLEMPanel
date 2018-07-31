@@ -1,13 +1,10 @@
 const author = require('../models').author
 const md5 = require('md5')
-const {check, validationResult} = require('express-validator/check')
+const validationMiddleware = require('../helpers/validationMiddleware')
+const validationRulues = require('../helpers/validationRules')
 
 module.exports = (app) => {
-  app.patch('/api/signin', [check('email').withMessage('Please provide a valid Email'), check('password').withMessage('Please provide a valid Password')], (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      res.status(401).json({ messages: errors.array() })
-    }
+  app.patch('/api/signin', validationMiddleware.validate(validationRulues.auth.signin, false), (req, res) => {
     author.findOne({where: {email: req.body.email, password: md5(req.body.password)}}).then(object => {
       if (object == null) {
         res.json({message: ['Invalid credentails. Please try again.']})
@@ -19,23 +16,13 @@ module.exports = (app) => {
     })
   })
 
-  app.post('/api/signup', [check('name').withMessage('Please provide a valid Name'), check('email').withMessage('Please provide a valid Email'), check('password').withMessage('Please provide a valid Password')], (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      res.status(401).json({ messages: errors.array() })
-    }
-
+  app.post('/api/signup', validationMiddleware.validate(validationRulues.auth.signup, false), (req, res) => {
     author.create({name: req.body.name, email: req.body.email, password: md5(req.body.password)}).then(() => {
       res.json({data: {message: ['Welcome to ARLEM Panel. Please signin.']}})
     })
   })
 
-  app.post('/api/forget', [check('email').withMessage('Please provide a valid Email')], (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      res.status(401).json({ messages: errors.array() })
-    }
-
+  app.post('/api/forget', validationMiddleware.validate(validationRulues.auth.forgot, false), (req, res) => {
     author.findOne({where: {email: req.body.email}}).then(object => {
       if (object == null) {
         res.json({message: ['Account does not exists, please try again.']})
@@ -45,16 +32,7 @@ module.exports = (app) => {
     })
   })
 
-  app.patch('/api/change/:code', [check('password').withMessage('Please provide same password in both fields'), check('repassword').withMessage('Please provide same password in both fields')], (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      res.status(401).json({ messages: errors.array() })
-    }
-
-    if (req.body.password !== req.body.repassword) {
-      res.status(401).json({ message: ['Please enter correct password in both fields'] })
-    }
-
+  app.patch('/api/change/:code', validationMiddleware.validate(validationRulues.auth.change, false), (req, res) => {
     author.findById(req.params.code).then(object => {
       if (object == null) {
         res.json({message: ['Account does not exists, please try again.']})

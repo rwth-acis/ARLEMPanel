@@ -6,7 +6,6 @@ module.exports = (app) => {
       return
     }
     var name = file.substr(0, file.indexOf('.'))
-    console.log(name)
     require('./' + name)(app)
   })
 }
