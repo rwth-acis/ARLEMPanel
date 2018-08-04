@@ -3,7 +3,7 @@ import axios from 'axios'
 const tangibleServices = {
   getList (searchObject) {
     return new Promise((resolve) => {
-      axios.get(`tangibles`).then(response => {
+      axios.get(`tangible`).then(response => {
         if (response) {
           resolve(response.data)
         }
@@ -17,7 +17,7 @@ const tangibleServices = {
 
   postPersonCreate (objPerson) {
     return new Promise((resolve) => {
-      axios.post(`tangible/person/create`, {
+      axios.post(`tangible/person`, {
         'name': objPerson.name,
         'twitter': objPerson.twitter,
         'mbox': objPerson.mbox,
@@ -33,8 +33,7 @@ const tangibleServices = {
 
   postPlaceCreate (objThing) {
     return new Promise((resolve) => {
-      axios.post(`tangible/place/create`, {
-        'id_name': objThing.id,
+      axios.post(`tangible/place`, {
         'name': objThing.name,
         'detectable': objThing.detectable
       }).then(response => {
@@ -47,8 +46,7 @@ const tangibleServices = {
 
   postThingCreate (objThing) {
     return new Promise((resolve) => {
-      axios.post(`tangible/thing/create`, {
-        'id_name': objThing.id,
+      axios.post(`tangible/thing`, {
         'name': objThing.name,
         'urn': objThing.urn,
         'poi': objThing.pois,

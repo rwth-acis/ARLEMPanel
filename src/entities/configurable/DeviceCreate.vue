@@ -6,7 +6,7 @@
     <form novalidate  @submit.prevent="validate">
       <div class="md-layout md-gutter">
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
-        <input-select label="Type" :cssClass="getValidationClass('type')" :model.sync="form.type" error="Please choose a device type" url="configurable/device/types"></input-select>
+        <input-field label="Type" :cssClass="getValidationClass('type')" :model.sync="form.type" error="Please enter the type"></input-field>
       </div>
       <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save Device</md-button>
     </form>
@@ -47,7 +47,7 @@
         this.sending = true
         configurableServices.postDeviceCreate(this.form)
           .then((response) => {
-            this.$store.dispatch('showSnackBar', String(response.data.message))
+            this.$store.dispatch('showSnackBar', 'Device has been added successfully.')
             if (this.independent && this.independent === true) {
               this.$router.push('/configurables')
             } else {

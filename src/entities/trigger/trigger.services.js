@@ -3,7 +3,40 @@ import axios from 'axios'
 const triggerServices = {
   getList (searchObject) {
     return new Promise((resolve) => {
-      axios.get(`triggers`, {params: searchObject}).then(response => {
+      axios.get(`trigger`, {params: searchObject}).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
+  postPredicateCreate (objTrigger, category) {
+    return new Promise((resolve) => {
+      axios.post(`trigger/predicate`, {
+        'name': objTrigger.name,
+        'type': objTrigger.type,
+        'size': objTrigger.size,
+        'url': objTrigger.url,
+        'option': objTrigger.option,
+        'symbol': objTrigger.symbol,
+        'category': category
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
+  postDetectableCreate (objTrigger) {
+    return new Promise((resolve) => {
+      axios.post(`trigger/detectable`, {
+        'name': objTrigger.name,
+        'type': objTrigger.type,
+        'sensor': objTrigger.sensor,
+        'url': objTrigger.url
+      }).then(response => {
         if (response) {
           resolve(response.data)
         }

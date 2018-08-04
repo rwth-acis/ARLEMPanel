@@ -6,6 +6,7 @@ import activityModule from 'entities/activity/activity.module'
 import snackbarModule from './theme/snackbar'
 
 Vue.use(Vuex)
+Vue.use(require('vue-moment'))
 
 const store = new Vuex.Store({
   modules: {

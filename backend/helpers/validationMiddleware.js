@@ -14,7 +14,7 @@ var validate = function (schema = {}, validateHeader = true) {
     if (validateHeader === true) {
       const authorObject = await checkAuthor(req)
       if (authorObject === null) {
-        res.status(401).json({messages: 'You are not authorized to perform this action.'})
+        return next(new BadRequestError({messages: 'You are not authorized to perform this action.'}, res))
       } else {
         req.author = authorObject
       }

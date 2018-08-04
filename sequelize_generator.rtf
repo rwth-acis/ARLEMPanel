@@ -46,4 +46,8 @@ sequelize model:generate --name workplace --attributes name:string,type:string,a
 
 sequelize model:generate --name workplaceActivity --attributes workplace_id:integer,activities_id:integer
 
+sequelize model:generate --name activity --attributes name:string,description:string,language:string,workplace:integer,start:integer
 
+sequelize model:generate --name action --attributes activityId:integer,name:string,viewportId:integer,type:string,deviceId:integer,placeId:integer,primitiveId:integer,instructionTitle:string,instructionDescription:string
+
+sequelize model:generate --name actionTrigger --attributes actionId:integer,mode:string,removeSelf:integer,entityType:string,entityId:integer,poiId:integer,viewportId:string,predicateId:integer,option:string,value:string

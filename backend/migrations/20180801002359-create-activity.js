@@ -1,17 +1,29 @@
-'use strict'
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('workplaceActivities', {
+    return queryInterface.createTable('activities', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      name: {
+        type: Sequelize.STRING
+      },
+      description: {
+        type: Sequelize.TEXT
+      },
+      language: {
+        type: Sequelize.STRING,
+        defaultValue: 'English'
+      },
       workplaceId: {
         type: Sequelize.INTEGER
       },
-      activitiesId: {
+      start: {
+        type: Sequelize.INTEGER
+      },
+      authorId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -25,6 +37,6 @@ module.exports = {
     })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('workplaceActivities')
+    return queryInterface.dropTable('activities')
   }
 }

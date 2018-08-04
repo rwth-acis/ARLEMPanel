@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {})
   trigger.associate = (models) => {
     // associations can be defined here
+    models.trigger.belongsTo(models.author, {foreignKey: 'authorId'})
   }
   return trigger
 }

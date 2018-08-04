@@ -3,7 +3,7 @@
       <div class="md-layout-item">
         <page-header title="Triggers" description="Triggers are the physical objects present within the workplace. These objects are used / required to complete the activity." buttonText="Create Trigger" buttonUrl="/trigger/create"></page-header>
         <entity-tab entity="Triggers"></entity-tab>
-        <md-table v-model="searched" :md-sort.sync="currentSort" :md-sort-order.sync="currentSortOrder" :md-sort-fn="customSort"  md-card @md-selected="onSelect">
+        <md-table v-model="searched" md-card>
         <md-table-toolbar>
           <div class="md-toolbar-section-start">
             <h1 class="md-title">Triggers</h1>
@@ -25,15 +25,14 @@
             </md-button>
           </div>
         </md-table-toolbar>
-        <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple" md-auto-select>
-          <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
-          <md-table-cell md-label="Type" md-sort-by="type">{{ item.name }}</md-table-cell>
+        <md-table-row slot="md-table-row" slot-scope="{ item }">
+          <md-table-cell md-label="Name" md-sort-by="type">{{ item.name }}</md-table-cell>
+          <md-table-cell md-label="Category" md-sort-by="type">{{ item.category }}</md-table-cell>
           <md-table-cell md-label="Type" md-sort-by="type">{{ item.type }}</md-table-cell>
           <md-table-cell md-label="Author" md-sort-by="author">{{ item.author.name }}</md-table-cell>
-          <md-table-cell md-label="Created" md-sort-by="created">{{ item.created }}</md-table-cell>
+          <md-table-cell md-label="Created" md-sort-by="created">{{ item.createdAt | moment("MMMM Do YYYY") }}</md-table-cell>
           <md-table-cell md-label="Action">
             <md-icon>edit</md-icon>
-            <md-icon>delete</md-icon>
           </md-table-cell>
         </md-table-row>
       </md-table>
@@ -88,7 +87,7 @@
     },
     created () {
       triggerServices.getList({}).then(response => {
-        this.searched = response.data.data
+        this.searched = response
       })
     }
   }

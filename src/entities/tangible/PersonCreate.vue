@@ -11,7 +11,7 @@
       </div>
       <div class="md-layout md-gutter">
         <input-field label="Email" type="email" :cssClass="getValidationClass('mbox')" :model.sync="form.mbox" error="Please enter a valid email"></input-field>
-        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="triggers?type=detectable&all=true"></input-select>
+        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="trigger/detectable"></input-select>
       </div>
       <div class="md-layout md-gutter">
         <input-field label="Persona" :cssClass="getValidationClass('persona')" :model.sync="form.persona" error="Please enter a valid persona"></input-field>
@@ -58,13 +58,13 @@
         this.sending = true
         tangibleServices.postPersonCreate(this.form)
           .then((response) => {
-            this.$store.dispatch('showSnackBar', String(response.data.message))
+            this.$store.dispatch('showSnackBar', 'Person has been created successfully.')
             if (this.independent && this.independent === true) {
               this.$router.push('/tangibles')
             } else {
               this.$store.dispatch('addWorkplaceItem', {
-                'id': response.data.object.id,
-                'name': response.data.object.name,
+                'id': response.id,
+                'name': response.name,
                 'type': 'person'
               })
             }
@@ -127,7 +127,7 @@
 
     created () {
       triggerServices.getList({'type': 'detectable'}).then(response => {
-        this.detectables = response.data.data
+        this.detectables = response
       })
     }
 

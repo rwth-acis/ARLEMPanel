@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {})
   tangible.associate = (models) => {
     // associations can be defined here
+    models.tangible.belongsTo(models.author, {foreignKey: 'authorId'})
   }
   return tangible
 }

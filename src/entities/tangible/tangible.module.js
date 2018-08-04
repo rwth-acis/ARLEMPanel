@@ -34,7 +34,7 @@ const actions = {
     return new Promise((resolve) => {
       authService.postSignUp(user.name, user.email, user.password)
         .then((response) => {
-          context.dispatch('showSnackBar', response.data)
+          context.dispatch('showSnackBar', response)
           resolve()
         })
     })
@@ -43,7 +43,7 @@ const actions = {
     return new Promise((resolve) => {
       authService.postForgetPassword(email)
         .then((response) => {
-          context.dispatch('showSnackBar', response.data)
+          context.dispatch('showSnackBar', response)
           resolve()
         })
     })
@@ -59,8 +59,7 @@ const mutations = {
   },
   signIn (state, response) {
     if (window !== 'undefined') {
-      console.log(response.data.api_token)
-      window.localStorage.setItem('token', response.data.api_token)
+      window.localStorage.setItem('token', response.token)
     }
     state.isAuthenticated = true
   }

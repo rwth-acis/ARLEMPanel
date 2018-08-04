@@ -5,13 +5,12 @@
     <h4 class="md-display-1" v-if="!independent" style="margin:15px 0;">Add Thing</h4>
     <form novalidate  @submit.prevent="validate">
       <div class="md-layout md-gutter">
-        <input-field label="ID" :cssClass="getValidationClass('id')" :model.sync="form.id" error="Please enter the ID"></input-field>
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
       </div>
 
       <div class="md-layout md-gutter">
         <input-field label="URN" :cssClass="getValidationClass('urn')" :model.sync="form.urn" error="Please enter the URN"></input-field>
-        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="triggers?type=detectable&all=true"></input-select>
+        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="trigger/detectable"></input-select>
       </div>
 
       <poi-create @add="appendPOI" :poi.sync="form.pois"></poi-create>
@@ -60,7 +59,7 @@
         this.sending = true
         tangibleServices.postThingCreate(this.form)
           .then((response) => {
-            this.$store.dispatch('showSnackBar', String(response.data.message))
+            this.$store.dispatch('showSnackBar', 'Thing has been created successfully.')
             if (this.independent && this.independent === true) {
               this.$router.push('/tangibles')
             } else {
@@ -79,7 +78,6 @@
         this.$v.$reset()
         this.form = {
           name: null,
-          id: null,
           pois: [],
           detectable: null
         }
@@ -97,7 +95,6 @@
     data: function () {
       return {
         form: {
-          id: '',
           name: '',
           detectable: '',
           pois: []
@@ -109,9 +106,6 @@
 
     validations: {
       form: {
-        id: {
-          required
-        },
         name: {
           required
         },

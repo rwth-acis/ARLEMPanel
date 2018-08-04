@@ -1,6 +1,7 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
   var detectable = sequelize.define('detectable', {
+    name: DataTypes.STRING,
     sensor: DataTypes.INTEGER,
     type: DataTypes.STRING,
     url: DataTypes.STRING,

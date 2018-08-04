@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {})
   sensor.associate = (models) => {
     // associations can be defined here
+    models.sensor.belongsTo(models.author, {foreignKey: 'authorId'})
   }
   return sensor
 }

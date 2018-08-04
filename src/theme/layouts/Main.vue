@@ -1,12 +1,13 @@
 <template>
-  <div id="backend-app">
+  <div id="backend-app" style="height:100%;overflow-y:hidden">
     <template v-if="isAuthenticated">
-      <md-app>
+      <md-app :md-scrollbar="false">
         <md-app-toolbar class="md-primary">
           <navigation></navigation>
         </md-app-toolbar>
         <md-app-content>
           <router-view></router-view>
+          <div style="padding:60px">&nbsp;</div>
         </md-app-content>
       </md-app>
     </template>

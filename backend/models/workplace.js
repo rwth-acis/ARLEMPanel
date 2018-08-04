@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
   workplace.associate = (models) => {
     // associations can be defined here
     models.workplace.belongsTo(models.author, {foreignKey: 'authorId'})
-    models.workplace.hasMany(models.workplaceActivity, {foreignKey: 'workplaceId'})
     models.workplace.hasMany(models.workplaceResource, {foreignKey: 'workplaceId'})
   }
   return workplace

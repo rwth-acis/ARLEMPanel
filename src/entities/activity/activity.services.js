@@ -3,8 +3,7 @@ import axios from 'axios'
 const activityServices = {
   getList (searchObject) {
     return new Promise((resolve) => {
-      axios.get(`activities`).then(response => {
-        console.log(response)
+      axios.get(`activity`).then(response => {
         if (response) {
           resolve(response.data)
         }

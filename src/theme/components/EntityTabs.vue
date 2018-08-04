@@ -37,7 +37,7 @@
         if (this.entity === _class) {
           return 'md-primary md-raised'
         } else {
-          return ''
+          return 'md-raised'
         }
       }
     },

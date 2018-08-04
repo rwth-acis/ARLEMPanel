@@ -23,7 +23,7 @@
       url: function (newVal, oldVal) {
         if (newVal && newVal !== '') {
           axios.get(newVal).then((response) => {
-            this.items = response.data.data
+            this.items = response.data
           })
         }
       }
@@ -32,7 +32,7 @@
       this.value = this.model
       if (this.url && this.url !== '') {
         axios.get(this.url).then((response) => {
-          this.items = response.data.data
+          this.items = response.data
         })
       } else {
         this.items = this.customItems

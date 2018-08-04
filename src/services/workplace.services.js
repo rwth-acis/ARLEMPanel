@@ -3,7 +3,7 @@ import axios from 'axios'
 const workplaceServices = {
   getList (searchObject) {
     return new Promise((resolve) => {
-      axios.get(`workplaces`).then(response => {
+      axios.get(`workplace`).then(response => {
         if (response) {
           resolve(response.data)
         }

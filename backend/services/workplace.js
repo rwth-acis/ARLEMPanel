@@ -1,11 +1,12 @@
 const workplace = require('../models').workplace
 const workplaceResource = require('../models').workplaceResource
+const author = require('../models').author
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
 
 module.exports = (app) => {
   app.get('/api/workplace', validationMiddleware.validate(), (req, res) => {
-    workplace.findAll({ include: [workplaceResource], order: [['id', 'DESC']] }).then((objects) => {
+    workplace.findAll({ include: [workplaceResource, author], order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {
         res.json([])
       } else {

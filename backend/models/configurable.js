@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {})
   configurable.associate = (models) => {
     // associations can be defined here
+    models.configurable.belongsTo(models.author, {foreignKey: 'authorId'})
   }
   return configurable
 }

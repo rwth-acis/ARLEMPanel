@@ -5,12 +5,8 @@
     <h4 class="md-display-1" v-if="!independent" style="margin:15px 0;">Add Place</h4>
     <form novalidate  @submit.prevent="validate">
       <div class="md-layout md-gutter">
-        <input-field label="ID" :cssClass="getValidationClass('id')" :model.sync="form.id" error="Please enter the ID"></input-field>
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
-      </div>
-
-      <div class="md-layout md-gutter">
-        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="triggers?type=detectable&all=true"></input-select>
+        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="trigger/detectable"></input-select>
       </div>
       <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save Place</md-button>
     </form>
@@ -51,13 +47,13 @@
         this.sending = true
         tangibleServices.postPlaceCreate(this.form)
           .then((response) => {
-            this.$store.dispatch('showSnackBar', String(response.data.message))
+            this.$store.dispatch('showSnackBar', 'Place has been created successfully.')
             if (this.independent && this.independent === true) {
               this.$router.push('/tangibles')
             } else {
               this.$store.dispatch('addWorkplaceItem', {
-                'id': response.data.object.id,
-                'name': response.data.object.name,
+                'id': response.object.id,
+                'name': response.object.name,
                 'type': 'place'
               })
             }
@@ -70,7 +66,6 @@
         this.$v.$reset()
         this.form = {
           name: null,
-          id: null,
           detectable: null
         }
       },
@@ -87,7 +82,6 @@
     data: function () {
       return {
         form: {
-          id: '',
           name: '',
           detectable: ''
         },
@@ -98,9 +92,6 @@
 
     validations: {
       form: {
-        id: {
-          required
-        },
         name: {
           required
         },

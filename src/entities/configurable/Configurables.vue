@@ -3,7 +3,7 @@
       <div class="md-layout-item">
         <page-header title="Configurables" description="Configurables are the physical objects present within the workplace. These objects are used / required to complete the activity." buttonText="Create Configurable" buttonUrl="/configurable/create"></page-header>
         <entity-tab entity="Configurables"></entity-tab>
-        <md-table v-model="searched" :md-sort.sync="currentSort" :md-sort-order.sync="currentSortOrder" :md-sort-fn="customSort"  md-card @md-selected="onSelect">
+        <md-table v-model="searched" md-card>
         <md-table-toolbar>
           <div class="md-toolbar-section-start">
             <h1 class="md-title">Configurables</h1>
@@ -25,12 +25,11 @@
             </md-button>
           </div>
         </md-table-toolbar>
-        <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple" md-auto-select>
-          <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+        <md-table-row slot="md-table-row" slot-scope="{ item }">
           <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
           <md-table-cell md-label="Category" md-sort-by="category">{{ item.category }}</md-table-cell>
           <md-table-cell md-label="Author" md-sort-by="author">{{ item.author.name }}</md-table-cell>
-          <md-table-cell md-label="Created" md-sort-by="created">{{ item.created }}</md-table-cell>
+          <md-table-cell md-label="Created" md-sort-by="created">{{ item.createdAt | moment("MMMM Do YYYY")  }}</md-table-cell>
         </md-table-row>
       </md-table>
       </div>
@@ -84,10 +83,8 @@
     },
     created () {
       configurableServices.getList({}).then(response => {
-        for (var key in response.data.data[0]) {
-          console.log(key)
-        }
-        this.searched = response.data.data
+        console.log(response)
+        this.searched = response
       })
     }
   }

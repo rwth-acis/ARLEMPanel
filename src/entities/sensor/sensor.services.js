@@ -3,7 +3,7 @@ import axios from 'axios'
 const sensorServices = {
   getList (searchObject) {
     return new Promise((resolve) => {
-      axios.get(`sensors`).then(response => {
+      axios.get(`sensor`).then(response => {
         if (response) {
           resolve(response.data)
         }
@@ -15,12 +15,12 @@ const sensorServices = {
 
   },
 
-  postCreate (objSensor, listItems) {
+  postCreate (objSensor) {
     return new Promise((resolve) => {
-      axios.post(`sensor/create`, {
-        'id': objSensor.id,
+      axios.post(`sensor`, {
+        'type': objSensor.type,
         'name': objSensor.name,
-        'uri': objSensor.uri,
+        'url': objSensor.uri,
         'username': objSensor.username,
         'password': objSensor.password
       }).then(response => {

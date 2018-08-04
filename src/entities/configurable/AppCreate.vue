@@ -6,8 +6,12 @@
     <form novalidate  @submit.prevent="validate">
       <div class="md-layout md-gutter">
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
+        <input-field label="Type" :cssClass="getValidationClass('type')" :model.sync="form.type" error="Please enter the type"></input-field>
+      </div>
+      <div class="md-layout md-gutter">
         <input-field label="manifest" :cssClass="getValidationClass('manifest')" :model.sync="form.manifest" error="Please enter the Manifest"></input-field>
       </div>
+
       <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save App</md-button>
     </form>
   </div>
@@ -47,7 +51,7 @@
         this.sending = true
         configurableServices.postAppCreate(this.form)
           .then((response) => {
-            this.$store.dispatch('showSnackBar', String(response.data.message))
+            this.$store.dispatch('showSnackBar', 'App has been added successfully.')
             if (this.independent && this.independent === true) {
               this.$router.push('/configurables')
             } else {
@@ -66,6 +70,7 @@
         this.$v.$reset()
         this.form = {
           name: null,
+          type: null,
           manifest: null
         }
       },
@@ -83,6 +88,7 @@
       return {
         form: {
           name: '',
+          type: '',
           manifest: ''
         },
         sending: false,
@@ -92,6 +98,9 @@
 
     validations: {
       form: {
+        type: {
+          required
+        },
         name: {
           required
         },

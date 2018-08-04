@@ -30,14 +30,13 @@
           <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
           <md-table-cell md-label="Author" md-sort-by="author">{{ item.author.name }}</md-table-cell>
           <md-table-cell md-label="Workplace" md-sort-by="workplace">{{ item.workplace.name }}</md-table-cell>
-          <md-table-cell md-label="Created" md-sort-by="created_at">{{ item.created_at }}</md-table-cell>
+          <md-table-cell md-label="Created" md-sort-by="created_at">{{ item.createdAt | moment("MMMM Do YYYY") }}</md-table-cell>
           <md-table-cell md-label="Action">
             <md-icon>edit</md-icon>
-            <md-icon>delete</md-icon>
           </md-table-cell>
         </md-table-row>
       </md-table>
-      </div>      
+      </div>
     </div>
 </template>
 <script>
@@ -83,10 +82,7 @@
     created () {
       document.title = 'Activities @ ARLEM Panel'
       activityServices.getList({}).then(response => {
-        for (var key in response.data.data[0]) {
-          console.log(key)
-        }
-        this.searched = response.data.data
+        this.searched = response
       })
     }
   }

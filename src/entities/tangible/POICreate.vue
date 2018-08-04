@@ -24,7 +24,7 @@
         :md-description="`No point of intrests found. Add a new point of interest in this thing form button on top right.`">
       </md-table-empty-state>
       <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple" md-auto-select>
-        <md-table-cell md-label="X-Offset" md-numeric>{{ item.name }}</md-table-cell>
+        <md-table-cell md-label="Name" md-numeric>{{ item.name }}</md-table-cell>
         <md-table-cell md-label="X-Offset" md-numeric>{{ item.x }}</md-table-cell>
         <md-table-cell md-label="Y-Offset" md-numeric>{{ item.y }}</md-table-cell>
         <md-table-cell md-label="Z-Offset" md-numeric>{{ item.z }}</md-table-cell>

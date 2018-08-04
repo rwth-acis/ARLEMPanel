@@ -3,7 +3,7 @@ import axios from 'axios'
 const configurableServices = {
   getList (searchObject) {
     return new Promise((resolve) => {
-      axios.get(`configurables`).then(response => {
+      axios.get(`configurable`).then(response => {
         if (response) {
           resolve(response.data)
         }
@@ -13,12 +13,13 @@ const configurableServices = {
 
   postAppCreate (objApp) {
     return new Promise((resolve) => {
-      axios.post(`configurable/app/create`, {
+      axios.post(`configurable/app`, {
         'name': objApp.name,
+        'type': objApp.type,
         'manifest': objApp.manifest
       }).then(response => {
         if (response) {
-          resolve(response.data)
+          resolve(response)
         }
       })
     })
@@ -26,12 +27,12 @@ const configurableServices = {
 
   postDeviceCreate (objApp) {
     return new Promise((resolve) => {
-      axios.post(`configurable/device/create`, {
+      axios.post(`configurable/device`, {
         'name': objApp.name,
         'type': objApp.type
       }).then(response => {
         if (response) {
-          resolve(response.data)
+          resolve(response)
         }
       })
     })

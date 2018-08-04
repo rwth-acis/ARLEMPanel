@@ -5,8 +5,8 @@
     <h4 class="md-display-1" v-if="!independent" style="margin:15px 0;">Add Sensor</h4>
     <form novalidate  @submit.prevent="validate">
       <div class="md-layout md-gutter">
-        <input-field label="ID" :cssClass="getValidationClass('id')" :model.sync="form.id" error="Please enter the ID"></input-field>
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
+        <input-field label="Type" :cssClass="getValidationClass('type')" :model.sync="form.type" error="Please enter the type"></input-field>
       </div>
 
       <div class="md-layout md-gutter">
@@ -55,7 +55,7 @@
         this.sending = true
         sensorServices.postCreate(this.form)
           .then((response) => {
-            this.$store.dispatch('showSnackBar', String(response.data.message))
+            this.$store.dispatch('showSnackBar', 'Sensor has been added successfully.')
             if (this.independent && this.independent === true) {
               this.$router.push('/sensors')
             } else {
@@ -74,7 +74,7 @@
         this.$v.$reset()
         this.form = {
           name: null,
-          id: null,
+          type: null,
           uri: null,
           username: null,
           password: null
@@ -93,7 +93,7 @@
     data: function () {
       return {
         form: {
-          id: '',
+          type: '',
           name: '',
           uri: '',
           username: '',
@@ -106,7 +106,7 @@
 
     validations: {
       form: {
-        id: {
+        type: {
           required
         },
         name: {
