@@ -7,7 +7,7 @@
         </md-app-toolbar>
         <md-app-content>
           <router-view></router-view>
-          <div style="padding:60px">&nbsp;</div>
+          <div>&nbsp;</div>
         </md-app-content>
       </md-app>
     </template>

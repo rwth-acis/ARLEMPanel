@@ -38,6 +38,7 @@
           </md-table-cell>
         </md-table-row>
       </md-table>
+        <div style="clear: both;padding: 50px">&nbsp;</div>
       </div>
     </div>
 </template>

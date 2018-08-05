@@ -6,10 +6,10 @@
     <form novalidate  @submit.prevent="validateUser">
       <div class="md-layout md-gutter">
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
-        <input-select label="Category" :cssClass="getValidationClass('category')" :model.sync="form.category" error="Please choose a detectable" :customItems="categories"></input-select>
+        <!-- <input-select label="Category" :cssClass="getValidationClass('category')" :model.sync="form.category" error="Please choose a detectable" :customItems="categories"></input-select> -->
       </div>
       <md-progress-bar md-mode="indeterminate" v-if="sending" />
-      <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">{{ buttonText }}</md-button>
+      <md-button  v-if="buttonVisible" type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Start Adding Items</md-button>
     </form>
   </div>
 </template>
@@ -39,7 +39,7 @@
       },
 
       save: function () {
-        this.buttonText = 'Update'
+        this.buttonVisible = false
         this.$emit('saved', this.form)
       },
 
@@ -68,7 +68,7 @@
         },
         sending: false,
         categories: [],
-        buttonText: 'Start Adding Items'
+        buttonVisible: true
       }
     },
 
@@ -76,10 +76,11 @@
       form: {
         name: {
           required
-        },
-        category: {
-          required
         }
+        // Removeing category
+        /* category: {
+          required
+        } */
       }
     },
 

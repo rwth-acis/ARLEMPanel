@@ -1,8 +1,8 @@
 <template>
   <div>
     <template v-for='tab in tabs'>
-      <h4 v-if="tab.icon == '' && display == 'all'">{{ tab.text }}</h4>
-      <tile v-if="tab.icon != '' && (display == 'all' || display == tab.category)" :icon="tab.icon" :text="tab.text" :extraClass="activeTabClass(tab.component)" v-on:click.native="changeTab(tab.component)"></tile>
+      <h4 v-if="tab.icon == '' && display == 'all'" :key="tab.text">{{ tab.text }}</h4>
+      <tile v-if="tab.icon != '' && (display == 'all' || display == tab.category)" :icon="tab.icon" :text="tab.text" :key="tab.text" :extraClass="activeTabClass(tab.component)" v-on:click.native="changeTab(tab.component)"></tile>
     </template>
   </div>
 </template>

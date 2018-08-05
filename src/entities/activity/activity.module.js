@@ -79,6 +79,10 @@ const actions = {
 
   removeOperation (context, index) {
     context.commit('removeOperation', index)
+  },
+
+  saveBasics (context, basics) {
+    context.commit('saveBasics', basics)
   }
 }
 
@@ -133,6 +137,13 @@ const mutations = {
 
   removeOperation (state, index) {
     state.actions[state.currentAction].triggers[state.currentTrigger].operations.splice(index, 1)
+  },
+
+  saveBasics (state, basics) {
+    state.basics.name = basics.name
+    state.basics.workplace = basics.workplace
+    state.basics.language = basics.language
+    state.basics.description = basics.description
   }
 }
 

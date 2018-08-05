@@ -22,6 +22,9 @@ const actions = {
   },
   removeWorkplaceItem (context, index) {
     context.commit('removeItem', index)
+  },
+  cleanWorkplaceItems (context) {
+    context.commit('cleanItems')
   }
 }
 
@@ -33,6 +36,10 @@ const mutations = {
 
   removeItem (state, index) {
     state.items.splice(index, 1)
+  },
+
+  cleanItems (state, index) {
+    state.items = []
   }
 }
 

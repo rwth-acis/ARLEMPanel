@@ -27,7 +27,7 @@
   import InputField from 'components/InputField.vue'
   import InputSelect from 'components/InputSelect.vue'
   import { required } from 'vuelidate/lib/validators'
-  import configurableServices from './trigger.services'
+  import triggerServices from './trigger.services'
   export default {
     mixins: [validationMixin],
     props: ['independent'],
@@ -54,15 +54,15 @@
 
       save: function () {
         this.sending = true
-        configurableServices.postPredicateCreate(this.form, 'predicate')
+        triggerServices.postPredicateCreate(this.form, 'predicate')
           .then((response) => {
             this.$store.dispatch('showSnackBar', 'Predicate has been added successfully.')
             if (this.independent && this.independent === true) {
               this.$router.push('/triggers')
             } else {
               this.$store.dispatch('addWorkplaceItem', {
-                'id': response.data.object.id,
-                'name': response.data.object.name,
+                'id': response.id,
+                'name': response.name,
                 'type': 'predicate'
               })
             }

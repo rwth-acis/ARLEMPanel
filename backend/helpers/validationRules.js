@@ -94,7 +94,7 @@ module.exports = {
         operation: Joi.string().allow(null),
         entityType: Joi.string().allow(null),
         entityId: Joi.number().integer().allow(null),
-        poi: Joi.number().integer().allow(null),
+        poi: Joi.string().allow(null),
         viewportId: Joi.number().integer().allow(null),
         primitiveId: Joi.number().integer().allow(null),
         option: Joi.string().allow(null)

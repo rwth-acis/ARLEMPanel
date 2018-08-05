@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="md-layout md-gutter">
+      <div class="md-layout-item md-size-50">
+          <input-select label="Remove Self" :model.sync="form.removeSelf" :customItems="yesno"></input-select>
+      </div>
+    </div>
+
     <md-table v-model="currentOperations" md-card>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
@@ -10,35 +16,42 @@
       </md-table-toolbar>
       <md-table-empty-state md-label="No Operations added"></md-table-empty-state>
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="Operation">{{ item.action == 'y' ? 'Activate' : 'Deactivate' }}</md-table-cell>
-        <md-table-cell md-label="Type">{{ item.type }}</md-table-cell>
-        <md-table-cell md-label="Entity">{{ item.entity }}</md-table-cell>
-        <md-table-cell md-label="Predicate">{{ item.predicate }}</md-table-cell>
+        <md-table-cell md-label="Operation">{{ item.operation == 'activate' ? 'Activate' : 'Deactivate' }}</md-table-cell>
+        <md-table-cell md-label="Type">{{ item.entityType }}</md-table-cell>
+        <md-table-cell md-label="Entity">{{ item.entityId }}</md-table-cell>
+        <md-table-cell md-label="Predicate">{{ item.primitiveId }}</md-table-cell>
         <md-table-cell md-label="Action" v-on:click.native="removeOperation">
           <md-icon>delete</md-icon>
         </md-table-cell>
       </md-table-row>
-    </md-table>  
+    </md-table>
     <md-dialog :md-active.sync="showAddModal">
       <md-dialog-title>Preferences</md-dialog-title>
-      <md-dialog-content> 
+      <md-dialog-content>
         <form novalidate  @submit.prevent="validateUser">
           <div class="md-layout md-gutter">
-            <input-select label="Activate / Deactivate" :cssClass="getValidationClass('action')" :model.sync="form.action" :customItems="activateDeactivate"></input-select>
-            <input-select label="Type" :cssClass="getValidationClass('type')" :model.sync="form.type" :customItems="operationType"></input-select>
+            <input-select label="Activate / Deactivate" :cssClass="getValidationClass('operation')" :model.sync="form.operation" :customItems="activateDeactivate"></input-select>
+            <input-select label="Type" :cssClass="getValidationClass('entityType')" :model.sync="form.entityType" :customItems="operationType"></input-select>
           </div>
-          <div :class="'md-layout md-gutter' + (form.type !== null && form.type !== '' && form.type !== 'action' ? '' : ' hidden')">
-            <input-select label="Entity" :cssClass="getValidationClass('entity')" :model.sync="form.entity" :url="entitySelectUrl"></input-select>
-            <input-select label="Predicate" :cssClass="getValidationClass('predicate')" :model.sync="form.predicate" :customItems="operationType"></input-select>
-          </div>
-          <div :class="'md-layout md-gutter' + (form.type !== null && form.type !== '' && form.type !== 'action' ? '' : ' hidden')">
-            <input-select label="POI" :cssClass="getValidationClass('poi')" :model.sync="form.poi" :customItems="activateDeactivate"></input-select>
-            <input-field label="Options" :cssClass="getValidationClass('option')" :model.sync="form.option"></input-field>
-          </div>
-          <div :class="'md-layout md-gutter' + (form.type === 'action' ? '' : ' hidden')">
-            <input-select label="Action" :cssClass="getValidationClass('entity')" :model.sync="form.action" url="action/select"></input-select>
-            <input-field label="Viewport" :cssClass="getValidationClass('viewport')" :model.sync="form.viewport"></input-field>
-          </div>
+          <teplate v-if="form.entityType === 'Person' || form.entityType === 'Place' || form.entityType === 'Thing'">
+            <div class="md-layout md-gutter">
+              <input-select label="Entity" :cssClass="getValidationClass('entityId')" :model.sync="form.entityId" :url="entitySelectUrl"></input-select>
+              <input-select label="Viewport" :cssClass="getValidationClass('viewportId')" :model.sync="form.viewportId" url="viewport"></input-select>
+            </div>
+            <div class="md-layout md-gutter">
+              <input-select label="Predicate" :cssClass="getValidationClass('primitiveId')" :model.sync="form.primitiveId" url="trigger/primitive"></input-select>
+              <input-field label="POI" :cssClass="getValidationClass('poi')" :model.sync="form.poi"></input-field>
+            </div>
+            <div class="md-layout md-gutter">
+              <input-field label="Options" :cssClass="getValidationClass('option')" :model.sync="form.option"></input-field>
+            </div>
+          </teplate>
+          <teplate v-if="form.entityType === 'Action'">
+            <div class="md-layout md-gutter">
+              <input-select label="Entity" :cssClass="getValidationClass('entityId')" :model.sync="form.entityId" :customItems="actions"></input-select>
+              <input-select label="Viewport" :cssClass="getValidationClass('viewport')" :model.sync="form.viewport" url="viewport"></input-select>
+            </div>
+          </teplate>
           <md-progress-bar md-mode="indeterminate" v-if="sending" />
         </form>
       </md-dialog-content>
@@ -62,10 +75,11 @@
       'input-field': InputField,
       'input-select': InputSelect
     },
+    props: ['mode', 'remove'],
     computed: {
-      ...mapGetters(['currentOperations']),
+      ...mapGetters(['currentOperations', 'actions']),
       entitySelectUrl () {
-        return 'tangible/' + this.form.type + '/select'
+        return 'entity/' + this.form.entityType
       }
     },
     methods: {
@@ -111,13 +125,15 @@
       clearForm () {
         this.$v.$reset()
         this.form = {
-          action: null,
-          type: null,
-          entity: null,
-          predicate: null,
+          mode: this.mode,
+          removeSelf: null,
+          operation: null,
+          entityType: null,
+          entityId: null,
+          primitiveId: null,
           poi: null,
-          options: null,
-          viewport: null
+          option: null,
+          viewportId: null
         }
       }
     },
@@ -126,22 +142,28 @@
       return {
         showAddModal: false,
         form: {
-          action: null,
-          type: null,
-          entity: null,
-          predicate: null,
+          mode: this.mode,
+          removeSelf: null,
+          operation: null,
+          entityType: null,
+          entityId: null,
+          primitiveId: null,
           poi: null,
-          options: null,
-          viewport: null
+          option: null,
+          viewportId: null
         },
+        yesno: [
+          {id: 0, 'name': 'No'},
+          {id: 1, 'name': 'Yes'}
+        ],
         activateDeactivate: [
           {id: 'n', name: 'Deactivate'},
           {id: 'y', name: 'Activate'}
         ],
         operationType: [
-          {id: 'place', name: 'Place'},
-          {id: 'person', name: 'Person'},
           {id: 'thing', name: 'Thing'},
+          {id: 'person', name: 'Person'},
+          {id: 'place', name: 'Place'},
           {id: 'action', name: 'Action'}
         ],
         sending: false
@@ -150,10 +172,10 @@
 
     validations: {
       form: {
-        action: {
+        operation: {
           required
         },
-        type: {
+        entityType: {
           required
         }
       }

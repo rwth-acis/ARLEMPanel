@@ -5,12 +5,12 @@
     <h4 class="md-display-1" v-if="!independent" style="margin:15px 0;">Basic Details</h4>
     <form novalidate  @submit.prevent="validateUser">
       <div class="md-layout md-gutter">
-        <input-field label="Name" :model.sync="basics.name" error="Please enter the name"></input-field>
-        <input-select label="Workplace" :model.sync="basics.workplace" error="Please choose a workplace" url="workplace/select"></input-select>
-        <input-select label="Language" :model.sync="basics.language" error="Please choose a language" :customItems="languages"></input-select>
+        <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
+        <input-select label="Workplace" :cssClass="getValidationClass('workplace')" :model.sync="form.workplace" error="Please choose a workplace" url="workplace"></input-select>
+        <input-select label="Language" :cssClass="getValidationClass('language')" :model.sync="form.language" error="Please choose a language" :customItems="languages"></input-select>
       </div>
       <div class="md-layout md-gutter">
-        <input-area label="Description" :model.sync="basics.description" error="Please enter a valid Description"></input-area>
+        <input-area label="Description" :cssClass="getValidationClass('description')" :model.sync="form.description" error="Please enter a valid Description"></input-area>
       </div>
       <md-progress-bar md-mode="indeterminate" v-if="sending" />
       <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">{{ buttonText }}</md-button>
@@ -51,8 +51,9 @@
       },
 
       save: function () {
+        this.$store.dispatch('saveBasics', this.form)
         this.buttonText = 'Update'
-        this.$emit('saved', this.form)
+        this.$emit('saved')
       },
 
       clearForm () {
@@ -99,18 +100,14 @@
         },
         workplace: {
           required
+        },
+        language: {
+          required
+        },
+        description: {
+          required
         }
       }
-    },
-
-    created () {
-      this.categories = [
-        {id: 1, 'name': 'Category One'},
-        {id: 2, 'name': 'Category Two'},
-        {id: 3, 'name': 'Category Three'},
-        {id: 4, 'name': 'Category Four'}
-      ]
     }
-
   }
 </script>

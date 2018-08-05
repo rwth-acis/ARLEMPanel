@@ -1,7 +1,7 @@
 <template>
   <!-- Entity Create -->
   <div class="md-layout md-gutter main-screen">
-    <div class="md-layout-item md-size-20">
+    <div class="md-layout-item md-size-20" style="position: relative; height: 100%; overflow-y: auto;padding-bottom: 60px;">
       <tabs :component="tab" :display="display" @changeTab="tabChange"></tabs>
     </div>
     <div class="md-layout-item md-size-50">
@@ -18,7 +18,7 @@
     </div>
     <div class="md-layout-item md-size-30 selected-entities">
       <h2 class="md-display-1">Added Entities</h2>
-        
+
         <md-autocomplete md-layout="box" v-model="value" :md-options="countries" @md-changed="getCountries" @md-opened="getCountries" @md-selected="addWorkplaceItem">
           <label>Search Entities</label>
           <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item.name }}<br /><small>{{ item.type }}</small></template>
@@ -102,8 +102,8 @@
         this.countries = []
         if (searchTerm && searchTerm !== '') {
           workplaceServices.getEntityList(searchTerm).then(response => {
-            if (response.data.total && response.data.total > 0) {
-              this.countries = response.data.data
+            if (response.length && response.length > 0) {
+              this.countries = response
             }
           })
         }
@@ -124,8 +124,10 @@
           items: this.items
         })
           .then((response) => {
-            this.$store.dispatch('showSnackBar', String(response.data.message))
+            this.$store.dispatch('showSnackBar', String('Workplace has added created successfully.'))
             this.$router.push('/workplaces')
+            this.items = []
+            this.$store.dispatch('cleanWorkplaceItems')
           })
       },
       savedWorkplace: function (_entity) {

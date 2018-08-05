@@ -1,16 +1,7 @@
 <template>
   <!-- Tangible Person Create -->
   <div>
-    <form novalidate  @submit.prevent="validateUser">
-      <operations></operations>
-      <div class="md-layout md-gutter">
-        <input-select label="Remove Self" :model.sync="actions[currentAction].triggers[currentTrigger].remove" :customItems="yesno"></input-select>
-        <input-field label="Instruction Title" :model.sync="actions[currentAction].triggers[currentTrigger].title" error="Please enter a valid Instruction Title"></input-field>
-      </div>
-      <div class="md-layout md-gutter">
-        <input-area label="Instruction Details" :model.sync="actions[currentAction].triggers[currentTrigger].details" error="Please enter a valid Instruction Details"></input-area>
-      </div>
-    </form>
+    <operations mode="exit"></operations>
   </div>
 </template>
 <script>
@@ -24,24 +15,27 @@
     props: [
       'independent'
     ],
+
     computed: {
       ...mapGetters(['actions', 'currentAction', 'currentTrigger'])
     },
+
     components: {
       'input-area': InputArea,
       'input-field': InputField,
       'input-select': InputSelect,
       'operations': Operations
     },
+
     data: function () {
       return {
+        removeSelf: 0,
         yesno: [
           {id: 0, 'name': 'No'},
           {id: 1, 'name': 'Yes'}
         ]
       }
     }
-
   }
 </script>
 <style lang="scss" scoped>

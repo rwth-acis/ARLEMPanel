@@ -6,16 +6,17 @@
       <h3 style="margin:15px 0;text-align: center">Activity Actions</h3>
         <div class="tile-cover" v-for="(action, index) in actions" :key="index">
           <i class="material-icons close" @click="removeAction(index)">close</i>
-          <tile class="tile"  :text="action.id ? action.id : 'Unnamed'" :extraClass="currentAction === index ? 'md-primary' : action.isValid === false ? 'md-danger' : ''" v-on:click.native="switchAction(index)" showClose="removeAction"></tile>
+          <tile class="tile"  :text="action.name ? action.name : 'Unnamed'" :extraClass="currentAction === index && component !== 'activity-basic'  ? ' md-primary' : action.isValid === false ? 'md-danger' : ''" v-on:click.native="switchAction(index)" showClose="removeAction"></tile>
         </div>
       <tile class="tile" text="Add Action" icon="add" v-on:click.native="addAction()"></tile>
     </div>
     <div class="md-layout-item md-size-70">
       <h1 class="md-display-3" style="margin:15px 0;">Create Activity</h1>
-      <keep-alive><component :is="component"></component></keep-alive>
-      <div style="text-align:center">
+      <keep-alive><component :is="component" @saved="saveActivityBasics"></component></keep-alive>
+      <div style="text-align:center" v-if="component !== 'activity-basic'">
         <md-button class="md-raised md-primary" @click="saveActivity(basics, actions)" style="width:250px;height:50px;">Save Activity</md-button>
       </div>
+      <div style="clear: both;padding: 50px">&nbsp;</div>
     </div>
   </div>
 </template>
@@ -26,7 +27,7 @@
   import ActivityBasic from './ActivityCreateBasic.vue'
   import ActionCreate from 'entities/action/ActionCreate.vue'
   import activityServices from './activity.services'
-  
+
   export default {
     components: {
       'tile': Tile,
@@ -51,8 +52,10 @@
     methods: {
       activeTabClass (index) {
         if (index === -1) {
+          console.log(index)
           return this.component === 'activity-basic' ? 'md-primary' : ''
         } else {
+          console.log(this.currentAction)
           return this.currentAction === index ? 'md-primary' : ''
         }
       },
@@ -61,12 +64,19 @@
         this.component = 'activity-basic'
       },
 
+      saveActivityBasics () {
+        if (this.actions.length > 0) {
+          this.switchAction(0)
+        } else {
+          this.addAction()
+        }
+      },
+
       addAction () {
         this.component = 'action-create'
         this.$store.dispatch('addAction', {
-          id: '',
           name: '',
-          remove: '',
+          type: 'action',
           instructionTitle: '',
           instructionDescription: '',
           viewport: 0,
@@ -92,10 +102,14 @@
 
       switchAction (index) {
         this.$store.dispatch('switchAction', index)
+        this.component = 'action-create'
       },
 
       removeAction (index) {
         this.$store.dispatch('removeAction', index)
+        if (this.actions.length === 0) {
+          this.component = 'activity-basic'
+        }
       },
 
       activeActionClass (index) {
@@ -103,10 +117,30 @@
       },
 
       saveActivity (_basics, _actions) {
-        _basics.actions = _actions
+        var actions = []
+        for (var i = 0; i < _actions.length; i++) {
+          var triggers = []
+          for (var j = 0; j < _actions[i].triggers.length; j++) {
+            if (_actions[i].triggers[j].operations.length > 0) {
+              for (var k = 0; k < _actions[i].triggers[j].operations.length; k++) {
+                triggers.push(_actions[i].triggers[j].operations[k])
+              }
+            }
+          }
+          actions.push({
+            name: _actions[i].name,
+            type: 'action',
+            viewport: _actions[i].viewport,
+            instructionTitle: _actions[i].viewport,
+            instructionDescription: _actions[i].viewport,
+            triggers: triggers
+          })
+        }
+        _basics.actions = actions
+        console.log(JSON.stringify(actions))
         activityServices.post(_basics)
           .then((response) => {
-            this.$store.dispatch('showSnackBar', String(response.data.message))
+            this.$store.dispatch('showSnackBar', String('Activity has been added successfully.'))
             this.$router.push('/activites')
           })
       }

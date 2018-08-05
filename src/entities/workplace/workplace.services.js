@@ -20,7 +20,6 @@ const workplaceServices = {
     return new Promise((resolve) => {
       axios.post(`workplace`, {
         'name': objWorkplace.name,
-        'category': objWorkplace.category,
         'items': objWorkplace.items
       }).then(response => {
         if (response) {
@@ -40,7 +39,7 @@ const workplaceServices = {
 
   getEntityList (term) {
     return new Promise((resolve) => {
-      axios.get(`entities`, {
+      axios.get(`entity`, {
         params: {
           'term': term
         }

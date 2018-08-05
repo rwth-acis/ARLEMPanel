@@ -5,20 +5,7 @@
       <div class="md-layout md-gutter">
         <input-select label="Mode" :model.sync="actions[currentAction].triggers[currentTrigger].mode" url="action/trigger/mode/select"></input-select>
       </div>
-      <div class="md-layout md-gutter">
-        <input-select v-if="actions[currentAction].triggers[currentTrigger].mode == '3'" label="Action" :model.sync="actions[currentAction].triggers[currentTrigger].entity" url="action/select"></input-select>
-        <input-select v-if="actions[currentAction].triggers[currentTrigger].mode == '3'" label="Viewport" :model.sync="actions[currentAction].triggers[currentTrigger].viewport"  url="viewport/select"></input-select>
-      </div>
-      <div class="md-layout md-gutter">
-        <input-select v-if="actions[currentAction].triggers[currentTrigger].mode == '4'" label="Type" :model.sync="actions[currentAction].triggers[currentTrigger].type" :customItems="operationType"></input-select>
-        <input-field  v-if="actions[currentAction].triggers[currentTrigger].mode == '4'" label="Options" :model.sync="actions[currentAction].triggers[currentTrigger].options"></input-field>
-        <input-select v-if="actions[currentAction].triggers[currentTrigger].mode == '4'" label="Entity" :model.sync="actions[currentAction].triggers[currentTrigger].entity" :url="'/tangible/' + actions[currentAction].triggers[currentTrigger].type + '/select'"></input-select>
-      </div>
-      <div class="md-layout md-gutter">
-        <input-select v-if="actions[currentAction].triggers[currentTrigger].mode == '5'" label="Sensor" :model.sync="actions[currentAction].triggers[currentTrigger].entity" :url="'sensor/select'"></input-select>
-        <input-field  v-if="actions[currentAction].triggers[currentTrigger].mode == '5'" label="Options" :model.sync="actions[currentAction].triggers[currentTrigger].options"></input-field>
-      </div>
-      <operations></operations>
+      <operations :mode="actions[currentAction].triggers[currentTrigger].mode"></operations>
     </form>
   </div>
 </template>

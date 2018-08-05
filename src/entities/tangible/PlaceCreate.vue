@@ -52,8 +52,8 @@
               this.$router.push('/tangibles')
             } else {
               this.$store.dispatch('addWorkplaceItem', {
-                'id': response.object.id,
-                'name': response.object.name,
+                'id': response.id,
+                'name': response.name,
                 'type': 'place'
               })
             }

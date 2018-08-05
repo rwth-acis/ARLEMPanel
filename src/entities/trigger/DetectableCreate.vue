@@ -56,8 +56,8 @@
               this.$router.push('/triggers')
             } else {
               this.$store.dispatch('addWorkplaceItem', {
-                'id': response.data.object.id,
-                'name': response.data.object.name,
+                'id': response.id,
+                'name': response.name,
                 'type': 'predicate'
               })
             }

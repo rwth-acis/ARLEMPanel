@@ -4,15 +4,12 @@
     <h3 class="md-display-1" style="margin:15px 0;">Create Action</h3>
     <form novalidate>
       <div class="md-layout md-gutter">
-          <input-field label="ID" :model.sync="actions[currentAction].id" error="Please enter a valid ID"></input-field>
           <input-field label="Name" :model.sync="actions[currentAction].name" error="Please enter the name"></input-field>
-      </div>       
+          <input-select label="View Port" :model.sync="actions[currentAction].viewport" error="Please choose a workplace" url="viewport"></input-select>
+      </div>
       <div class="md-layout md-gutter">
-          <input-select label="View Port" :model.sync="actions[currentAction].viewport" error="Please choose a workplace" url="viewport/select"></input-select>
-          <input-field label="Instruction Title" :model.sync="actions[currentAction].instructionTitle" error="Please enter a valid Instruction Title"></input-field>
-      </div>       
-      <div class="md-layout md-gutter">
-        <input-area label="Instruction Details" :model.sync="actions[currentAction].instructionDescription" error="Please enter a valid Instruction Details"></input-area>
+        <input-field label="Instruction Title" :model.sync="actions[currentAction].instructionTitle" error="Please enter a valid Instruction Title"></input-field>
+        <input-field label="Instruction Details" :model.sync="actions[currentAction].instructionDescription" error="Please enter a valid Instruction Details"></input-field>
       </div>
       <div>
         <div class="tile-cover" v-for="(tab, index) in actions[currentAction].triggers" :key="index">
@@ -26,7 +23,7 @@
         <template v-if="component !== ''">
           <keep-alive><component :is="component"></component></keep-alive>
         </template>
-      </div>       
+      </div>
     </form>
   </div>
 </template>

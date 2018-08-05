@@ -1,10 +1,52 @@
 const workplace = require('../models').workplace
+const entity = require('../models').entity
+const viewport = require('../models').viewport
 const workplaceResource = require('../models').workplaceResource
 const author = require('../models').author
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
 
 module.exports = (app) => {
+  app.get('/api/entity', validationMiddleware.validate(), (req, res) => {
+    if (req.params.term === '') {
+      entity.findAll({ order: [['id', 'DESC']] }).then((objects) => {
+        if (objects === null) {
+          res.json([])
+        } else {
+          res.json(objects)
+        }
+      })
+    } else {
+      entity.findAll({ order: [['id', 'DESC']] }).then((objects) => {
+        if (objects === null) {
+          res.json([])
+        } else {
+          res.json(objects)
+        }
+      })
+    }
+  })
+
+  app.get('/api/entity/:type', validationMiddleware.validate(), (req, res) => {
+    entity.findAll({ where: {type: req.params.type}, order: [['id', 'DESC']] }).then((objects) => {
+      if (objects === null) {
+        res.json([])
+      } else {
+        res.json(objects)
+      }
+    })
+  })
+
+  app.get('/api/viewport', validationMiddleware.validate(), (req, res) => {
+    viewport.findAll({ order: [['id', 'DESC']] }).then((objects) => {
+      if (objects === null) {
+        res.json([])
+      } else {
+        res.json(objects)
+      }
+    })
+  })
+
   app.get('/api/workplace', validationMiddleware.validate(), (req, res) => {
     workplace.findAll({ include: [workplaceResource, author], order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {

@@ -13,13 +13,27 @@ const triggerServices = {
 
   postPredicateCreate (objTrigger, category) {
     return new Promise((resolve) => {
-      axios.post(`trigger/predicate`, {
+      axios.post(`trigger/primitive`, {
         'name': objTrigger.name,
         'type': objTrigger.type,
         'size': objTrigger.size,
         'url': objTrigger.url,
         'option': objTrigger.option,
         'symbol': objTrigger.symbol,
+        'category': category
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
+  postPredicateOtherCreate (objTrigger, category) {
+    return new Promise((resolve) => {
+      axios.post(`trigger/primitive`, {
+        'name': objTrigger.name,
+        'type': objTrigger.type,
         'category': category
       }).then(response => {
         if (response) {

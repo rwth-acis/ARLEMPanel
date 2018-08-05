@@ -45,15 +45,15 @@
 
       save: function () {
         this.sending = true
-        configurableServices.postPredicateCreate(this.form, 'hazard')
+        configurableServices.postPredicateOtherCreate(this.form, 'hazard')
           .then((response) => {
             this.$store.dispatch('showSnackBar', 'Hazard has been added successfully.')
             if (this.independent && this.independent === true) {
               this.$router.push('/triggers')
             } else {
               this.$store.dispatch('addWorkplaceItem', {
-                'id': response.data.object.id,
-                'name': response.data.object.name,
+                'id': response.id,
+                'name': response.name,
                 'type': 'hazard'
               })
             }

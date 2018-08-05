@@ -32,6 +32,7 @@
           <md-table-cell md-label="Created" md-sort-by="created">{{ item.createdAt | moment("MMMM Do YYYY")  }}</md-table-cell>
         </md-table-row>
       </md-table>
+        <div style="clear: both;padding: 50px">&nbsp;</div>
       </div>
     </div>
 </template>
@@ -93,4 +94,5 @@
   .md-field {
     max-width: 900px;
   }
+
 </style>
