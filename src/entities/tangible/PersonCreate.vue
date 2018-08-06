@@ -11,7 +11,7 @@
       </div>
       <div class="md-layout md-gutter">
         <input-field label="Email" type="email" :cssClass="getValidationClass('mbox')" :model.sync="form.mbox" error="Please enter a valid email"></input-field>
-        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="trigger/detectable"></input-select>
+        <input-select label="Detectable" :cssClass="getValidationClass('detectableId')" :model.sync="form.detectableId" error="Please choose a detectable" url="trigger/detectable"></input-select>
       </div>
       <div class="md-layout md-gutter">
         <input-field label="Persona" :cssClass="getValidationClass('persona')" :model.sync="form.persona" error="Please enter a valid persona"></input-field>
@@ -24,7 +24,6 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import tangibleServices from './tangible.services'
-  import triggerServices from '../trigger/trigger.services'
   import InputField from 'components/InputField.vue'
   import InputSelect from 'components/InputSelect.vue'
   // import workplaceModule from 'entities/workplace/workplace.module'
@@ -36,9 +35,7 @@
   } from 'vuelidate/lib/validators'
 
   export default {
-    props: [
-      'independent'
-    ],
+    props: ['independent'],
     components: {
       'input-field': InputField,
       'input-select': InputSelect
@@ -56,21 +53,29 @@
 
       savePerson: function () {
         this.sending = true
-        tangibleServices.postPersonCreate(this.form)
-          .then((response) => {
-            this.$store.dispatch('showSnackBar', 'Person has been created successfully.')
-            if (this.independent && this.independent === true) {
+        if (this.form.id > 0) {
+          tangibleServices.putPersonUpdate(this.form)
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Person has been updated successfully.')
               this.$router.push('/tangibles')
-            } else {
-              this.$store.dispatch('addWorkplaceItem', {
-                'id': response.id,
-                'name': response.name,
-                'type': 'person'
-              })
-            }
-            this.sending = false
-            this.clearForm()
-          })
+            })
+        } else {
+          tangibleServices.postPersonCreate(this.form)
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Person has been created successfully.')
+              if (this.independent && this.independent === true) {
+                this.$router.push('/tangibles')
+              } else {
+                this.$store.dispatch('addWorkplaceItem', {
+                  'id': response.id,
+                  'name': response.name,
+                  'type': 'person'
+                })
+              }
+              this.sending = false
+              this.clearForm()
+            })
+        }
       },
 
       clearForm () {
@@ -80,7 +85,7 @@
           twitter: null,
           persona: null,
           mbox: null,
-          detectable: null
+          detectableId: null
         }
       },
 
@@ -100,7 +105,7 @@
           twitter: '',
           persona: '',
           mbox: '',
-          detectable: ''
+          detectableId: ''
         },
         sending: false,
         detectables: []
@@ -115,7 +120,7 @@
         twitter: {
           required
         },
-        detectable: {
+        detectableId: {
           required
         },
         mbox: {
@@ -126,11 +131,12 @@
     },
 
     created () {
-      triggerServices.getList({'type': 'detectable'}).then(response => {
-        this.detectables = response
-      })
+      if (this.$route.params.id > 0) {
+        tangibleServices.get('person', this.$route.params.id).then(response => {
+          this.form = response
+        })
+      }
     }
-
   }
 </script>
 <style lang="scss" scoped>

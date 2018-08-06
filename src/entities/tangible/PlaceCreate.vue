@@ -6,7 +6,7 @@
     <form novalidate  @submit.prevent="validate">
       <div class="md-layout md-gutter">
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
-        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="trigger/detectable"></input-select>
+        <input-select label="Detectable" :cssClass="getValidationClass('detectableId')" :model.sync="form.detectableId" error="Please choose a detectable" url="trigger/detectable"></input-select>
       </div>
       <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save Place</md-button>
     </form>
@@ -27,8 +27,12 @@
       'input-select': InputSelect
     },
 
-    mounted () {
-      console.log('Workplace Create Mounted')
+    created () {
+      if (this.$route.params.id > 0) {
+        tangibleServices.get('place', this.$route.params.id).then(response => {
+          this.form = response
+        })
+      }
     },
 
     methods: {
@@ -45,28 +49,36 @@
 
       save: function () {
         this.sending = true
-        tangibleServices.postPlaceCreate(this.form)
-          .then((response) => {
-            this.$store.dispatch('showSnackBar', 'Place has been created successfully.')
-            if (this.independent && this.independent === true) {
+        if (this.form.id > 0) {
+          tangibleServices.putPlaceUpdate(this.form)
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Place has been updated successfully.')
               this.$router.push('/tangibles')
-            } else {
-              this.$store.dispatch('addWorkplaceItem', {
-                'id': response.id,
-                'name': response.name,
-                'type': 'place'
-              })
-            }
-            this.sending = false
-            this.clearForm()
-          })
+            })
+        } else {
+          tangibleServices.postPlaceCreate(this.form)
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Place has been created successfully.')
+              if (this.independent && this.independent === true) {
+                this.$router.push('/tangibles')
+              } else {
+                this.$store.dispatch('addWorkplaceItem', {
+                  'id': response.id,
+                  'name': response.name,
+                  'type': 'place'
+                })
+              }
+              this.sending = false
+              this.clearForm()
+            })
+        }
       },
 
       clearForm () {
         this.$v.$reset()
         this.form = {
           name: null,
-          detectable: null
+          detectableId: null
         }
       },
 
@@ -83,7 +95,7 @@
       return {
         form: {
           name: '',
-          detectable: ''
+          detectableId: ''
         },
         sending: false,
         showDialog: false
@@ -95,7 +107,7 @@
         name: {
           required
         },
-        detectable: {
+        detectableId: {
           required
         }
       }

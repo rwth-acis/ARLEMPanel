@@ -17,20 +17,11 @@
               :md-description="`No workplace found for this '${search}' query. Try a different search term or create a new Workplace.`">
             <md-button class="md-primary md-raised" @click="newLink">Create New Workplace</md-button>
           </md-table-empty-state>
-          <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
-            <div class="md-toolbar-section-start">{{ getAlternateLabel(count) }}</div>
-            <div class="md-toolbar-section-end">
-              <md-button class="md-icon-button">
-                <md-icon>delete</md-icon>
-              </md-button>
-            </div>
-          </md-table-toolbar>
           <md-table-row slot="md-table-row" slot-scope="{ item }">
             <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
             <md-table-cell md-label="Author" md-sort-by="author">{{ item.author.name }}</md-table-cell>
             <md-table-cell md-label="Created" md-sort-by="created_at">{{ item.createdAt | moment("MMMM Do YYYY") }}</md-table-cell>
             <md-table-cell md-label="Action">
-              <md-icon>edit</md-icon>
               <template v-if="user == item.author.id">
                 <md-button @click="deleteOperation(item.id)" class="md-icon-button md-raised">
                   <md-icon>delete</md-icon>

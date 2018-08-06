@@ -10,13 +10,13 @@
       </div>
 
       <div class="md-layout md-gutter">
-        <input-field label="URI" :cssClass="getValidationClass('uri')" :model.sync="form.uri" error="Please enter the access URI"></input-field>
+        <input-field label="URI" :cssClass="getValidationClass('url')" :model.sync="form.url" error="Please enter the access URI"></input-field>
       </div>
       <div class="md-layout md-gutter">
         <input-field label="Username" :cssClass="getValidationClass('username')" :model.sync="form.username"></input-field>
         <input-field label="Password" :cssClass="getValidationClass('password')" :model.sync="form.password"></input-field>
       </div>
-      <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save Place</md-button>
+      <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save Sensor</md-button>
     </form>
   </div>
 </template>
@@ -35,8 +35,12 @@
       'input-select': InputSelect
     },
 
-    mounted () {
-      console.log('Workplace Create Mounted')
+    created () {
+      if (this.$route.params.id > 0) {
+        sensorServices.get(this.$route.params.id).then(response => {
+          this.form = response
+        })
+      }
     },
 
     methods: {
@@ -53,21 +57,29 @@
 
       save: function () {
         this.sending = true
-        sensorServices.postCreate(this.form)
-          .then((response) => {
-            this.$store.dispatch('showSnackBar', 'Sensor has been added successfully.')
-            if (this.independent && this.independent === true) {
+        if (this.form.id > 0) {
+          sensorServices.putUpdate(this.form)
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Sensor has been updated successfully.')
               this.$router.push('/sensors')
-            } else {
-              this.$store.dispatch('addWorkplaceItem', {
-                'id': response.id,
-                'name': response.name,
-                'type': 'sensor'
-              })
-            }
-            this.sending = false
-            this.clearForm()
-          })
+            })
+        } else {
+          sensorServices.putCreate(this.form)
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Sensor has been added successfully.')
+              if (this.independent && this.independent === true) {
+                this.$router.push('/sensors')
+              } else {
+                this.$store.dispatch('addWorkplaceItem', {
+                  'id': response.id,
+                  'name': response.name,
+                  'type': 'sensor'
+                })
+              }
+              this.sending = false
+              this.clearForm()
+            })
+        }
       },
 
       clearForm () {
@@ -75,7 +87,7 @@
         this.form = {
           name: null,
           type: null,
-          uri: null,
+          url: null,
           username: null,
           password: null
         }
@@ -95,7 +107,7 @@
         form: {
           type: '',
           name: '',
-          uri: '',
+          url: '',
           username: '',
           password: ''
         },
@@ -112,7 +124,7 @@
         name: {
           required
         },
-        uri: {
+        url: {
           required
         }
       }

@@ -30,8 +30,10 @@
       'app-create': AppCreate,
       'device-create': DeviceCreate
     },
-    mounted () {
-      console.log(this.component)
+    created () {
+      if (this.$route.params.type && this.$route.params.type !== '') {
+        this.component = this.$route.params.type + '-create'
+      }
     },
     data: function () {
       return {

@@ -11,8 +11,14 @@ const sensorServices = {
     })
   },
 
-  getSingle (id) {
-
+  get (id) {
+    return new Promise((resolve) => {
+      axios.get(`sensor/` + id).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   },
 
   postCreate (objSensor) {
@@ -20,7 +26,7 @@ const sensorServices = {
       axios.post(`sensor`, {
         'type': objSensor.type,
         'name': objSensor.name,
-        'url': objSensor.uri,
+        'url': objSensor.url,
         'username': objSensor.username,
         'password': objSensor.password
       }).then(response => {
@@ -31,8 +37,20 @@ const sensorServices = {
     })
   },
 
-  putEdit (objWorkplace, listItems) {
-
+  putUpdate (objSensor) {
+    return new Promise((resolve) => {
+      axios.put(`sensor/` + objSensor.id, {
+        'type': objSensor.type,
+        'name': objSensor.name,
+        'url': objSensor.url,
+        'username': objSensor.username,
+        'password': objSensor.password
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   },
 
   delete (id) {

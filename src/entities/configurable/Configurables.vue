@@ -31,8 +31,10 @@
           <md-table-cell md-label="Author" md-sort-by="author">{{ item.author.name }}</md-table-cell>
           <md-table-cell md-label="Created" md-sort-by="created">{{ item.createdAt | moment("MMMM Do YYYY")  }}</md-table-cell>
           <md-table-cell md-label="Action">
-            <md-icon>edit</md-icon>
             <template v-if="user == item.author.id">
+              <md-button @click="$router.push('/configurable/' + item.category + '/edit/' + item.id)" class="md-icon-button md-raised">
+                <md-icon>edit</md-icon>
+              </md-button>
               <md-button @click="deleteOperation(item.id, item.category)" class="md-icon-button md-raised">
                 <md-icon>delete</md-icon>
               </md-button>

@@ -44,6 +44,11 @@
       savedEntity: function (_entity) {
         this.items.push(_entity)
       }
+    },
+    created () {
+      if (this.$route.params.type && this.$route.params.type !== '') {
+        this.component = this.$route.params.type + '-create'
+      }
     }
   }
 </script>

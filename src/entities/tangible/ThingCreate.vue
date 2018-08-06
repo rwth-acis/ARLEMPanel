@@ -10,7 +10,7 @@
 
       <div class="md-layout md-gutter">
         <input-field label="URN" :cssClass="getValidationClass('urn')" :model.sync="form.urn" error="Please enter the URN"></input-field>
-        <input-select label="Detectable" :cssClass="getValidationClass('detectable')" :model.sync="form.detectable" error="Please choose a detectable" url="trigger/detectable"></input-select>
+        <input-select label="Detectable" :cssClass="getValidationClass('detectableId')" :model.sync="form.detectableId" error="Please choose a detectable" url="trigger/detectable"></input-select>
       </div>
 
       <poi-create @add="appendPOI" :poi.sync="form.pois"></poi-create>
@@ -36,8 +36,12 @@
       'input-select': InputSelect
     },
 
-    mounted () {
-      console.log('Workplace Create Mounted')
+    created () {
+      if (this.$route.params.id > 0) {
+        tangibleServices.get('thing', this.$route.params.id).then(response => {
+          this.form = response
+        })
+      }
     },
 
     methods: {
@@ -57,21 +61,29 @@
 
       save: function () {
         this.sending = true
-        tangibleServices.postThingCreate(this.form)
-          .then((response) => {
-            this.$store.dispatch('showSnackBar', 'Thing has been created successfully.')
-            if (this.independent && this.independent === true) {
+        if (this.form.id > 0) {
+          tangibleServices.putThingUpdate(this.form)
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Thing has been updated successfully.')
               this.$router.push('/tangibles')
-            } else {
-              this.$store.dispatch('addWorkplaceItem', {
-                'id': response.id,
-                'name': response.name,
-                'type': 'thing'
-              })
-            }
-            this.sending = false
-            this.clearForm()
-          })
+            })
+        } else {
+          tangibleServices.postThingCreate(this.form)
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Thing has been created successfully.')
+              if (this.independent && this.independent === true) {
+                this.$router.push('/tangibles')
+              } else {
+                this.$store.dispatch('addWorkplaceItem', {
+                  'id': response.id,
+                  'name': response.name,
+                  'type': 'thing'
+                })
+              }
+              this.sending = false
+              this.clearForm()
+            })
+        }
       },
 
       clearForm () {
@@ -79,7 +91,7 @@
         this.form = {
           name: null,
           pois: [],
-          detectable: null
+          detectableId: null
         }
       },
 
@@ -96,7 +108,7 @@
       return {
         form: {
           name: '',
-          detectable: '',
+          detectableId: '',
           pois: []
         },
         sending: false,
@@ -109,7 +121,7 @@
         name: {
           required
         },
-        detectable: {
+        detectableId: {
           required
         }
       }

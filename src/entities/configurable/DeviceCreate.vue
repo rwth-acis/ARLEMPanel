@@ -27,12 +27,15 @@
       'input-select': InputSelect
     },
 
-    mounted () {
-      console.log('Workplace Create Mounted')
+    created () {
+      if (this.$route.params.id > 0) {
+        configurableServices.get('device', this.$route.params.id).then(response => {
+          this.form = response
+        })
+      }
     },
 
     methods: {
-
       getValidationClass (fieldName) {
         const field = this.$v.form[fieldName]
 
@@ -45,21 +48,29 @@
 
       save: function () {
         this.sending = true
-        configurableServices.postDeviceCreate(this.form)
-          .then((response) => {
-            this.$store.dispatch('showSnackBar', 'Device has been added successfully.')
-            if (this.independent && this.independent === true) {
+        if (this.form.id > 0) {
+          configurableServices.putDeviceUpdate(this.form)
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Device has been updated successfully.')
               this.$router.push('/configurables')
-            } else {
-              this.$store.dispatch('addWorkplaceItem', {
-                'id': response.id,
-                'name': response.name,
-                'type': 'device'
-              })
-            }
-            this.sending = false
-            this.clearForm()
-          })
+            })
+        } else {
+          configurableServices.postDeviceCreate(this.form)
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Device has been added successfully.')
+              if (this.independent && this.independent === true) {
+                this.$router.push('/configurables')
+              } else {
+                this.$store.dispatch('addWorkplaceItem', {
+                  'id': response.id,
+                  'name': response.name,
+                  'type': 'device'
+                })
+              }
+              this.sending = false
+              this.clearForm()
+            })
+        }
       },
 
       clearForm () {

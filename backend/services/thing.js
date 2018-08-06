@@ -1,5 +1,7 @@
 const thing = require('../models').thing
 const poi = require('../models').poi
+const author = require('../models').author
+const detectable = require('../models').detectable
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
 
@@ -15,7 +17,7 @@ module.exports = (app) => {
   })
 
   app.get('/api/tangible/thing/:id', validationMiddleware.validate(), (req, res) => {
-    thing.find({where: {id: req.params.id}}).then((object) => {
+    thing.find({include: [poi, author, detectable], where: {id: req.params.id}}).then((object) => {
       if (object === null) {
         res.status(401).json({ messages: 'Thing does not exists' })
       } else {

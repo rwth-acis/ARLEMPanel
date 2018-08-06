@@ -36,8 +36,12 @@
       'input-select': InputSelect
     },
 
-    mounted () {
-      console.log('Workplace Create Mounted')
+    created () {
+      if (this.$route.params.id > 0) {
+        triggerServices.get('primitive', this.$route.params.id).then(response => {
+          this.form = response
+        })
+      }
     },
 
     methods: {
@@ -54,21 +58,29 @@
 
       save: function () {
         this.sending = true
-        triggerServices.postPredicateCreate(this.form, 'predicate')
-          .then((response) => {
-            this.$store.dispatch('showSnackBar', 'Predicate has been added successfully.')
-            if (this.independent && this.independent === true) {
+        if (this.form.id > 0) {
+          triggerServices.putPredicateUpdate(this.form, 'predicate')
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Predicate has been updated successfully.')
               this.$router.push('/triggers')
-            } else {
-              this.$store.dispatch('addWorkplaceItem', {
-                'id': response.id,
-                'name': response.name,
-                'type': 'predicate'
-              })
-            }
-            this.sending = false
-            this.clearForm()
-          })
+            })
+        } else {
+          triggerServices.postPredicateCreate(this.form, 'predicate')
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Predicate has been added successfully.')
+              if (this.independent && this.independent === true) {
+                this.$router.push('/triggers')
+              } else {
+                this.$store.dispatch('addWorkplaceItem', {
+                  'id': response.id,
+                  'name': response.name,
+                  'type': 'predicate'
+                })
+              }
+              this.sending = false
+              this.clearForm()
+            })
+        }
       },
 
       clearForm () {

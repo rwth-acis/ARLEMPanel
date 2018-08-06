@@ -11,8 +11,14 @@ const tangibleServices = {
     })
   },
 
-  getSingle (id) {
-
+  get (type, id) {
+    return new Promise((resolve) => {
+      axios.get(`tangible/` + type + `/` + id).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   },
 
   postPersonCreate (objPerson) {
@@ -21,7 +27,7 @@ const tangibleServices = {
         'name': objPerson.name,
         'twitter': objPerson.twitter,
         'mbox': objPerson.mbox,
-        'detectable': objPerson.detectable,
+        'detectable': objPerson.detectableId,
         'persona': objPerson.persona
       }).then(response => {
         if (response) {
@@ -31,11 +37,40 @@ const tangibleServices = {
     })
   },
 
-  postPlaceCreate (objThing) {
+  putPersonUpdate (objPerson) {
+    return new Promise((resolve) => {
+      axios.put(`tangible/person/` + objPerson.id, {
+        'name': objPerson.name,
+        'twitter': objPerson.twitter,
+        'mbox': objPerson.mbox,
+        'detectable': objPerson.detectableId,
+        'persona': objPerson.persona
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
+  postPlaceCreate (objPlace) {
     return new Promise((resolve) => {
       axios.post(`tangible/place`, {
-        'name': objThing.name,
-        'detectable': objThing.detectable
+        'name': objPlace.name,
+        'detectable': objPlace.detectableId
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
+  putPlaceUpdate (objPlace) {
+    return new Promise((resolve) => {
+      axios.put(`tangible/place/` + objPlace.id, {
+        'name': objPlace.name,
+        'detectable': objPlace.detectableId
       }).then(response => {
         if (response) {
           resolve(response.data)
@@ -46,11 +81,11 @@ const tangibleServices = {
 
   postThingCreate (objThing) {
     return new Promise((resolve) => {
-      axios.post(`tangible/thing`, {
+      axios.post(`tangible/thing` + objThing.id, {
         'name': objThing.name,
         'urn': objThing.urn,
         'poi': objThing.pois,
-        'detectable': objThing.detectable
+        'detectable': objThing.detectableId
       }).then(response => {
         if (response) {
           resolve(response.data)
@@ -59,9 +94,21 @@ const tangibleServices = {
     })
   },
 
-  putEdit (objWorkplace, listItems) {
-
+  putThingUpdate (objThing) {
+    return new Promise((resolve) => {
+      axios.put(`tangible/thing/` + objThing.id, {
+        'name': objThing.name,
+        'urn': objThing.urn,
+        'poi': objThing.pois,
+        'detectable': objThing.detectableId
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   },
+
   delete (id, type) {
     return new Promise((resolve) => {
       axios.delete(`tangible/` + type + `/` + id).then(response => {

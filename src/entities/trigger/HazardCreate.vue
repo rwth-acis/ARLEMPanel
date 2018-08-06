@@ -18,7 +18,7 @@
   import InputField from 'components/InputField.vue'
   import InputSelect from 'components/InputSelect.vue'
   import { required } from 'vuelidate/lib/validators'
-  import configurableServices from './trigger.services'
+  import triggerServices from './trigger.services'
   export default {
     mixins: [validationMixin],
     props: ['independent'],
@@ -27,8 +27,12 @@
       'input-select': InputSelect
     },
 
-    mounted () {
-      console.log('Workplace Create Mounted')
+    created () {
+      if (this.$route.params.id > 0) {
+        triggerServices.get('primitive', this.$route.params.id).then(response => {
+          this.form = response
+        })
+      }
     },
 
     methods: {
@@ -45,21 +49,29 @@
 
       save: function () {
         this.sending = true
-        configurableServices.postPredicateOtherCreate(this.form, 'hazard')
-          .then((response) => {
-            this.$store.dispatch('showSnackBar', 'Hazard has been added successfully.')
-            if (this.independent && this.independent === true) {
+        if (this.form.id > 0) {
+          triggerServices.putPredicateOtherUpdate(this.form, 'hazard')
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Hazard has been updated successfully.')
               this.$router.push('/triggers')
-            } else {
-              this.$store.dispatch('addWorkplaceItem', {
-                'id': response.id,
-                'name': response.name,
-                'type': 'hazard'
-              })
-            }
-            this.sending = false
-            this.clearForm()
-          })
+            })
+        } else {
+          triggerServices.postPredicateOtherCreate(this.form, 'hazard')
+            .then((response) => {
+              this.$store.dispatch('showSnackBar', 'Hazard has been added successfully.')
+              if (this.independent && this.independent === true) {
+                this.$router.push('/triggers')
+              } else {
+                this.$store.dispatch('addWorkplaceItem', {
+                  'id': response.id,
+                  'name': response.name,
+                  'type': 'hazard'
+                })
+              }
+              this.sending = false
+              this.clearForm()
+            })
+        }
       },
 
       clearForm () {
