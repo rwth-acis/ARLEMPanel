@@ -70,8 +70,15 @@ const triggerServices = {
 
   },
 
-  delete (id) {
-
+  delete (id, type) {
+    return new Promise((resolve) => {
+      type = (type === 'warning' || type === 'hazard' || type === 'predicate' ? 'primitive' : 'detectable')
+      axios.delete(`trigger/` + type + `/` + id).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   }
 
 }

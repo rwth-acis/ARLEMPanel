@@ -54,12 +54,14 @@ const mutations = {
   signOut (state) {
     if (window !== 'undefined') {
       window.localStorage.removeItem('token')
+      window.localStorage.removeItem('user')
     }
     state.isAuthenticated = false
   },
   signIn (state, response) {
     if (window !== 'undefined') {
       window.localStorage.setItem('token', response.token)
+      window.localStorage.setItem('user', response.id)
     }
     state.isAuthenticated = true
   }

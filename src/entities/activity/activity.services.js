@@ -19,6 +19,16 @@ const activityServices = {
         }
       })
     })
+  },
+
+  delete (id) {
+    return new Promise((resolve) => {
+      axios.delete(`activity/` + id).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   }
 }
 

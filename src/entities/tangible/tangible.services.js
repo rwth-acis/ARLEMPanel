@@ -62,9 +62,14 @@ const tangibleServices = {
   putEdit (objWorkplace, listItems) {
 
   },
-
-  delete (id) {
-
+  delete (id, type) {
+    return new Promise((resolve) => {
+      axios.delete(`tangible/` + type + `/` + id).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   }
 
 }

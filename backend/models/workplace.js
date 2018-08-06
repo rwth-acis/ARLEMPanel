@@ -1,4 +1,4 @@
-'use strict'
+const sequelizePaginate = require('sequelize-paginate')
 module.exports = (sequelize, DataTypes) => {
   var workplace = sequelize.define('workplace', {
     name: DataTypes.STRING,
@@ -9,5 +9,6 @@ module.exports = (sequelize, DataTypes) => {
     models.workplace.belongsTo(models.author, {foreignKey: 'authorId'})
     models.workplace.hasMany(models.workplaceResource, {foreignKey: 'workplaceId'})
   }
+  sequelizePaginate.paginate(workplace)
   return workplace
 }

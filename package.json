@@ -14,9 +14,11 @@
     "mysql2": "^1.5.3",
     "nobel": "^0.3.0",
     "sequelize": "^4.38.0",
+    "sequelize-paginate": "^1.1.2",
     "vue": "^2.5.13",
     "vue-material": "^1.0.0-beta-10.2",
     "vue-moment": "^4.0.0",
+    "vue-paginate-al": "^1.0.18",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

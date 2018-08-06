@@ -33,21 +33,32 @@
           <md-table-cell md-label="Created" md-sort-by="created">{{ item.createdAt | moment("MMMM Do YYYY") }}</md-table-cell>
           <md-table-cell md-label="Action">
             <md-icon>edit</md-icon>
+            <template v-if="user == item.author.id">
+              <md-button @click="deleteOperation(item.id, item.category)" class="md-icon-button md-raised">
+                <md-icon>delete</md-icon>
+              </md-button>
+            </template>
           </md-table-cell>
         </md-table-row>
       </md-table>
-        <div style="clear: both;padding: 50px">&nbsp;</div>
+      <pagination :totalPage="total" @btnClick="changePage" style="float:right;margin-right: 20px;"></pagination>
+      <div style="clear: both;padding: 50px">&nbsp;</div>
       </div>
+      <delete-dialog entity="Activity" @delete="deleteIt" @hide="hideDialog" :showModal="showDeleteDialog"></delete-dialog>
     </div>
 </template>
 <script>
   import EntityTabs from 'theme/components/EntityTabs.vue'
   import Header from 'theme/components/Header.vue'
   import triggerServices from './trigger.services.js'
+  import Pagination from 'vue-paginate-al'
+  import DeleteDialog from 'components/DeleteDialog.vue'
   export default {
     components: {
       'entity-tab': EntityTabs,
-      'page-header': Header
+      'page-header': Header,
+      'pagination': Pagination,
+      'delete-dialog': DeleteDialog
     },
     data: function () {
       return {
@@ -56,10 +67,20 @@
         currentSort: 'name',
         currentSortOrder: 'asc',
         selected: [],
-        headers: []
+        headers: [],
+        page: 1,
+        total: 0,
+        user: 0,
+        showDeleteDialog: false,
+        entityId: 0,
+        entityType: ''
       }
     },
     methods: {
+      changePage (_page) {
+        this.page = _page
+        this.loadData()
+      },
       onSelect (items) {
         this.selected = items
       },
@@ -84,12 +105,34 @@
       },
       newLink () {
         this.$router.push('/trigger/create')
+      },
+      loadData () {
+        triggerServices.getList({page: this.page}).then(response => {
+          this.searched = response.docs
+          this.total = response.pages
+        })
+      },
+      deleteOperation (id, type) {
+        this.entityId = id
+        this.entityType = type
+        console.log(this.entityType)
+        this.showDeleteDialog = true
+      },
+      deleteIt () {
+        triggerServices.delete(this.entityId, this.entityType).then(response => {
+          this.$store.dispatch('showSnackBar', String('Trigger has added deleted successfully.'))
+          this.hideDialog()
+          this.loadData()
+        })
+      },
+      hideDialog () {
+        this.showDeleteDialog = false
       }
     },
     created () {
-      triggerServices.getList({}).then(response => {
-        this.searched = response
-      })
+      document.title = 'Triggers @ ARLEM Panel'
+      this.loadData()
+      this.user = window.localStorage.getItem('user')
     }
   }
 </script>

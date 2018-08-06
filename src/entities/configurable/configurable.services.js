@@ -3,7 +3,7 @@ import axios from 'axios'
 const configurableServices = {
   getList (searchObject) {
     return new Promise((resolve) => {
-      axios.get(`configurable`).then(response => {
+      axios.get(`configurable`, {params: searchObject}).then(response => {
         if (response) {
           resolve(response.data)
         }
@@ -50,8 +50,14 @@ const configurableServices = {
 
   },
 
-  delete (id) {
-
+  delete (id, type) {
+    return new Promise((resolve) => {
+      axios.delete(`configurable/` + type + `/` + id).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   }
 
 }

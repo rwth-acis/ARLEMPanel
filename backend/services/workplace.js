@@ -48,7 +48,13 @@ module.exports = (app) => {
   })
 
   app.get('/api/workplace', validationMiddleware.validate(), (req, res) => {
-    workplace.findAll({ include: [workplaceResource, author], order: [['id', 'DESC']] }).then((objects) => {
+    const options = {
+      page: req.query.page && req.query.page > 0 ? req.query.page : 1,
+      paginate: 25,
+      include: [author],
+      order: [['id', 'DESC']]
+    }
+    workplace.paginate(options).then((objects) => {
       if (objects === null) {
         res.json([])
       } else {

@@ -1,3 +1,4 @@
+const sequelizePaginate = require('sequelize-paginate')
 module.exports = (sequelize, DataTypes) => {
   var configurable = sequelize.define('configurable', {
     name: DataTypes.STRING,
@@ -9,5 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     models.configurable.belongsTo(models.author, {foreignKey: 'authorId'})
   }
+  sequelizePaginate.paginate(configurable)
   return configurable
 }

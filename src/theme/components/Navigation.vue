@@ -17,7 +17,6 @@
           </ul>
         </li>
         <li><router-link :to="{ name: 'activity.list' }">Activities</router-link></li>
-        <li><router-link :to="{ name: 'learner.list' }">Learners</router-link></li>
         <li>
           <span>Account</span>
           <ul>
@@ -58,27 +57,25 @@
   a,span {
     text-decoration: none;
   }
-  > li {
+  > a {
     display: inline-block;
     padding: 1em 18px;
     cursor: pointer;
     position: relative;
-    color: white;
-
-    & > a {
-      color: #fff!important;
-
-      &:hover {
-        text-decoration: none;
-      }
+    color: white!important;
+    text-decoration: none;
+    &:hover {
+      color: $font-color;
+      background: rgba(white,0.4);
     }
+  }
+
+  > li
 
     ul {
       position: absolute;
       left: 0;
       top: 100%;
-      transition: all 0.3s ease;
-      transform: scale(0);
       transform-origin: 0 0;
       box-shadow: 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12), 0 3px 5px -1px rgba(0,0,0,.2);
       background: white;
@@ -104,16 +101,6 @@
         }
       }
     }
-
-    &:hover {
-      color: $font-color;
-      background: rgba(white,0.4);
-
-      ul {
-        transform: scale(1);
-      }
-    }
   }
-}
 </style>
 

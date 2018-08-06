@@ -3,7 +3,7 @@ import axios from 'axios'
 const workplaceServices = {
   getList (searchObject) {
     return new Promise((resolve) => {
-      axios.get(`workplace`).then(response => {
+      axios.get(`workplace`, {params: searchObject}).then(response => {
         console.log(response)
         if (response) {
           resolve(response.data)
@@ -34,7 +34,13 @@ const workplaceServices = {
   },
 
   delete (id) {
-
+    return new Promise((resolve) => {
+      axios.delete(`workplace/` + id).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   },
 
   getEntityList (term) {

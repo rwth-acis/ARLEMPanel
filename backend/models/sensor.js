@@ -1,4 +1,4 @@
-'use strict'
+const sequelizePaginate = require('sequelize-paginate')
 module.exports = (sequelize, DataTypes) => {
   var sensor = sequelize.define('sensor', {
     name: DataTypes.STRING,
@@ -12,5 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     models.sensor.belongsTo(models.author, {foreignKey: 'authorId'})
   }
+  sequelizePaginate.paginate(sensor)
   return sensor
 }

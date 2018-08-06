@@ -31,21 +31,32 @@
             <md-table-cell md-label="Created" md-sort-by="created_at">{{ item.createdAt | moment("MMMM Do YYYY") }}</md-table-cell>
             <md-table-cell md-label="Action">
               <md-icon>edit</md-icon>
+              <template v-if="user == item.author.id">
+                <md-button @click="deleteOperation(item.id)" class="md-icon-button md-raised">
+                  <md-icon>delete</md-icon>
+                </md-button>
+              </template>
             </md-table-cell>
           </md-table-row>
         </md-table>
+        <pagination :totalPage="total" @btnClick="changePage" style="float:right;margin-right: 20px;"></pagination>
         <div style="clear: both;padding: 50px">&nbsp;</div>
       </div>
+      <delete-dialog entity="Workplace" @delete="deleteWorkplace" @hide="hideDialog" :showModal="showDeleteDialog"></delete-dialog>
     </div>
 </template>
 <script>
   import EntityTabs from 'theme/components/EntityTabs.vue'
   import Header from 'theme/components/Header.vue'
   import workplaceServices from './workplace.services.js'
+  import Pagination from 'vue-paginate-al'
+  import DeleteDialog from 'components/DeleteDialog.vue'
   export default {
     components: {
       'entity-tab': EntityTabs,
-      'page-header': Header
+      'page-header': Header,
+      'pagination': Pagination,
+      'delete-dialog': DeleteDialog
     },
     data: function () {
       return {
@@ -54,10 +65,19 @@
         currentSort: 'name',
         currentSortOrder: 'asc',
         selected: [],
-        headers: []
+        headers: [],
+        page: 1,
+        total: 0,
+        user: 0,
+        showDeleteDialog: false,
+        entityId: 0
       }
     },
     methods: {
+      changePage (_page) {
+        this.page = _page
+        this.loadData()
+      },
       getAlternateLabel (count) {
         let plural = ''
         if (count > 1) {
@@ -71,13 +91,32 @@
       newLink () {
         // alert('transfer');
         this.$router.push('/workplace/create')
+      },
+      loadData () {
+        workplaceServices.getList({page: this.page}).then(response => {
+          this.searched = response.docs
+          this.total = response.pages
+        })
+      },
+      deleteOperation (id) {
+        this.entityId = id
+        this.showDeleteDialog = true
+      },
+      deleteWorkplace () {
+        workplaceServices.delete(this.entityId).then(response => {
+          this.$store.dispatch('showSnackBar', String('Workplace has added deleted successfully.'))
+          this.hideDialog()
+          this.loadData()
+        })
+      },
+      hideDialog () {
+        this.showDeleteDialog = false
       }
     },
     created () {
       document.title = 'Workplaces @ ARLEM Panel'
-      workplaceServices.getList({}).then(response => {
-        this.searched = response
-      })
+      this.loadData()
+      this.user = window.localStorage.getItem('user')
     }
   }
 </script>

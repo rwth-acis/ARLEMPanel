@@ -36,7 +36,13 @@ const sensorServices = {
   },
 
   delete (id) {
-
+    return new Promise((resolve) => {
+      axios.delete(`sensor/` + id).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
   }
 
 }

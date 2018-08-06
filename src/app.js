@@ -10,6 +10,8 @@ const app = new Vue({
   store
 })
 
+Vue.use(require('vue-moment'))
+
 Vue.filter('capitalize', function (value) {
   if (!value) return ''
   value = value.toString()

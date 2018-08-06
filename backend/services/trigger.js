@@ -4,7 +4,13 @@ const validationMiddleware = require('../helpers/validationMiddleware')
 
 module.exports = (app) => {
   app.get('/api/trigger', validationMiddleware.validate(), (req, res) => {
-    trigger.findAll({order: [['createdAt', 'DESC']], include: [author]}).then((objects) => {
+    const options = {
+      page: req.query.page && req.query.page > 0 ? req.query.page : 1,
+      paginate: 25,
+      include: [author],
+      order: [['createdAt', 'DESC']]
+    }
+    trigger.paginate(options).then((objects) => {
       if (objects === null) {
         res.json([])
       } else {

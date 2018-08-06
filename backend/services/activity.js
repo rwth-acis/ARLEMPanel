@@ -13,7 +13,13 @@ const validationRules = require('../helpers/validationRules')
 
 module.exports = (app) => {
   app.get('/api/activity', validationMiddleware.validate(), (req, res) => {
-    activity.findAll({ include: [action, author, workplace], order: [['id', 'DESC']] }).then((objects) => {
+    const options = {
+      page: req.query.page && req.query.page > 0 ? req.query.page : 1,
+      paginate: 25,
+      include: [author, workplace],
+      order: [['createdAt', 'DESC']]
+    }
+    activity.paginate(options).then((objects) => {
       if (objects === null) {
         res.json([])
       } else {

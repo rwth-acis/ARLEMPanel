@@ -1,3 +1,4 @@
+const sequelizePaginate = require('sequelize-paginate')
 module.exports = (sequelize, DataTypes) => {
   var activity = sequelize.define('activity', {
     name: DataTypes.STRING,
@@ -13,5 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     models.activity.belongsTo(models.workplace, {foreignKey: 'workplaceId'})
     models.activity.hasMany(models.action, {foreignKey: 'activityId'})
   }
+  sequelizePaginate.paginate(activity)
   return activity
 }

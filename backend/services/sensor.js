@@ -5,7 +5,13 @@ const validationRules = require('../helpers/validationRules')
 
 module.exports = (app) => {
   app.get('/api/sensor', validationMiddleware.validate(), (req, res) => {
-    sensor.findAll({ order: [['id', 'DESC']], include: [author] }).then((objects) => {
+    const options = {
+      page: req.query.page && req.query.page > 0 ? req.query.page : 1,
+      paginate: 25,
+      include: [author],
+      order: [['createdAt', 'DESC']]
+    }
+    sensor.paginate(options).then((objects) => {
       if (objects === null) {
         res.json([])
       } else {
