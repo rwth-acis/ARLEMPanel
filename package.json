@@ -9,7 +9,7 @@
     "express-rate-limit": "^2.11.0",
     "express-validator": "^5.2.0",
     "joi": "^13.5.2",
-    "js2xmlparser": "^3.0.0",
+    "jsontoxml": "^1.0.0",
     "md5": "^2.2.1",
     "mysql": "^2.16.0",
     "mysql2": "^1.5.3",

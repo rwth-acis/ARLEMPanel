@@ -1,8 +1,16 @@
 const workplace = require('../models').workplace
 const entity = require('../models').entity
 const viewport = require('../models').viewport
+const activity = require('../models').activity
+const detectable = require('../models').detectable
 const workplaceResource = require('../models').workplaceResource
+const pois = require('../models').poi
 const author = require('../models').author
+const action = require('../models').action
+const actionTrigger = require('../models').actionTrigger
+const primitive = require('../models').primitive
+const device = require('../models').device
+const place = require('../models').place
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
 
@@ -64,11 +72,134 @@ module.exports = (app) => {
   })
 
   app.get('/api/workplace/:id', validationMiddleware.validate(), (req, res) => {
-    workplace.find({where: {id: req.params.id}}).then((object) => {
+    workplace.find({where: {id: req.params.id}, include: [{model: author}, {model: workplaceResource}]}).then(async (object) => {
       if (object === null) {
         res.status(401).json({ messages: 'Workplace does not exists' })
       } else {
-        res.json(object)
+        var workplace = {
+          id: object.id,
+          name: object.name,
+          createdAt: object.createdAt,
+          updatedAt: object.updatedAt,
+          author: object.author
+        }
+        for (var i = 0; i < object.workplaceResources.length; i++) {
+          if (object.workplaceResources[i].entityId !== null && object.workplaceResources[i].entityType != null) {
+            if (object.workplaceResources[i].entityType === 'person') {
+              if (!workplace.tangibles) {
+                workplace.tangibles = {}
+              }
+              if (!workplace.tangibles.persons) {
+                workplace.tangibles.persons = []
+              }
+              let entity = await require('../models')[object.workplaceResources[i].entityType].find({where: {id: object.workplaceResources[i].entityId}, include: [author, detectable]})
+              if (entity && entity !== null) {
+                workplace.tangibles.persons.push(entity)
+              }
+            } else if (object.workplaceResources[i].entityType === 'place') {
+              if (!workplace.tangibles) {
+                workplace.tangibles = {}
+              }
+              if (!workplace.tangibles.places) {
+                workplace.tangibles.places = []
+              }
+              let entity = await require('../models')[object.workplaceResources[i].entityType].find({where: {id: object.workplaceResources[i].entityId}, include: [author, detectable]})
+              if (entity && entity !== null) {
+                workplace.tangibles.places.push(entity)
+              }
+            } else if (object.workplaceResources[i].entityType === 'thing') {
+              if (!workplace.tangibles) {
+                workplace.tangibles = {}
+              }
+              if (!workplace.tangibles.things) {
+                workplace.tangibles.things = []
+              }
+              let entity = await require('../models')[object.workplaceResources[i].entityType].find({where: {id: object.workplaceResources[i].entityId}, include: [author, pois, detectable]})
+              if (entity && entity !== null) {
+                workplace.tangibles.things.push(entity)
+              }
+            } else if (object.workplaceResources[i].entityType === 'warning') {
+              if (!workplace.triggers) {
+                workplace.triggers = {}
+              }
+              if (!workplace.triggers.warnings) {
+                workplace.triggers.warnings = []
+              }
+              let entity = await require('../models')['primitive'].find({where: {id: object.workplaceResources[i].entityId}, include: [author]})
+              if (entity && entity !== null) {
+                workplace.triggers.warnings.push(entity)
+              }
+            } else if (object.workplaceResources[i].entityType === 'hazard') {
+              if (!workplace.triggers) {
+                workplace.triggers = {}
+              }
+              if (!workplace.triggers.hazards) {
+                workplace.triggers.hazards = []
+              }
+              let entity = await require('../models')['primitive'].find({where: {id: object.workplaceResources[i].entityId}, include: [author]})
+              if (entity && entity !== null) {
+                workplace.triggers.hazards.push(entity)
+              }
+            } else if (object.workplaceResources[i].entityType === 'predicate') {
+              if (!workplace.triggers) {
+                workplace.triggers = {}
+              }
+              if (!workplace.triggers.predicates) {
+                workplace.triggers.predicates = []
+              }
+
+              let entity = await require('../models')['primitive'].find({where: {id: object.workplaceResources[i].entityId}, include: [author]})
+              if (entity && entity !== null) {
+                workplace.triggers.predicates.push(entity)
+              }
+            } else if (object.workplaceResources[i].entityType === 'app') {
+              if (!workplace.configurables) {
+                workplace.configurables = {}
+              }
+              if (!workplace.configurables.apps) {
+                workplace.configurables.apps = []
+              }
+              let entity = await require('../models')['app'].find({where: {id: object.workplaceResources[i].entityId}, include: [author]})
+              if (entity && entity !== null) {
+                workplace.triggers.apps.push(entity)
+              }
+            } else if (object.workplaceResources[i].entityType === 'device') {
+              if (!workplace.configurables) {
+                workplace.configurables = {}
+              }
+              if (!workplace.configurables.devices) {
+                workplace.configurables.devices = []
+              }
+              let entity = await require('../models')['device'].find({where: {id: object.workplaceResources[i].entityId}, include: [author]})
+              if (entity && entity !== null) {
+                workplace.triggers.devices.push(entity)
+              }
+            } else if (object.workplaceResources[i].entityType === 'sensor') {
+              if (!workplace.sensors) {
+                workplace.sensors = []
+              }
+              let entity = await require('../models')['sensor'].find({where: {id: object.workplaceResources[i].entityId}, include: [author]})
+              if (entity && entity !== null) {
+                workplace.sensors.push(entity)
+              }
+            }
+          }
+        }
+        var activities = await activity.findAll({where: {workplaceId: req.params.id}, include: [{model: author}, {model: action, include: [{model: device}, {model: place}, {model: primitive}, {model: viewport}, {model: actionTrigger, include: [viewport, primitive, pois]}]}]})
+        if (object !== null) {
+          activities = JSON.parse(JSON.stringify(activities))
+          for (var h = 0; h < activities.length; h++) {
+            for (i = 0; i < activities[h].actions.length; i++) {
+              for (var j = 0; j < activities[h].actions[i].actionTriggers.length; j++) {
+                if (activities[h].actions[i].actionTriggers[j].entityId !== null && activities[h].actions[i].actionTriggers[j].entityType != null) {
+                  activities[h].actions[i].actionTriggers[j].entity = await require('../models')[activities[h].actions[i].actionTriggers[j].entityType].find({where: {id: activities[h].actions[i].actionTriggers[j].entityId}})
+                }
+              }
+            }
+          }
+          workplace.activities = activities
+        }
+        res.json(workplace)
       }
     })
   })

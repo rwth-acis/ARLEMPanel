@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {})
   primitive.associate = (models) => {
     // associations can be defined here
+    models.primitive.belongsTo(models.author, {foreignKey: 'authorId'})
   }
   return primitive
 }
