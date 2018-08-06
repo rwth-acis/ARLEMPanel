@@ -1,5 +1,8 @@
 const author = require('../models').author
 const md5 = require('md5')
+const workplace = require('../models').workplace
+const activity = require('../models').activity
+const entity = require('../models').entity
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRulues = require('../helpers/validationRules')
 
@@ -42,5 +45,9 @@ module.exports = (app) => {
         res.json({message: ['Password has been updated, try login now.']})
       }
     })
+  })
+
+  app.get('/api/dashboard', validationMiddleware.validate(), async (req, res) => {
+    res.json({workplaces: await workplace.count(), activities: await activity.count(), entities: await entity.count()})
   })
 }

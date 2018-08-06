@@ -11,7 +11,7 @@
               </md-card-header-text>
 
               <md-card-media md-medium>
-                <p class="md-display-4">20</p>
+                <p class="md-display-4" style="text-align: right">{{ workplaces }}</p>
               </md-card-media>
             </md-card-header>
           </md-card>
@@ -23,19 +23,19 @@
               </md-card-header-text>
 
               <md-card-media md-medium>
-                <p class="md-display-4">20</p>
+                <p class="md-display-4" style="text-align: right">{{ activities }}</p>
               </md-card-media>
             </md-card-header>
           </md-card>
           <md-card class="md-layout-item">
             <md-card-header>
               <md-card-header-text>
-                <div class="md-title">Learners</div>
-                <div class="md-subhead">All the participants and data regarding their actions</div>
+                <div class="md-title">Entities</div>
+                <div class="md-subhead">All the entities like triggers, tangibles, configurables and sensors</div>
               </md-card-header-text>
 
               <md-card-media md-medium>
-                <p class="md-display-4">20</p>
+                <p class="md-display-4">{{ entities }}</p>
               </md-card-media>
             </md-card-header>
 
@@ -46,7 +46,15 @@
 </template>
 <script>
   import Header from 'theme/components/Header.vue'
+  import memberServices from './member.services'
   export default {
+    data () {
+      return {
+        workplaces: 0,
+        activities: 0,
+        entities: 0
+      }
+    },
     components: {
       'page-header': Header
     },
@@ -54,6 +62,11 @@
 
     },
     created () {
+      memberServices.getDashboard().then((response) => {
+        this.workplaces = response.workplaces
+        this.activities = response.activities
+        this.entities = response.entities
+      })
       document.title = 'Dashboard @ ARLEM Panel'
     }
   }
