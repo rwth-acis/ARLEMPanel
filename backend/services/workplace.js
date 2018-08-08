@@ -13,6 +13,7 @@ const device = require('../models').device
 const place = require('../models').place
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
+const xmlGenerator = require('../helpers/xmlGenerator')
 
 module.exports = (app) => {
   app.get('/api/entity', validationMiddleware.validate(), (req, res) => {
@@ -199,7 +200,13 @@ module.exports = (app) => {
           }
           workplace.activities = activities
         }
-        res.json(workplace)
+        var contype = req.headers['content-type']
+        if (!contype || contype.indexOf('application/json') !== 0) {
+          res.set('Content-Type', 'text/xml')
+          res.send(xmlGenerator(workplace).end({ pretty: true }))
+        } else {
+          res.json(workplace)
+        }
       }
     })
   })
