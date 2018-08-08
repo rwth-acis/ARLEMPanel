@@ -20,6 +20,20 @@ module.exports = (app) => {
     })
   })
 
+  app.get('/api/sensor/select', validationMiddleware.validate(), (req, res) => {
+    const options = {
+      include: [author],
+      order: [['createdAt', 'DESC']]
+    }
+    sensor.findAll(options).then((objects) => {
+      if (objects === null) {
+        res.json([])
+      } else {
+        res.json(objects)
+      }
+    })
+  })
+
   app.get('/api/sensor/:id', validationMiddleware.validate(), (req, res) => {
     sensor.find({where: {id: req.params.id}}).then((object) => {
       if (object === null) {

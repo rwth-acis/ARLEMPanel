@@ -46,7 +46,7 @@
       <pagination :totalPage="total" @btnClick="changePage" style="float:right;margin-right: 20px;"></pagination>
       <div style="clear: both;padding: 50px">&nbsp;</div>
       </div>
-      <delete-dialog entity="Activity" @delete="deleteIt" @hide="hideDialog" :showModal="showDeleteDialog"></delete-dialog>
+      <delete-dialog entity="Trigger" @delete="deleteIt" @hide="hideDialog" :showModal="showDeleteDialog"></delete-dialog>
     </div>
 </template>
 <script>

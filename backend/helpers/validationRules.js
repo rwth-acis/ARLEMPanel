@@ -23,8 +23,8 @@ module.exports = {
       name: Joi.string().required(),
       persona: Joi.string().required(),
       detectable: Joi.number().integer().required(),
-      twitter: Joi.string().allow(null),
-      mbox: Joi.string().allow(null)
+      twitter: Joi.string().allow(null).allow(""),
+      mbox: Joi.string().allow(null).allow("")
     },
     place: {
       name: Joi.string().required(),
@@ -34,30 +34,30 @@ module.exports = {
       name: Joi.string().required(),
       urn: Joi.string().required(),
       detectable: Joi.number().integer().required(),
-      poi: Joi.array().allow(null)
+      poi: Joi.array().allow(null).allow("")
     }
   },
   trigger: {
     detectable: {
       name: Joi.string().required(),
-      sensor: Joi.number().integer().allow(null),
-      type: Joi.string().allow(null),
-      url: Joi.string().allow(null)
+      sensor: Joi.number().integer().allow(null).allow(""),
+      type: Joi.string().allow(null).allow(""),
+      url: Joi.string().allow(null).allow("")
     },
     primitive: {
       name: Joi.string().required(),
-      category: Joi.string().allow(null),
-      type: Joi.string().allow(null),
-      symbol: Joi.string().allow(null),
-      size: Joi.number().precision(3).allow(null),
-      url: Joi.string().allow(null),
-      option: Joi.string().allow(null)
+      category: Joi.string().allow(null).allow(""),
+      type: Joi.string().allow(null).allow(""),
+      symbol: Joi.string().allow(null).allow(""),
+      size: Joi.number().precision(3).allow(null).allow("").allow(""),
+      url: Joi.string().allow(null).allow("").allow(""),
+      option: Joi.string().allow(null).allow("").allow("")
     }
   },
   configurable: {
     app: {
       name: Joi.string().required(),
-      manifest: Joi.string().allow(null),
+      manifest: Joi.string().allow(null).allow(""),
       type: Joi.string().required()
     },
     device: {
@@ -69,8 +69,8 @@ module.exports = {
     name: Joi.string().required(),
     url: Joi.string().required(),
     type: Joi.string().required(),
-    username: Joi.string().allow(null),
-    password: Joi.string().allow(null)
+    username: Joi.string().allow(null).allow(""),
+    password: Joi.string().allow(null).allow("")
   },
   workplace: {
     name: Joi.string().required(),
@@ -78,26 +78,26 @@ module.exports = {
   },
   activity: {
     name: Joi.string().required(),
-    description: Joi.string().allow(null),
+    description: Joi.string().allow(null).allow(""),
     language: Joi.string().required(),
     workplace: Joi.number().integer().required(),
-    start: Joi.number().integer().allow(null),
+    start: Joi.number().integer().allow(null).allow(""),
     actions: Joi.array().items(Joi.object({
       name: Joi.string().required(),
       type: Joi.string().required(),
-      viewport: Joi.number().integer().allow(null),
-      instructionTitle: Joi.string().allow(null),
-      instructionDescription: Joi.string().allow(null),
+      viewport: Joi.number().integer().allow(null).allow(""),
+      instructionTitle: Joi.string().allow(null).allow(""),
+      instructionDescription: Joi.string().allow(null).allow(""),
       triggers: Joi.array().items(Joi.object({
         mode: Joi.string().required(),
-        removeSelf: Joi.number().integer().allow(null),
-        operation: Joi.string().allow(null),
-        entityType: Joi.string().allow(null),
-        entityId: Joi.number().integer().allow(null),
-        poi: Joi.allow(null),
-        viewportId: Joi.number().integer().allow(null),
-        primitiveId: Joi.number().integer().allow(null),
-        option: Joi.string().allow(null)
+        removeSelf: Joi.number().integer().allow(null).allow(""),
+        operation: Joi.string().allow(null).allow(""),
+        entityType: Joi.string().allow(null).allow(""),
+        entityId: Joi.number().integer().allow(null).allow(""),
+        poi: Joi.allow(null).allow(""),
+        viewportId: Joi.number().integer().allow(null).allow(""),
+        primitiveId: Joi.number().integer().allow(null).allow(""),
+        option: Joi.string().allow(null).allow("")
       }))
     })).required()
   }

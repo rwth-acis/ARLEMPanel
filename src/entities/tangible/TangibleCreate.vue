@@ -48,6 +48,9 @@
     created () {
       if (this.$route.params.type && this.$route.params.type !== '') {
         this.component = this.$route.params.type + '-create'
+        document.title = 'Edit Tangibles @ ARLEM Panel'
+      } else {
+        document.title = 'Create Tangibles @ ARLEM Panel'
       }
     }
   }

@@ -18,11 +18,12 @@ Vue.filter('capitalize', function (value) {
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
-axios.defaults.baseURL = 'http://0.0.0.0:3001/api'
+axios.defaults.baseURL = '/api'
 axios.interceptors.response.use(undefined, function (error) {
   if (error.response.status !== 200) {
+    store.dispatch('showSnackBar', error.response.data.message)
     var message = ''
-    for (var item of error.response.data) {
+    for (var item of error.response.message) {
       message += item.message + '. '
     }
     store.dispatch('showSnackBar', message)

@@ -8,6 +8,10 @@
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
         <input-field label="Type" :cssClass="getValidationClass('type')" :model.sync="form.type" error="Please enter the type"></input-field>
       </div>
+      <div class="md-layout md-gutter">
+        <input-field label="Size" type="number" :cssClass="getValidationClass('size')" :model.sync="form.size"></input-field>
+        <input-field label="Symbol" :cssClass="getValidationClass('symbol')" :model.sync="form.symbol"></input-field>
+      </div>
       <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save Hazard</md-button>
     </form>
   </div>
@@ -50,13 +54,13 @@
       save: function () {
         this.sending = true
         if (this.form.id > 0) {
-          triggerServices.putPredicateOtherUpdate(this.form, 'hazard')
+          triggerServices.putPredicateUpdate(this.form, 'hazard')
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Hazard has been updated successfully.')
               this.$router.push('/triggers')
             })
         } else {
-          triggerServices.postPredicateOtherCreate(this.form, 'hazard')
+          triggerServices.postPredicateCreate(this.form, 'hazard')
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Hazard has been added successfully.')
               if (this.independent && this.independent === true) {

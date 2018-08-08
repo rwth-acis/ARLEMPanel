@@ -46,7 +46,7 @@
     },
 
     created () {
-      document.title = 'Create Workplaces @ ARLEM Panel'
+      document.title = 'Create Activities @ ARLEM Panel'
     },
 
     methods: {

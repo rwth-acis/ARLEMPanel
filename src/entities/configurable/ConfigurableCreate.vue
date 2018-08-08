@@ -33,6 +33,9 @@
     created () {
       if (this.$route.params.type && this.$route.params.type !== '') {
         this.component = this.$route.params.type + '-create'
+        document.title = 'Edit Configurable @ ARLEM Panel'
+      } else {
+        document.title = 'Create Configurables @ ARLEM Panel'
       }
     },
     data: function () {

@@ -40,6 +40,9 @@
         sensorServices.get(this.$route.params.id).then(response => {
           this.form = response
         })
+        document.title = 'Create Sensors @ ARLEM Panel'
+      } else {
+        document.title = 'Edit Sensor @ ARLEM Panel'
       }
     },
 
@@ -64,17 +67,17 @@
               this.$router.push('/sensors')
             })
         } else {
-          sensorServices.putCreate(this.form)
+          sensorServices.postCreate(this.form)
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Sensor has been added successfully.')
-              if (this.independent && this.independent === true) {
-                this.$router.push('/sensors')
-              } else {
+              if (this.independent && this.independent === false) {
                 this.$store.dispatch('addWorkplaceItem', {
                   'id': response.id,
                   'name': response.name,
                   'type': 'sensor'
                 })
+              } else {
+                this.$router.push('/sensors')
               }
               this.sending = false
               this.clearForm()

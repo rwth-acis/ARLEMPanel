@@ -5,7 +5,7 @@
       <tabs :component="component" :display="display" @changeTab="tabChange"></tabs>
     </div>
     <div class="md-layout-item md-size-60">
-      <keep-alive><component :is="component" @saved="savedEntity"></component></keep-alive>
+      <keep-alive><component :is="component" @saved="savedEntity" :independent="true"></component></keep-alive>
     </div>
     <div class="md-layout-item">
       <div v-for="item in items" :key="item.id">
@@ -36,6 +36,9 @@
     created () {
       if (this.$route.params.type && this.$route.params.type !== '') {
         this.component = this.$route.params.type + '-create'
+        document.title = 'Edit Trigger @ ARLEM Panel'
+      } else {
+        document.title = 'Create Triggers @ ARLEM Panel'
       }
     },
     data: function () {

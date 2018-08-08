@@ -1,18 +1,18 @@
 <template>
   <!-- Workplace Create Mounted -->
   <div>
-    <h3 class="md-display-3" v-if="independent" style="margin:15px 0;">Create Predicate</h3>
-    <h4 class="md-display-1" v-if="!independent" style="margin:15px 0;">Add Predicate</h4>
+    <h3 class="md-display-3" v-if="independent" style="margin:15px 0;">Create Detectable</h3>
+    <h4 class="md-display-1" v-if="!independent" style="margin:15px 0;">Add Detectable</h4>
     <form novalidate  @submit.prevent="validate">
       <div class="md-layout md-gutter">
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
         <input-field label="Type" :cssClass="getValidationClass('type')" :model.sync="form.type" error="Please enter the type"></input-field>
       </div>
       <div class="md-layout md-gutter">
-        <input-select label="Sensor" :cssClass="getValidationClass('sensor')" :model.sync="form.sensor" url="sensor"></input-select>
+        <input-select label="Sensor" :cssClass="getValidationClass('sensor')" :model.sync="form.sensor" url="sensor/select"></input-select>
         <input-field label="Url" :cssClass="getValidationClass('url')" :model.sync="form.url"></input-field>
       </div>
-      <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save Predicate</md-button>
+      <md-button type="submit" class="md-raised md-primary" style="margin:0" :disabled="sending">Save Detectable</md-button>
     </form>
   </div>
 </template>
@@ -69,7 +69,7 @@
                 this.$store.dispatch('addWorkplaceItem', {
                   'id': response.id,
                   'name': response.name,
-                  'type': 'predicate'
+                  'type': 'detectable'
                 })
               }
               this.sending = false

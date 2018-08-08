@@ -9,7 +9,7 @@
         <input-field label="Type" :cssClass="getValidationClass('type')" :model.sync="form.type" error="Please enter the type"></input-field>
       </div>
       <div class="md-layout md-gutter">
-        <input-field label="Size" :cssClass="getValidationClass('size')" :model.sync="form.size"></input-field>
+        <input-field label="Size" type="number" :cssClass="getValidationClass('size')" :model.sync="form.size"></input-field>
         <input-field label="Symbol" :cssClass="getValidationClass('symbol')" :model.sync="form.symbol"></input-field>
       </div>
       <div class="md-layout md-gutter">
