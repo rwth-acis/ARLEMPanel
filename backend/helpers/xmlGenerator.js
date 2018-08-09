@@ -177,5 +177,71 @@ module.exports = (workplace) => {
 
     triggers.up()
   }
+
+  if (workplace.activities) {
+    const activities = xml.ele('activities')
+    for (let activity of workplace.activities) {
+      const activityML = activities.ele('activity')
+        .att('id', activity.id)
+        .att('name', activity.name)
+        .att('language', activity.language)
+        // .att('description', activity.description)
+        .att('start', activity.start)
+
+      if (activity.actions) {
+        for (let action of activity.actions) {
+          const actionML = activityML.ele('action')
+            .att('id', action.id)
+            .att('viewport', action.viewport !== null ? action.viewport.name : null)
+            .att('device', action.device !== null ? action.device.name : null)
+            .att('location', action.place !== null ? action.place.name : null)
+            .att('predicate', action.primitive !== null ? action.primitive.name : null)
+
+          if (action.actionTriggers) {
+            var triggerList = {enter: null, exit: null, triggers: null}
+            for (let trigger of action.actionTriggers) {
+              if (trigger.mode === 'enter' || trigger.mode === 'exit') {
+                if (triggerList[trigger.mode] === null) {
+                  triggerList[trigger.mode] = actionML.ele(trigger.mode)
+                }
+                triggerList[trigger.mode].ele(trigger.operation)
+                  .att('id', trigger.entity !== null ? trigger.entity.id : null)
+                  .att('type', trigger.entityType)
+                  .att('predicate', trigger.primitive !== null ? trigger.primitive.name : null)
+                  .att('poi', trigger.poi !== null ? trigger.poi.name : null)
+                  .att('url', trigger.entity !== null ? trigger.entity.url : null)
+                  .att('text', trigger.entity !== null ? (trigger.entity.url === null ? trigger.entity.name : null) : null)
+                  .att('option', trigger.option)
+                  .att('value', trigger.value)
+                  .up()
+              } else {
+                if (triggerList['triggers'] === null) {
+                  triggerList.triggers = actionML.ele('triggers')
+                }
+                triggerList.triggers.ele('trigger')
+                  .att('id', trigger.entity !== null ? trigger.entity.id : null)
+                  .att('type', trigger.entityType)
+                  .att('mode', trigger.mode)
+                  .att('predicate', trigger.primitive !== null ? trigger.primitive.name : null)
+                  .att('poi', trigger.poi !== null ? trigger.poi.name : null)
+                  .att('url', trigger.entity !== null ? trigger.entity.url : null)
+                  .att('text', trigger.entity !== null ? (trigger.entity.url === null ? trigger.entity.name : null) : null)
+                  .att('option', trigger.option)
+                  .att('value', trigger.value)
+              }
+            }
+          }
+
+          const instructionEle = actionML.ele('instruction')
+          instructionEle.ele('title', action.instructionTitle).up()
+          instructionEle.ele('description', action.instructionDescription).up()
+
+          actionML.up()
+        }
+      }
+      activityML.up()
+    }
+    activities.up()
+  }
   return xml
 }

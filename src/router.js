@@ -32,7 +32,7 @@ import ActivityCreate from 'entities/activity/ActivityCreate.vue'
 
 // import Learners from 'pages/Learners.vue'
 
-// import NotFound from 'pages/NotFound.vue'
+import NotFound from 'entities/auth/NotFound.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueMaterial)
@@ -61,8 +61,8 @@ const router = new VueRouter({
     { path: '/activites', component: Activities, name: 'activity.list' },
     { path: '/activity/create', component: ActivityCreate, name: 'activity.list' },
     // { path: '/learners', component: Learners, name: 'learner.list' },
-    { path: '/', component: Authentication, name: 'authentication' }
-    // { path: '*', component: NotFound, name: 'notfound' }
+    { path: '/', component: Authentication, name: 'authentication' },
+    { path: '*', component: NotFound, name: 'notfound' }
 
   ]
 })
