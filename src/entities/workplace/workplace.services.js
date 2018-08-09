@@ -12,8 +12,19 @@ const workplaceServices = {
     })
   },
 
-  getSingle (id) {
-
+  get (id, isXML = false) {
+    return new Promise((resolve) => {
+      axios.get(`workplace/` + id, {
+        headers: {
+          'Content-Type': isXML === true ? 'application/xml' : 'application/json'
+        }
+      }).then(response => {
+        if (response) {
+          console.log(response)
+          resolve(response.data)
+        }
+      })
+    })
   },
 
   postCreate (objWorkplace, listItems) {

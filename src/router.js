@@ -11,6 +11,7 @@ import Dashboard from 'entities/member/Dashboard.vue'
 
 import Workplaces from 'entities/workplace/Workplaces.vue'
 import WorkplaceCreate from 'entities/workplace/WorkplaceCreate.vue'
+import WorkplaceGenerate from 'entities/workplace/WorkplaceGenerate.vue'
 
 // import Workplaces from 'entities/workplace/Workplaces.vue'
 import TangibleCreate from 'entities/tangible/TangibleCreate.vue'
@@ -44,6 +45,7 @@ const router = new VueRouter({
     // { path: '/settings', component: Settings, name: 'member.settings' },
     { path: '/workplaces', component: Workplaces, name: 'workplace.list' },
     { path: '/workplace/create', component: WorkplaceCreate, name: 'workplace.create' },
+    { path: '/workplace/:id/generate', component: WorkplaceGenerate, name: 'workplace.generate' },
     { path: '/tangibles', component: Tangibles, name: 'tangible.list' },
     { path: '/tangible/create', component: TangibleCreate, name: 'tangible.create' },
     { path: '/tangible/:type/edit/:id', component: TangibleCreate, name: 'tangible.update' },
