@@ -23,6 +23,9 @@
             <md-table-cell md-label="Created" md-sort-by="created_at">{{ item.createdAt | moment("MMMM Do YYYY") }}</md-table-cell>
             <md-table-cell md-label="Action">
               <template v-if="user == item.author.id">
+                <md-button @click="generate(item.id)" class="md-icon-button md-raised">
+                  <md-icon>code</md-icon>
+                </md-button>
                 <md-button @click="deleteOperation(item.id)" class="md-icon-button md-raised">
                   <md-icon>delete</md-icon>
                 </md-button>
@@ -40,7 +43,7 @@
   import EntityTabs from 'theme/components/EntityTabs.vue'
   import Header from 'theme/components/Header.vue'
   import workplaceServices from './workplace.services.js'
-  import Pagination from 'vue-paginate-al'
+  import Pagination from 'vue-paginate-ml'
   import DeleteDialog from 'components/DeleteDialog.vue'
   export default {
     components: {
@@ -102,6 +105,9 @@
       },
       hideDialog () {
         this.showDeleteDialog = false
+      },
+      generate (id) {
+        this.$router.push('/workplace/' + id + '/generate')
       }
     },
     created () {

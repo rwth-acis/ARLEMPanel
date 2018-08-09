@@ -50,7 +50,7 @@
   import EntityTabs from 'theme/components/EntityTabs.vue'
   import Header from 'theme/components/Header.vue'
   import activityServices from './activity.services'
-  import Pagination from 'vue-paginate-al'
+  import Pagination from 'vue-paginate-ml'
   import DeleteDialog from 'components/DeleteDialog.vue'
   export default {
     components: {
