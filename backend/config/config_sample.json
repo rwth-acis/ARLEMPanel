@@ -1,21 +1,21 @@
 {
   "development": {
-    "username": "root",
-    "password": "digitalOcean##1",
+    "username": "",
+    "password": "",
     "database": "arlem_new",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": "digitalOcean##1",
+    "username": "",
+    "password": "",
     "database": "arlem_new",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "digitalOcean##1",
+    "username": "",
+    "password": "",
     "database": "arlem_new",
     "host": "127.0.0.1",
     "dialect": "mysql"
