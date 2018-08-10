@@ -1,8 +1,8 @@
 <template>
   <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
     <md-field :class="cssClass">
-      <md-select v-model="model" :placeholder="label" @input="$emit('update:model',model)">
-        <md-option v-for="item in items" :key="item.id" :value="item.id | capitalize">{{ item.name | capitalize }}</md-option>
+      <md-select v-model="value" :placeholder="label" @input="$emit('update:model',value)">
+        <md-option v-for="(item, index) in items" :key="index" :value="item.id">{{ (item.name === '' ? 'Unnamed' : item.name) | capitalize }}</md-option>
       </md-select>
       <span class="md-error">{{ error }}</span>
     </md-field>

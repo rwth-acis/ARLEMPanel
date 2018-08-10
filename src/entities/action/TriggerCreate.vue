@@ -3,26 +3,31 @@
   <div>
     <form novalidate  @submit.prevent="validateUser">
       <div class="md-layout md-gutter">
-        <input-select label="Mode" :model.sync="form.mode" :customItems="modes"></input-select>
-        <teplate v-if="form.mode === 'click'">
-          <div class="md-layout md-gutter">
-            <input-select label="Action" :cssClass="getValidationClass('entityId')" :model.sync="form.entityId" :customItems="actions"></input-select>
-            <input-select label="Viewport" :cssClass="getValidationClass('viewport')" :model.sync="form.viewport" url="viewport"></input-select>
-          </div>
-        </teplate>
-        <teplate v-if="form.mode === 'detect'">
-          <div class="md-layout md-gutter">
-            <input-select label="Tangible" :cssClass="getValidationClass('entityId')" :model.sync="form.entityId" :customItems="tangible/thing"></input-select>
-            <input-select label="Viewport" :cssClass="getValidationClass('viewport')" :model.sync="form.viewport" url="viewport"></input-select>
-          </div>
-        </teplate>
-        <teplate v-if="form.mode === 'sensor'">
-          <div class="md-layout md-gutter">
-            <input-select label="Sensor" :cssClass="getValidationClass('entityId')" :model.sync="form.entityId" :customItems="sensor/select"></input-select>
-            <input-field label="Value" :cssClass="getValidationClass('value')" :model.sync="form.value"></input-field>
-          </div>
-        </teplate>
+        <input-select label="Mode" @change="updateTrigger" :model.sync="actions[currentAction].triggers[currentTrigger].mode" :customItems="modes"></input-select>
+        <template v-if="actions[currentAction].triggers[currentTrigger].mode === 'click'">
+          <input-select label="Action" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].entityId" :customItems="actions"></input-select>
+          <input-select label="Viewport" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].viewport" url="viewport"></input-select>
+        </template>
+        <template v-if="actions[currentAction].triggers[currentTrigger].mode === 'detect'">
+          <input-select label="Tangible" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].entityId" url="tangible/thing"></input-select>
+          <input-select label="Viewport" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].viewport" url="viewport"></input-select>
+        </template>
+        <template v-if="actions[currentAction].triggers[currentTrigger].mode === 'sensor'">
+          <input-select label="Sensor" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].entityId" url="sensor/select"></input-select>
+          <input-field label="Value" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].value"></input-field>
+        </template>
+        <template v-if="actions[currentAction].triggers[currentTrigger].mode === 'module'">
+          <input-select label="Module" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].entityId" url="module"></input-select>
+          <input-field label="Value" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].value"></input-field>
+        </template>
       </div>
+        <template v-if="actions[currentAction].triggers[currentTrigger].mode === 'module'">
+          <div class="md-layout md-gutter">
+            <input-select label="Action" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].entityId" :customItems="actions"></input-select>
+            <input-select label="Viewport" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].viewport" url="viewport"></input-select>
+          </div>
+        </template>
+      <md-button type="submit" class="md-raised md-primary" style="margin:0">Save Trigger</md-button>
     </form>
   </div>
 </template>
@@ -52,6 +57,12 @@
         if (mode === 'click') {
           return true
         }
+      },
+      getValidationClass (fieldName) {
+
+      },
+      updateTrigger () {
+
       }
     },
 

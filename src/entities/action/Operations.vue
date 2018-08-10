@@ -33,7 +33,7 @@
             <input-select label="Activate / Deactivate" :cssClass="getValidationClass('operation')" :model.sync="form.operation" :customItems="activateDeactivate"></input-select>
             <input-select label="Type" :cssClass="getValidationClass('entityType')" :model.sync="form.entityType" :customItems="operationType"></input-select>
           </div>
-          <teplate v-if="form.entityType === 'Person' || form.entityType === 'Place' || form.entityType === 'Thing'">
+          <teplate v-if="form.entityType === 'person' || form.entityType === 'place' || form.entityType === 'thing'">
             <div class="md-layout md-gutter">
               <input-select label="Entity" :cssClass="getValidationClass('entityId')" :model.sync="form.entityId" :url="entitySelectUrl"></input-select>
               <input-select label="Viewport" :cssClass="getValidationClass('viewportId')" :model.sync="form.viewportId" url="viewport"></input-select>
@@ -46,7 +46,7 @@
               <input-field label="Options" :cssClass="getValidationClass('option')" :model.sync="form.option"></input-field>
             </div>
           </teplate>
-          <teplate v-if="form.entityType === 'Action'">
+          <teplate v-if="form.entityType === 'action'">
             <div class="md-layout md-gutter">
               <input-select label="Entity" :cssClass="getValidationClass('entityId')" :model.sync="form.entityId" :customItems="actions"></input-select>
               <input-select label="Viewport" :cssClass="getValidationClass('viewport')" :model.sync="form.viewport" url="viewport"></input-select>

@@ -45,6 +45,7 @@ module.exports = (app) => {
   })
 
   app.post('/api/activity', validationMiddleware.validate(validationRules.activity), (req, res) => {
+    var actionIds = []
     activity.create({
       name: req.body.name,
       workplaceId: req.body.workplace,
@@ -68,6 +69,7 @@ module.exports = (app) => {
               instructionDescription: req.body.actions[i].instructionDescription,
               activityId: object.id
             })
+            actionIds.push(actionObject.id)
             if (i === 0) {
               await object.updateAttributes({
                 start: actionObject.id
@@ -81,7 +83,7 @@ module.exports = (app) => {
                   removeSelf: req.body.actions[i].triggers[j].removeSelf,
                   operation: req.body.actions[i].triggers[j].operation,
                   entityType: req.body.actions[i].triggers[j].entityType,
-                  entityId: req.body.actions[i].triggers[j].entityId,
+                  entityId: req.body.actions[i].triggers[j].entityType === 'action' ? actionIds[req.body.actions[i].triggers[j].entityId] : req.body.actions[i].triggers[j].entityId,
                   poi: req.body.actions[i].triggers[j].poi,
                   viewportId: req.body.actions[i].triggers[j].viewportId,
                   primitiveId: req.body.actions[i].triggers[j].predicateId,
@@ -165,6 +167,4 @@ module.exports = (app) => {
       }
     })
   })
-
-
 }

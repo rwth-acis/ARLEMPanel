@@ -75,6 +75,7 @@
       addAction () {
         this.component = 'action-create'
         this.$store.dispatch('addAction', {
+          id: this.actions.length,
           name: '',
           type: 'action',
           instructionTitle: '',
@@ -86,14 +87,14 @@
               text: 'Enter',
               component: 'action-enter-create',
               operations: [],
-              mode: 1,
+              mode: 'enter',
               isValid: true
             },
             {
               text: 'Exit',
               component: 'action-exit-create',
               operations: [],
-              mode: 2,
+              mode: 'exit',
               isValid: true
             }
           ]
@@ -123,16 +124,32 @@
           for (var j = 0; j < _actions[i].triggers.length; j++) {
             if (_actions[i].triggers[j].operations.length > 0) {
               for (var k = 0; k < _actions[i].triggers[j].operations.length; k++) {
-                triggers.push(_actions[i].triggers[j].operations[k])
+                let operation = JSON.parse(JSON.stringify(_actions[i].triggers[j].operations[k]))
+
+                if (_actions[i].triggers[j].mode !== 'enter' && _actions[i].triggers[j].mode !== 'exit') {
+                  _actions[i].triggers[j].operations[k].mode = _actions[i].triggers[j].mode
+                  if (_actions[i].triggers[j].mode === 'click') {
+                    operation.entityType = 'action'
+                  } else if (_actions[i].triggers[j].mode === 'detect') {
+                    operation.entityType = 'thing'
+                  } else if (_actions[i].triggers[j].mode === 'sensor') {
+                    operation.entityType = 'sensor'
+                  } else if (_actions[i].triggers[j].mode === 'module') {
+                    operation.entityType = 'action'
+                  }
+                }
+                operation.viewportId = operation.viewport
+                delete operation.viewport
+                triggers.push(operation)
               }
             }
           }
           actions.push({
             name: _actions[i].name,
             type: 'action',
-            viewport: _actions[i].viewport,
-            instructionTitle: _actions[i].viewport,
-            instructionDescription: _actions[i].viewport,
+            viewportId: _actions[i].viewport,
+            instructionTitle: _actions[i].instructionTitle,
+            instructionDescription: _actions[i].instructionDescription,
             triggers: triggers
           })
         }

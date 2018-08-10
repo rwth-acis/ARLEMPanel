@@ -10,11 +10,12 @@ const state = {
   currentAction: null,
   currentTrigger: null,
   triggerModeIcons: {
-    '1': 'arrow_forward_ios',
-    '2': 'arrow_back_ios',
-    '3': 'mouse',
-    '4': 'filter_tilt_shift',
-    '5': 'memory'
+    'enter': 'arrow_forward_ios',
+    'exit': 'arrow_back_ios',
+    'click': 'mouse',
+    'detect': 'filter_tilt_shift',
+    'sensor': 'memory',
+    'module': 'accessibility_new'
   }
 }
 
@@ -110,10 +111,20 @@ const mutations = {
   addTrigger (state, action) {
     state.currentTrigger = state.actions[state.currentAction].triggers.length
     state.actions[state.currentAction].triggers.push({
-      mode: 3,
+      mode: 'click',
       text: 'Trigger',
       component: 'action-trigger-create',
-      operations: [],
+      operations: [{
+        mode: 'click',
+        removeSelf: null,
+        operation: null,
+        entityType: null,
+        entityId: null,
+        primitiveId: null,
+        poi: null,
+        option: null,
+        viewportId: null
+      }],
       isValid: true
     })
   },
