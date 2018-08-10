@@ -8,13 +8,11 @@
       <h2 class="md-display-2">Create Workplace</h2>
       <workplace-create @saved="savedWorkplace"></workplace-create>
       <template v-if="component !== ''">
-        <keep-alive><component :is="component"></component></keep-alive>
+        <keep-alive><component :is="component" :independent="false"></component></keep-alive>
       </template>
-      <template v-if="component !== ''">
-        <div style="text-align:center">
-          <md-button class="md-raised md-primary" @click="saveWorkplace" style="width:250px;height:50px;">Save Workplace</md-button>
-        </div>
-      </template>
+      <div style="text-align:center">
+        <md-button class="md-raised md-primary" @click="saveWorkplace" style="width:250px;height:50px;">Save Workplace</md-button>
+      </div>
     </div>
     <div class="md-layout-item md-size-30 selected-entities">
       <h2 class="md-display-1">Added Entities</h2>
@@ -62,7 +60,7 @@
   import AppCreate from 'entities/configurable/AppCreate.vue'
   import DeviceCreate from 'entities/configurable/DeviceCreate.vue'
 
-  import SensorCreate from 'entities/sensor/SensorCreate.vue'
+  import SensorCreate from 'entities/sensor/SensorCreateWorkplace.vue'
 
   import workplaceServices from './workplace.services.js'
 

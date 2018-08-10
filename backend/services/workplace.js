@@ -17,8 +17,8 @@ const xmlGenerator = require('../helpers/xmlGenerator')
 
 module.exports = (app) => {
   app.get('/api/entity', validationMiddleware.validate(), (req, res) => {
-    if (req.params.term === '') {
-      entity.findAll({ order: [['id', 'DESC']] }).then((objects) => {
+    if (req.params.term !== '') {
+      entity.findAll({ where: { name: { $like: '%' + req.query.term + '%' } }, order: [['id', 'DESC']] }).then((objects) => {
         if (objects === null) {
           res.json([])
         } else {
@@ -63,13 +63,26 @@ module.exports = (app) => {
       include: [author],
       order: [['id', 'DESC']]
     }
-    workplace.paginate(options).then((objects) => {
+    if(req.query.select === 'true')
+    {
+      workplace.findAll({include: [author], order: [['id', 'DESC']]}).then((objects) => {
+            if (objects === null) {
+              res.json([])
+            } else {
+              res.json(objects)
+            }
+          })
+
+
+    } else {
+      workplace.paginate(options).then((objects) => {
       if (objects === null) {
         res.json([])
       } else {
         res.json(objects)
       }
     })
+    }
   })
 
   app.get('/api/workplace/:id', validationMiddleware.validate(), (req, res) => {

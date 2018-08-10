@@ -6,7 +6,7 @@
     <form novalidate  @submit.prevent="validateUser">
       <div class="md-layout md-gutter">
         <input-field label="Name" :cssClass="getValidationClass('name')" :model.sync="form.name" error="Please enter the name"></input-field>
-        <input-select label="Workplace" :cssClass="getValidationClass('workplace')" :model.sync="form.workplace" error="Please choose a workplace" url="workplace"></input-select>
+        <input-select label="Workplace" :cssClass="getValidationClass('workplace')" :model.sync="form.workplace" error="Please choose a workplace" url="workplace/?select=true"></input-select>
         <input-select label="Language" :cssClass="getValidationClass('language')" :model.sync="form.language" error="Please choose a language" :customItems="languages"></input-select>
       </div>
       <div class="md-layout md-gutter">

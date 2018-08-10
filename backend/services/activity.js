@@ -156,19 +156,15 @@ module.exports = (app) => {
     })
   })
 
-  app.delete('/api/activity/:id', validationMiddleware.validate(), (req, res) => {
-    activity.find({where: {id: req.params.id}}).then((object) => {
-      if (object !== null) {
-        object.destroy().then((innerObject) => {
-          if (innerObject !== null) {
-            res.status(200).json({ messages: 'Activity has been deleted successfully' })
-          } else {
-            res.status(500).json({ messages: 'An unexpected error occured' })
-          }
-        })
+  app.get('/api/activity/:id/action', validationMiddleware.validate(), (req, res) => {
+    action.findAll({where: {activityId: req.params.id}}).then((objects) => {
+      if (objects === null) {
+        res.json([])
       } else {
-        res.status(401).json({ messages: 'Activity does not exists' })
+        res.json(objects)
       }
     })
   })
+
+
 }

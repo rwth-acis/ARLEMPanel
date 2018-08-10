@@ -81,7 +81,7 @@ const tangibleServices = {
 
   postThingCreate (objThing) {
     return new Promise((resolve) => {
-      axios.post(`tangible/thing` + objThing.id, {
+      axios.post(`tangible/thing`, {
         'name': objThing.name,
         'urn': objThing.urn,
         'poi': objThing.pois,

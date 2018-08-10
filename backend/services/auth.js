@@ -20,9 +20,16 @@ module.exports = (app) => {
   })
 
   app.post('/api/signup', validationMiddleware.validate(validationRulues.auth.signup, false), (req, res) => {
-    author.create({name: req.body.name, email: req.body.email, password: md5(req.body.password)}).then(() => {
-      res.json({data: {message: ['Welcome to ARLEM Panel. Please signin.']}})
+    author.findOne({where: {email: req.body.email}}).then(object => {
+      if (object == null) {
+        author.create({name: req.body.name, email: req.body.email, password: md5(req.body.password)}).then(() => {
+          res.json({data: {message: ['Welcome to ARLEM Panel. Please signin.']}})
+        })
+      } else {
+        res.status(401).json({message: ['Email already exists. Please try login.']})
+      }
     })
+
   })
 
   app.post('/api/forget', validationMiddleware.validate(validationRulues.auth.forgot, false), (req, res) => {
