@@ -26,6 +26,16 @@ module.exports = (app) => {
     })
   })
 
+  app.get('/api/tangible/thing/:id/poi', validationMiddleware.validate(), (req, res) => {
+    thing.find({include: [poi, author, detectable], where: {id: req.params.id}}).then((object) => {
+      if (object === null) {
+        res.json([])
+      } else {
+        res.json(object.pois)
+      }
+    })
+  })
+
   app.post('/api/tangible/thing', validationMiddleware.validate(validationRules.tangilbe.thing), (req, res) => {
     thing.create({
       name: req.body.name,

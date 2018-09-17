@@ -11,6 +11,20 @@ const activityServices = {
     })
   },
 
+  get (id, isXML = false) {
+    return new Promise((resolve) => {
+      axios.get(`activity/` + id, {
+        headers: {
+          'Content-Type': isXML === true ? 'application/xml' : 'application/json'
+        }
+      }).then(response => {
+        if (response) {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
   post (createObject) {
     return new Promise((resolve) => {
       axios.post(`activity`, createObject).then(response => {

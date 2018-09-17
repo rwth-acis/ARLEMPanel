@@ -1,7 +1,8 @@
 <template>
   <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
     <md-field :class="cssClass">
-      <md-select v-model="value" :placeholder="label" @input="$emit('update:model',value)">
+      <md-select v-model="value" :placeholder="label">
+        <md-option value="">Choose {{ label }}</md-option>
         <md-option v-for="(item, index) in items" :key="index" :value="item.id">{{ (item.name === '' ? 'Unnamed' : item.name) | capitalize }}</md-option>
       </md-select>
       <span class="md-error">{{ error }}</span>
@@ -26,6 +27,15 @@
             this.items = response.data
           })
         }
+      },
+      model: function (newVal, oldVal) {
+        this.value = this.model
+      },
+      value: function (newVal, oldVal) {
+        if (this.value === null) {
+          this.value = ''
+        }
+        this.$emit('update:model', this.value)
       }
     },
     created () {

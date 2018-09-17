@@ -11,6 +11,7 @@ const actionTrigger = require('../models').actionTrigger
 const primitive = require('../models').primitive
 const device = require('../models').device
 const place = require('../models').place
+const modular = require('../models').modular
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
 const xmlGenerator = require('../helpers/xmlGenerator')
@@ -199,7 +200,7 @@ module.exports = (app) => {
             }
           }
         }
-        var activities = await activity.findAll({where: {workplaceId: req.params.id}, include: [{model: author}, {model: action, include: [{model: device}, {model: place}, {model: primitive}, {model: viewport}, {model: actionTrigger, include: [viewport, primitive, pois]}]}]})
+        var activities = await activity.findAll({where: {workplaceId: req.params.id}, include: [{model: author}, {model: action, include: [{model: device}, {model: place}, {model: primitive}, {model: viewport}, {model: actionTrigger, include: [viewport, primitive, pois, modular]}]}]})
         if (object !== null) {
           activities = JSON.parse(JSON.stringify(activities))
           for (var h = 0; h < activities.length; h++) {
@@ -216,7 +217,7 @@ module.exports = (app) => {
         var contype = req.headers['content-type']
         if (!contype || contype.indexOf('application/json') !== 0) {
           res.set('Content-Type', 'text/xml')
-          res.send(xmlGenerator(workplace).end({ pretty: true }))
+          res.send(xmlGenerator(workplace, 'workplace').end({ pretty: true }))
         } else {
           res.json(workplace)
         }

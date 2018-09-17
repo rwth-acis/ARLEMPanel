@@ -6,10 +6,12 @@ const device = require('../models').device
 const poi = require('../models').poi
 const primitive = require('../models').primitive
 const place = require('../models').place
+const modular = require('../models').modular
 const author = require('../models').author
 const workplace = require('../models').workplace
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
+const xmlGenerator = require('../helpers/xmlGenerator')
 
 module.exports = (app) => {
   app.get('/api/activity', validationMiddleware.validate(), (req, res) => {
@@ -29,18 +31,25 @@ module.exports = (app) => {
   })
 
   app.get('/api/activity/:id', validationMiddleware.validate(), async (req, res) => {
-    const object = await activity.find({where: {id: req.params.id}, include: [{model: author}, {model: action, include: [{model: device}, {model: place}, {model: primitive}, {model: viewport}, {model: actionTrigger, include: [viewport, primitive, poi]}]}]})
+    var object = await activity.find({where: {id: req.params.id}, include: [{model: author}, {model: action, include: [{model: device}, {model: place}, {model: primitive}, {model: viewport}, {model: actionTrigger, include: [viewport, primitive, poi, modular]}]}]})
     if (object === null) {
       res.status(401).json({ messages: 'Activity does not exists' })
     } else {
-      for (var i = 0; i < object.actions.length; i++) {
+      object = JSON.parse(JSON.stringify(object))
+      for (i = 0; i < object.actions.length; i++) {
         for (var j = 0; j < object.actions[i].actionTriggers.length; j++) {
           if (object.actions[i].actionTriggers[j].entityId !== null && object.actions[i].actionTriggers[j].entityType != null) {
-            object.actions[i].actionTriggers[j].entityType = await require('../models')[object.actions[i].actionTriggers[j].entityType].find({where: {id: object.actions[i].actionTriggers[j].entityId}})
+            object.actions[i].actionTriggers[j].entity = await require('../models')[object.actions[i].actionTriggers[j].entityType].find({where: {id: object.actions[i].actionTriggers[j].entityId}})
           }
         }
       }
-      res.json(object)
+      var contype = req.headers['content-type']
+      if (!contype || contype.indexOf('application/json') !== 0) {
+        res.set('Content-Type', 'text/xml')
+        res.send(xmlGenerator(object, 'activity').end({ pretty: true }))
+      } else {
+        res.json(object)
+      }
     }
   })
 
@@ -80,14 +89,16 @@ module.exports = (app) => {
                 await actionTrigger.create({
                   actionId: actionObject.id,
                   mode: req.body.actions[i].triggers[j].mode,
-                  removeSelf: req.body.actions[i].triggers[j].removeSelf,
+                  removeSelf: req.body.actions[i].triggers[j].removeSelf === "" ? null : req.body.actions[i].triggers[j].removeSelf,
                   operation: req.body.actions[i].triggers[j].operation,
                   entityType: req.body.actions[i].triggers[j].entityType,
                   entityId: req.body.actions[i].triggers[j].entityType === 'action' ? actionIds[req.body.actions[i].triggers[j].entityId] : req.body.actions[i].triggers[j].entityId,
                   poi: req.body.actions[i].triggers[j].poi,
                   viewportId: req.body.actions[i].triggers[j].viewportId,
                   primitiveId: req.body.actions[i].triggers[j].predicateId,
-                  option: req.body.actions[i].triggers[j].option
+                  option: req.body.actions[i].triggers[j].option,
+                  value: req.body.actions[i].triggers[j].value,
+                  modularId: req.body.actions[i].triggers[j].modularId
                 })
               }
             }
@@ -143,7 +154,9 @@ module.exports = (app) => {
                       poi: req.body.actions[i].triggers[j].poi,
                       viewportId: req.body.actions[i].triggers[j].viewportId,
                       primitiveId: req.body.actions[i].triggers[j].predicateId,
-                      option: req.body.actions[i].triggers[j].option
+                      option: req.body.actions[i].triggers[j].option,
+                      value: req.body.actions[i].triggers[j].value,
+                      modularId: req.body.actions[i].triggers[j].modularId
                     })
                   }
                 }
@@ -164,6 +177,22 @@ module.exports = (app) => {
         res.json([])
       } else {
         res.json(objects)
+      }
+    })
+  })
+
+  app.delete('/api/activity/:id', validationMiddleware.validate(), (req, res) => {
+    activity.find({where: {id: req.params.id}}).then((object) => {
+      if (object !== null) {
+        object.destroy().then((innerObject) => {
+          if (innerObject !== null) {
+            res.status(200).json({ messages: 'Activity has been deleted successfully' })
+          } else {
+            res.status(500).json({ messages: 'An unexpected error occured' })
+          }
+        })
+      } else {
+        res.status(401).json({ messages: 'Activity does not exists' })
       }
     })
   })

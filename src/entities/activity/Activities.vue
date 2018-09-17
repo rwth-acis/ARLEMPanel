@@ -31,7 +31,9 @@
           <md-table-cell md-label="Workplace" md-sort-by="workplace">{{ item.workplace.name }}</md-table-cell>
           <md-table-cell md-label="Created" md-sort-by="created_at">{{ item.createdAt | moment("MMMM Do YYYY") }}</md-table-cell>
           <md-table-cell md-label="Action">
-            <md-icon>edit</md-icon>
+            <md-button @click="generate(item.id)" class="md-icon-button md-raised">
+              <md-icon>code</md-icon>
+            </md-button>
             <template v-if="user == item.author.id">
               <md-button @click="deleteOperation(item.id)" class="md-icon-button md-raised">
                 <md-icon>delete</md-icon>
@@ -118,6 +120,9 @@
       },
       hideDialog () {
         this.showDeleteDialog = false
+      },
+      generate (id) {
+        this.$router.push('/activity/' + id + '/generate')
       }
     },
     created () {

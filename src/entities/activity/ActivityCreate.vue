@@ -12,7 +12,7 @@
     </div>
     <div class="md-layout-item md-size-70">
       <h1 class="md-display-3" style="margin:15px 0;">Create Activity</h1>
-      <keep-alive><component :is="component" @saved="saveActivityBasics"></component></keep-alive>
+      <keep-alive><component ref="currentComponent" :is="component" @saved="saveActivityBasics"></component></keep-alive>
       <div style="text-align:center" v-if="component !== 'activity-basic'">
         <md-button class="md-raised md-primary" @click="saveActivity(basics, actions)" style="width:250px;height:50px;">Save Activity</md-button>
       </div>
@@ -73,6 +73,16 @@
       },
 
       addAction () {
+        if (this.component === 'activity-basic') {
+          if (this.$refs.currentComponent.$v.$invalid) {
+            this.$refs.currentComponent.validateUser()
+            return
+          }
+        }
+        this.insertAction()
+      },
+
+      insertAction () {
         this.component = 'action-create'
         this.$store.dispatch('addAction', {
           id: this.actions.length,

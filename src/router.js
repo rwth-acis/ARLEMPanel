@@ -29,6 +29,7 @@ import SensorsCreate from 'entities/sensor/SensorCreate.vue'
 // import Activities from 'pages/Activities.vue'
 import Activities from 'entities/activity/Activities.vue'
 import ActivityCreate from 'entities/activity/ActivityCreate.vue'
+import ActivityGenerate from 'entities/activity/ActivityGenerate.vue'
 
 // import Learners from 'pages/Learners.vue'
 
@@ -60,6 +61,7 @@ const router = new VueRouter({
     { path: '/sensor/edit/:id', component: SensorsCreate, name: 'sensor.update' },
     { path: '/activites', component: Activities, name: 'activity.list' },
     { path: '/activity/create', component: ActivityCreate, name: 'activity.list' },
+    { path: '/activity/:id/generate', component: ActivityGenerate, name: 'activity.generate' },
     // { path: '/learners', component: Learners, name: 'learner.list' },
     { path: '/', component: Authentication, name: 'authentication' },
     { path: '*', component: NotFound, name: 'notfound' }

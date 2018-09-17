@@ -71,6 +71,9 @@
 
         if (!this.$v.$invalid) {
           this.save()
+          return true
+        } else {
+          return false
         }
       }
     },

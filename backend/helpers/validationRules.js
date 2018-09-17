@@ -98,6 +98,7 @@ module.exports = {
         entityType: Joi.string().allow(null).allow(''),
         entityId: Joi.number().integer().allow(null).allow(''),
         poi: Joi.allow(null).allow(''),
+        modularId: Joi.number().integer().allow(null),
         value: Joi.allow(null).allow(''),
         viewportId: Joi.number().integer().allow(null).allow(''),
         primitiveId: Joi.number().integer().allow(null).allow(''),

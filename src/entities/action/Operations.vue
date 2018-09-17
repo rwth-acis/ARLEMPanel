@@ -33,25 +33,27 @@
             <input-select label="Activate / Deactivate" :cssClass="getValidationClass('operation')" :model.sync="form.operation" :customItems="activateDeactivate"></input-select>
             <input-select label="Type" :cssClass="getValidationClass('entityType')" :model.sync="form.entityType" :customItems="operationType"></input-select>
           </div>
-          <teplate v-if="form.entityType === 'person' || form.entityType === 'place' || form.entityType === 'thing'">
+          <template v-if="form.entityType === 'person' || form.entityType === 'place' || form.entityType === 'thing'">
             <div class="md-layout md-gutter">
               <input-select label="Entity" :cssClass="getValidationClass('entityId')" :model.sync="form.entityId" :url="entitySelectUrl"></input-select>
               <input-select label="Viewport" :cssClass="getValidationClass('viewportId')" :model.sync="form.viewportId" url="viewport"></input-select>
             </div>
             <div class="md-layout md-gutter">
               <input-select label="Predicate" :cssClass="getValidationClass('primitiveId')" :model.sync="form.primitiveId" url="trigger/primitive"></input-select>
-              <input-field label="POI" :cssClass="getValidationClass('poi')" :model.sync="form.poi"></input-field>
+              <template v-if="form.entityType === 'thing'">
+                <input-select label="POI" :cssClass="getValidationClass('poi')" :model.sync="form.poi" :url="poiSelectUrl"></input-select>
+              </template>
             </div>
             <div class="md-layout md-gutter">
               <input-field label="Options" :cssClass="getValidationClass('option')" :model.sync="form.option"></input-field>
             </div>
-          </teplate>
-          <teplate v-if="form.entityType === 'action'">
+          </template>
+          <template v-if="form.entityType === 'action'">
             <div class="md-layout md-gutter">
               <input-select label="Entity" :cssClass="getValidationClass('entityId')" :model.sync="form.entityId" :customItems="actions"></input-select>
               <input-select label="Viewport" :cssClass="getValidationClass('viewport')" :model.sync="form.viewport" url="viewport"></input-select>
             </div>
-          </teplate>
+          </template>
           <md-progress-bar md-mode="indeterminate" v-if="sending" />
         </form>
       </md-dialog-content>
@@ -80,6 +82,9 @@
       ...mapGetters(['currentOperations', 'actions']),
       entitySelectUrl () {
         return 'entity/' + this.form.entityType
+      },
+      poiSelectUrl () {
+        return 'tangible/thing/' + this.form.entityId + '/poi'
       }
     },
     methods: {
@@ -152,13 +157,14 @@
           option: null,
           viewportId: null
         },
+        poi: [],
         yesno: [
           {id: 0, 'name': 'No'},
           {id: 1, 'name': 'Yes'}
         ],
         activateDeactivate: [
-          {id: 'n', name: 'Deactivate'},
-          {id: 'y', name: 'Activate'}
+          {id: 'deactivate', name: 'Deactivate'},
+          {id: 'activate', name: 'Activate'}
         ],
         operationType: [
           {id: 'thing', name: 'Thing'},

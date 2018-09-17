@@ -17,7 +17,7 @@
           <input-field label="Value" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].value"></input-field>
         </template>
         <template v-if="actions[currentAction].triggers[currentTrigger].mode === 'module'">
-          <input-select label="Module" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].entityId" url="module"></input-select>
+          <input-select label="Type" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].type" url="module"></input-select>
           <input-field label="Value" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].value"></input-field>
         </template>
       </div>
