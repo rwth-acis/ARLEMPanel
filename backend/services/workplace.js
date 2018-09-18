@@ -47,6 +47,16 @@ module.exports = (app) => {
     })
   })
 
+  app.get('/api/entity/:type/:workplace', validationMiddleware.validate(), (req, res) => {
+    workplaceResource.findAll({attributes: [], where: {entityType: req.params.type, workplaceId: req.params.workplace}, include: [{model: entity, where: {type: req.params.type}, required: true}]}).then((objects) => {
+      if (objects === null) {
+        res.json([])
+      } else {
+        res.json(objects.map(object => object.entity))
+      }
+    })
+  })
+
   app.get('/api/viewport', validationMiddleware.validate(), (req, res) => {
     viewport.findAll({ order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {
@@ -64,25 +74,22 @@ module.exports = (app) => {
       include: [author],
       order: [['id', 'DESC']]
     }
-    if(req.query.select === 'true')
-    {
+    if (req.query.select === 'true') {
       workplace.findAll({include: [author], order: [['id', 'DESC']]}).then((objects) => {
-            if (objects === null) {
-              res.json([])
-            } else {
-              res.json(objects)
-            }
-          })
-
-
+        if (objects === null) {
+          res.json([])
+        } else {
+          res.json(objects)
+        }
+      })
     } else {
       workplace.paginate(options).then((objects) => {
-      if (objects === null) {
-        res.json([])
-      } else {
-        res.json(objects)
-      }
-    })
+        if (objects === null) {
+          res.json([])
+        } else {
+          res.json(objects)
+        }
+      })
     }
   })
 

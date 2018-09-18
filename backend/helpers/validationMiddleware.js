@@ -27,7 +27,8 @@ var validate = function (schema = {}, validateHeader = true) {
       if (err) {
         var details = []
         err.details.forEach(function (d) {
-          details.push({message: d.message, path: d.path})
+          // For debugging just place d.path
+          details.push(d.message) // + ' at ' + d.path
         })
 
         return next(new BadRequestError(details, res))

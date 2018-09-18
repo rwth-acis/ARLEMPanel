@@ -9,11 +9,7 @@
 </template>
 
 <script>
-  export default {
-    mounted () {
-      console.log('Main Search box mounted.')
-    }
-  }
+  export default {}
 </script>
 
 <style lang="scss" scoped>

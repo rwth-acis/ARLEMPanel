@@ -116,9 +116,6 @@
           return ''
         }
       }
-    },
-    mounted () {
-      console.log('Sign Up.')
     }
   }
 </script>

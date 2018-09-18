@@ -5,9 +5,6 @@
 
 <script>
     export default {
-        mounted () {
-            console.log('Change Password Mounted.')
-        }
     }
 </script>
 <style scoped>

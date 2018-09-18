@@ -84,9 +84,6 @@
         }
       }
     },
-    mounted () {
-      console.log('Sign Up.')
-    },
     validations: {
       form: {
         name: {

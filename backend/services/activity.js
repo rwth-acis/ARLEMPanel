@@ -36,7 +36,7 @@ module.exports = (app) => {
       res.status(401).json({ messages: 'Activity does not exists' })
     } else {
       object = JSON.parse(JSON.stringify(object))
-      for (i = 0; i < object.actions.length; i++) {
+      for (var i = 0; i < object.actions.length; i++) {
         for (var j = 0; j < object.actions[i].actionTriggers.length; j++) {
           if (object.actions[i].actionTriggers[j].entityId !== null && object.actions[i].actionTriggers[j].entityType != null) {
             object.actions[i].actionTriggers[j].entity = await require('../models')[object.actions[i].actionTriggers[j].entityType].find({where: {id: object.actions[i].actionTriggers[j].entityId}})
@@ -89,7 +89,7 @@ module.exports = (app) => {
                 await actionTrigger.create({
                   actionId: actionObject.id,
                   mode: req.body.actions[i].triggers[j].mode,
-                  removeSelf: req.body.actions[i].triggers[j].removeSelf === "" ? null : req.body.actions[i].triggers[j].removeSelf,
+                  removeSelf: req.body.actions[i].triggers[j].removeSelf === '' ? null : req.body.actions[i].triggers[j].removeSelf,
                   operation: req.body.actions[i].triggers[j].operation,
                   entityType: req.body.actions[i].triggers[j].entityType,
                   entityId: req.body.actions[i].triggers[j].entityType === 'action' ? actionIds[req.body.actions[i].triggers[j].entityId] : req.body.actions[i].triggers[j].entityId,

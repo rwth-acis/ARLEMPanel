@@ -117,7 +117,6 @@
       deleteOperation (id, type) {
         this.entityId = id
         this.entityType = type
-        console.log(this.entityType)
         this.showDeleteDialog = true
       },
       deleteIt () {

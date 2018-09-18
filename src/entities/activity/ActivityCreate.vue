@@ -52,10 +52,8 @@
     methods: {
       activeTabClass (index) {
         if (index === -1) {
-          console.log(index)
           return this.component === 'activity-basic' ? 'md-primary' : ''
         } else {
-          console.log(this.currentAction)
           return this.currentAction === index ? 'md-primary' : ''
         }
       },
@@ -164,7 +162,6 @@
           })
         }
         _basics.actions = actions
-        console.log(JSON.stringify(actions))
         activityServices.post(_basics)
           .then((response) => {
             this.$store.dispatch('showSnackBar', String('Activity has been added successfully.'))

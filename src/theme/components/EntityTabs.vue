@@ -40,9 +40,6 @@
           return 'md-raised'
         }
       }
-    },
-    mounted () {
-      console.log('Sign Up.')
     }
   }
 </script>

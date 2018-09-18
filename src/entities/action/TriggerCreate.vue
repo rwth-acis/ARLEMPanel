@@ -27,7 +27,7 @@
             <input-select label="Viewport" :model.sync="actions[currentAction].triggers[currentTrigger].operations[0].viewport" url="viewport"></input-select>
           </div>
         </template>
-      <md-button type="submit" class="md-raised md-primary" style="margin:0">Save Trigger</md-button>
+      <!--<md-button type="submit" class="md-raised md-primary" style="margin:0">Save Trigger</md-button>-->
     </form>
   </div>
 </template>

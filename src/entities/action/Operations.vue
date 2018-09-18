@@ -5,11 +5,10 @@
           <input-select label="Remove Self" :model.sync="form.removeSelf" :customItems="yesno"></input-select>
       </div>
     </div>
-
     <md-table v-model="currentOperations" md-card>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
-          <h1 class="md-title" style="float:left">Activations & Deactivations</h1>
+          <h1 class="md-title" style="float:left">Activations &amp; Deactivations</h1>
           <md-button style="float:right" class="md-primary md-raised" @click="newOperation">Add</md-button>
           <div style="clear:both"></div>
         </div>
@@ -39,7 +38,7 @@
               <input-select label="Viewport" :cssClass="getValidationClass('viewportId')" :model.sync="form.viewportId" url="viewport"></input-select>
             </div>
             <div class="md-layout md-gutter">
-              <input-select label="Predicate" :cssClass="getValidationClass('primitiveId')" :model.sync="form.primitiveId" url="trigger/primitive"></input-select>
+              <input-select label="Predicate" :cssClass="getValidationClass('primitiveId')" :model.sync="form.primitiveId" :url="primitiveUrl"></input-select>
               <template v-if="form.entityType === 'thing'">
                 <input-select label="POI" :cssClass="getValidationClass('poi')" :model.sync="form.poi" :url="poiSelectUrl"></input-select>
               </template>
@@ -79,12 +78,15 @@
     },
     props: ['mode', 'remove'],
     computed: {
-      ...mapGetters(['currentOperations', 'actions']),
+      ...mapGetters(['currentOperations', 'actions', 'basics']),
       entitySelectUrl () {
-        return 'entity/' + this.form.entityType
+        return 'entity/' + this.form.entityType + '/' + this.basics.workplace
       },
       poiSelectUrl () {
         return 'tangible/thing/' + this.form.entityId + '/poi'
+      },
+      primitiveUrl () {
+        return 'entity/predicate/' + this.basics.workplace
       }
     },
     methods: {

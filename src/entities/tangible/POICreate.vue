@@ -106,6 +106,7 @@
         this.form.x = 0
         this.form.y = 0
         this.form.z = 0
+        this.form.name = ''
       }
     }
   }

@@ -97,6 +97,7 @@ module.exports = {
         operation: Joi.string().allow(null).allow(''),
         entityType: Joi.string().allow(null).allow(''),
         entityId: Joi.number().integer().allow(null).allow(''),
+        type: Joi.number().allow(null).allow(''),
         poi: Joi.allow(null).allow(''),
         modularId: Joi.number().integer().allow(null),
         value: Joi.allow(null).allow(''),
