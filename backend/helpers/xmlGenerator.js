@@ -201,34 +201,36 @@ module.exports = (workplace, type) => {
             if (action.actionTriggers) {
               var triggerList = {enter: null, exit: null, triggers: null}
               for (let trigger of action.actionTriggers) {
-                if (trigger.mode === 'enter' || trigger.mode === 'exit') {
-                  if (triggerList[trigger.mode] === null) {
-                    triggerList[trigger.mode] = actionML.ele(trigger.mode)
+                if (trigger && trigger.entity) {
+                  if (trigger.mode === 'enter' || trigger.mode === 'exit') {
+                    if (triggerList[trigger.mode] === null) {
+                      triggerList[trigger.mode] = actionML.ele(trigger.mode)
+                    }
+                    triggerList[trigger.mode].ele(trigger.operation)
+                      .att('id', trigger.entity !== null ? trigger.entity.id : null)
+                      .att('type', trigger.entityType)
+                      .att('predicate', trigger.primitive !== null ? trigger.primitive.name : null)
+                      .att('poi', trigger.poi !== null ? trigger.poi.name : null)
+                      .att('url', trigger.entity !== null ? trigger.entity.url : null)
+                      .att('text', trigger.entity !== null ? (trigger.entity.url === null ? trigger.entity.name : null) : null)
+                      .att('option', trigger.option)
+                      .att('value', trigger.value)
+                      .up()
+                  } else {
+                    if (triggerList['triggers'] === null) {
+                      triggerList.triggers = actionML.ele('triggers')
+                    }
+                    triggerList.triggers.ele('trigger')
+                      .att('id', trigger.entity !== null ? trigger.entity.id : null)
+                      .att('type', trigger.entityType)
+                      .att('mode', trigger.mode)
+                      .att('predicate', trigger.primitive !== null ? trigger.primitive.name : null)
+                      .att('poi', trigger.poi !== null ? trigger.poi.name : null)
+                      .att('url', trigger.entity !== null ? trigger.entity.url : null)
+                      .att('text', trigger.entity !== null ? (trigger.entity.url === null ? trigger.entity.name : null) : null)
+                      .att('option', trigger.option)
+                      .att('value', trigger.value)
                   }
-                  triggerList[trigger.mode].ele(trigger.operation)
-                    .att('id', trigger.entity !== null ? trigger.entity.id : null)
-                    .att('type', trigger.entityType)
-                    .att('predicate', trigger.primitive !== null ? trigger.primitive.name : null)
-                    .att('poi', trigger.poi !== null ? trigger.poi.name : null)
-                    .att('url', trigger.entity !== null ? trigger.entity.url : null)
-                    .att('text', trigger.entity !== null ? (trigger.entity.url === null ? trigger.entity.name : null) : null)
-                    .att('option', trigger.option)
-                    .att('value', trigger.value)
-                    .up()
-                } else {
-                  if (triggerList['triggers'] === null) {
-                    triggerList.triggers = actionML.ele('triggers')
-                  }
-                  triggerList.triggers.ele('trigger')
-                    .att('id', trigger.entity !== null ? trigger.entity.id : null)
-                    .att('type', trigger.entityType)
-                    .att('mode', trigger.mode)
-                    .att('predicate', trigger.primitive !== null ? trigger.primitive.name : null)
-                    .att('poi', trigger.poi !== null ? trigger.poi.name : null)
-                    .att('url', trigger.entity !== null ? trigger.entity.url : null)
-                    .att('text', trigger.entity !== null ? (trigger.entity.url === null ? trigger.entity.name : null) : null)
-                    .att('option', trigger.option)
-                    .att('value', trigger.value)
                 }
               }
             }
