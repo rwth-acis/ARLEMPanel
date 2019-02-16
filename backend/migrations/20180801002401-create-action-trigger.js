@@ -38,6 +38,9 @@ module.exports = {
       predicateId: {
         type: Sequelize.INTEGER
       },
+      primitiveId: {
+        type: Sequelize.INTEGER
+      },
       option: {
         type: Sequelize.STRING
       },

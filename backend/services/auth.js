@@ -10,7 +10,7 @@ module.exports = (app) => {
   app.patch('/api/signin', validationMiddleware.validate(validationRulues.auth.signin, false), (req, res) => {
     author.findOne({where: {email: req.body.email, password: md5(req.body.password)}}).then(object => {
       if (object == null) {
-        res.status(401).json({message: ['Invalid credentails. Please try again.']})
+        res.status(401).json(['Invalid credentails. Please try again'])
       } else {
         object.token = md5(Date())
         object.save()
@@ -23,19 +23,18 @@ module.exports = (app) => {
     author.findOne({where: {email: req.body.email}}).then(object => {
       if (object == null) {
         author.create({name: req.body.name, email: req.body.email, password: md5(req.body.password)}).then(() => {
-          res.json({data: {message: ['Welcome to ARLEM Panel. Please signin.']}})
+          res.json({data: 'Welcome to ARLEM Panel. Please signin.'})
         })
       } else {
-        res.status(401).json({message: ['Email already exists. Please try login.']})
+        res.status(401).json(['Email already exists. Please try login.'])
       }
     })
-
   })
 
   app.post('/api/forget', validationMiddleware.validate(validationRulues.auth.forgot, false), (req, res) => {
     author.findOne({where: {email: req.body.email}}).then(object => {
       if (object == null) {
-        res.status(401).json({message: ['Account does not exists, please try again.']})
+        res.status(401).json(['Account does not exists, please try again.'])
       } else {
         res.json({message: 'An email has been sent your email address with further instructions.'})
       }
@@ -45,7 +44,7 @@ module.exports = (app) => {
   app.patch('/api/change/:code', validationMiddleware.validate(validationRulues.auth.change, false), (req, res) => {
     author.findById(req.params.code).then(object => {
       if (object == null) {
-        res.status(401).json({message: ['Account does not exists, please try again.']})
+        res.status(401).json(['Account does not exists, please try again.'])
       } else {
         object.password = md5(req.body.password)
         object.save()

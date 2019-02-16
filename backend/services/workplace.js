@@ -207,8 +207,9 @@ module.exports = (app) => {
             }
           }
         }
-        var activities = await activity.findAll({where: {workplaceId: req.params.id}, include: [{model: author}, {model: action, include: [{model: device}, {model: place}, {model: primitive}, {model: viewport}, {model: actionTrigger, include: [viewport, primitive, pois, modular]}]}]})
-        if (object !== null) {
+        var activities = await activity.findAll({where: {workplaceId: req.params.id}})
+        if (activities !== null && activities.length > 0) {
+          activities = await activity.findAll({where: {workplaceId: req.params.id}, include: [{model: author}, {model: action, include: [{model: device}, {model: place}, {model: primitive}, {model: viewport}, {model: actionTrigger, include: [viewport, primitive, pois, modular]}]}]})
           activities = JSON.parse(JSON.stringify(activities))
           for (var h = 0; h < activities.length; h++) {
             for (i = 0; i < activities[h].actions.length; i++) {

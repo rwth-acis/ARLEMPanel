@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     models.actionTrigger.belongsTo(models.action, {foreignKey: 'actionId'})
     models.actionTrigger.belongsTo(models.viewport, {foreignKey: 'viewportId'})
     models.actionTrigger.belongsTo(models.primitive, {foreignKey: 'primitiveId'})
-    models.actionTrigger.belongsTo(models.modular, {foreignKey: 'modularId'})    
+    models.actionTrigger.belongsTo(models.modular, {foreignKey: 'modularId'})
     models.actionTrigger.belongsTo(models.poi, {foreignKey: 'poiId'})
   }
   return actionTrigger

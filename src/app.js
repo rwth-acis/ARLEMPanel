@@ -21,6 +21,7 @@ Vue.filter('capitalize', function (value) {
 axios.defaults.baseURL = '/api'
 axios.interceptors.response.use(undefined, function (error) {
   if (error.response.status !== 200) {
+    console.log(error.response.data)
     var message = ''
     for (var item of error.response.data) {
       message += item + '. '
