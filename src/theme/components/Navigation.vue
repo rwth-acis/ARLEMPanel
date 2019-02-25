@@ -18,13 +18,13 @@
         </li>
         <li><router-link :to="{ name: 'activity.list' }">Activities</router-link></li>
         <li><a @click="signOut()">SignOut</a></li>
-        <li style="display: none">
+        <!-- <li style="display: none">
           <span>Account</span>
           <ul>
             <li><router-link :to="{ name: 'member.settings' }">Settings</router-link></li>
             <li><a @click="signOut()">SignOut</a></li>
           </ul>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
