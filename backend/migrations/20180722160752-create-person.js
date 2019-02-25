@@ -47,7 +47,7 @@ module.exports = {
       })
       queryInterface.addConstraint('people', ['detectableId'], {
         type: 'foreign key',
-        name: 'places_detectables_fk_constraint',
+        name: 'persons_detectables_fk_constraint',
         references: {
           table: 'detectables',
           field: 'id'
