@@ -28,7 +28,7 @@ yarn install
 
 ### Setting Database Configuration
 
-User will have to provide database configuation in the file backend/config.json in the following format.
+User will have to provide database configuation in the file backend/config/config.json in the following format.
 
 ```
 {
