@@ -52,14 +52,14 @@
           configurableServices.putDeviceUpdate(this.form)
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Device has been updated successfully.')
-              this.$router.push('/configurables')
+              this.$router.push({ name: 'configurable.list' })
             })
         } else {
           configurableServices.postDeviceCreate(this.form)
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Device has been added successfully.')
               if (this.independent && this.independent === true) {
-                this.$router.push('/configurables')
+                this.$router.push({ name: 'configurable.list' })
               } else {
                 this.$store.dispatch('addWorkplaceItem', {
                   'id': response.id,

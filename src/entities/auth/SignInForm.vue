@@ -56,7 +56,7 @@
         this.$store.dispatch('signIn', this.form).then(() => {
           this.email = ''
           this.password = ''
-          this.$router.push('/dashboard')
+          this.$router.push({ name: 'member.dashboard' })
         })
       },
       getValidationClass (fieldName) {
@@ -87,7 +87,7 @@
     mounted () {
       document.title = 'ARLEM Panel'
       if (this.isAuthenticated === true) {
-        this.$router.push('/dashboard')
+        this.$router.push({ name: 'member.dashboard' })
       }
     },
     validations: {

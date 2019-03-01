@@ -1,7 +1,7 @@
 <template>
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
-        <page-header title="Workplaces" description="Workplaces are the main part of ARLME Panel" buttonText="Create Workplace" buttonUrl="/workplace/create"></page-header>
+        <page-header title="Workplaces" description="Workplaces are the main part of ARLME Panel" buttonText="Create Workplace" buttonUrl="workplace.create"></page-header>
         <entity-tab entity="Workplaces"></entity-tab>
         <md-table v-model="searched" md-card>
           <md-table-toolbar>
@@ -84,7 +84,7 @@
       },
       newLink () {
         // alert('transfer');
-        this.$router.push('/workplace/create')
+        this.$router.push({ name: 'workplace.create' })
       },
       loadData () {
         workplaceServices.getList({page: this.page}).then(response => {
@@ -107,7 +107,7 @@
         this.showDeleteDialog = false
       },
       generate (id) {
-        this.$router.push('/workplace/' + id + '/generate')
+        this.$router.push({ name: 'workplace.generate', params: { id } })
       }
     },
     created () {

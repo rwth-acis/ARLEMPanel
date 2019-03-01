@@ -64,7 +64,7 @@
           sensorServices.putUpdate(this.form)
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Sensor has been updated successfully.')
-              this.$router.push('/sensors')
+              this.$router.push({ name: 'sensor.list' })
             })
         } else {
           sensorServices.postCreate(this.form)

@@ -1,9 +1,10 @@
 const modular = require('../models').modular
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
+const config = require('../../config/default.json')
 
 module.exports = (app) => {
-  app.get('/api/module', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/module', validationMiddleware.validate(), (req, res) => {
     modular.findAll({ order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {
         res.json([])
@@ -13,7 +14,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post('/api/module', validationMiddleware.validate(validationRules.tangilbe.person), (req, res) => {
+  app.post(config.baseUrl + '/api/module', validationMiddleware.validate(validationRules.tangilbe.person), (req, res) => {
     modular.create({
       name: req.body.name,
       authorId: req.author.id
@@ -26,7 +27,7 @@ module.exports = (app) => {
     })
   })
 
-  app.put('/api/module/:id', validationMiddleware.validate(validationRules.tangilbe.person), (req, res) => {
+  app.put(config.baseUrl + '/api/module/:id', validationMiddleware.validate(validationRules.tangilbe.person), (req, res) => {
     modular.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.updateAttributes({
@@ -45,7 +46,7 @@ module.exports = (app) => {
     })
   })
 
-  app.delete('/api/module/:id', validationMiddleware.validate(), (req, res) => {
+  app.delete(config.baseUrl + '/api/module/:id', validationMiddleware.validate(), (req, res) => {
     modular.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.destroy().then((innerObject) => {

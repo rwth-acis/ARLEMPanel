@@ -1,9 +1,10 @@
 const device = require('../models').device
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
+const config = require('../../config/default.json')
 
 module.exports = (app) => {
-  app.get('/api/configurable/device', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/configurable/device', validationMiddleware.validate(), (req, res) => {
     device.findAll({ order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {
         res.json([])
@@ -13,7 +14,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/api/configurable/device/:id', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/configurable/device/:id', validationMiddleware.validate(), (req, res) => {
     device.find({where: {id: req.params.id}}).then((object) => {
       if (object === null) {
         res.status(401).json({ messages: 'Person does not exists' })
@@ -23,7 +24,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post('/api/configurable/device', validationMiddleware.validate(validationRules.configurable.device), (req, res) => {
+  app.post(config.baseUrl + '/api/configurable/device', validationMiddleware.validate(validationRules.configurable.device), (req, res) => {
     device.create({
       name: req.body.name,
       type: req.body.type,
@@ -37,7 +38,7 @@ module.exports = (app) => {
     })
   })
 
-  app.put('/api/configurable/device/:id', validationMiddleware.validate(validationRules.configurable.device), (req, res) => {
+  app.put(config.baseUrl + '/api/configurable/device/:id', validationMiddleware.validate(validationRules.configurable.device), (req, res) => {
     device.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.updateAttributes({
@@ -57,7 +58,7 @@ module.exports = (app) => {
     })
   })
 
-  app.delete('/api/configurable/device/:id', validationMiddleware.validate(), (req, res) => {
+  app.delete(config.baseUrl + '/api/configurable/device/:id', validationMiddleware.validate(), (req, res) => {
     device.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.destroy().then((innerObject) => {

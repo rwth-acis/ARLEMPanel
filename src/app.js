@@ -3,12 +3,13 @@ import AppLayout from './theme/layouts/Main.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-
 const app = new Vue({
   router,
   ...AppLayout,
   store
 })
+
+const config = require('../config/default.json')
 
 Vue.use(require('vue-moment'))
 
@@ -18,7 +19,7 @@ Vue.filter('capitalize', function (value) {
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = config.baseUrl + '/api'
 axios.interceptors.response.use(undefined, function (error) {
   if (error.response.status !== 200) {
     console.log(error.response.data)

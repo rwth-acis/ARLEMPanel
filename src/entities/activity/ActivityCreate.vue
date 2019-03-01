@@ -165,7 +165,7 @@
         activityServices.post(_basics)
           .then((response) => {
             this.$store.dispatch('showSnackBar', String('Activity has been added successfully.'))
-            this.$router.push('/activites')
+            this.$router.push({ name: 'activity.list' })
           })
       }
     }

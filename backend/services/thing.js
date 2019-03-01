@@ -4,9 +4,10 @@ const author = require('../models').author
 const detectable = require('../models').detectable
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
+const config = require('../../config/default.json')
 
 module.exports = (app) => {
-  app.get('/api/tangible/thing', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/tangible/thing', validationMiddleware.validate(), (req, res) => {
     thing.findAll({ include: [poi], order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {
         res.json([])
@@ -16,7 +17,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/api/tangible/thing/:id', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/tangible/thing/:id', validationMiddleware.validate(), (req, res) => {
     thing.find({include: [poi, author, detectable], where: {id: req.params.id}}).then((object) => {
       if (object === null) {
         res.status(401).json({ messages: 'Thing does not exists' })
@@ -26,7 +27,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/api/tangible/thing/:id/poi', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/tangible/thing/:id/poi', validationMiddleware.validate(), (req, res) => {
     thing.find({include: [poi, author, detectable], where: {id: req.params.id}}).then((object) => {
       if (object === null) {
         res.json([])
@@ -36,7 +37,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post('/api/tangible/thing', validationMiddleware.validate(validationRules.tangilbe.thing), (req, res) => {
+  app.post(config.baseUrl + '/api/tangible/thing', validationMiddleware.validate(validationRules.tangilbe.thing), (req, res) => {
     thing.create({
       name: req.body.name,
       urn: req.body.urn,
@@ -63,7 +64,7 @@ module.exports = (app) => {
     })
   })
 
-  app.put('/api/tangible/thing/:id', validationMiddleware.validate(validationRules.tangilbe.thing), (req, res) => {
+  app.put(config.baseUrl + '/api/tangible/thing/:id', validationMiddleware.validate(validationRules.tangilbe.thing), (req, res) => {
     thing.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.updateAttributes({
@@ -99,7 +100,7 @@ module.exports = (app) => {
     })
   })
 
-  app.delete('/api/tangible/thing/:id', validationMiddleware.validate(), (req, res) => {
+  app.delete(config.baseUrl + '/api/tangible/thing/:id', validationMiddleware.validate(), (req, res) => {
     thing.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.destroy().then((innerObject) => {

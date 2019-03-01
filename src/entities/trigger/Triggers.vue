@@ -1,7 +1,7 @@
 <template>
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
-        <page-header title="Triggers" description="Triggers are the physical objects present within the workplace. These objects are used / required to complete the activity." buttonText="Create Trigger" buttonUrl="/trigger/create"></page-header>
+        <page-header title="Triggers" description="Triggers are the physical objects present within the workplace. These objects are used / required to complete the activity." buttonText="Create Trigger" buttonUrl="trigger.create"></page-header>
         <entity-tab entity="Triggers"></entity-tab>
         <md-table v-model="searched" md-card>
         <md-table-toolbar>
@@ -33,7 +33,7 @@
           <md-table-cell md-label="Created" md-sort-by="created">{{ item.createdAt | moment("MMMM Do YYYY") }}</md-table-cell>
           <md-table-cell md-label="Action">
             <template v-if="user == item.author.id">
-              <md-button @click="$router.push('/trigger/' + item.category + '/edit/' + item.id)" class="md-icon-button md-raised">
+              <md-button @click="$router.push({ name: 'trigger.update', params: {type: item.category, id: item.id} })" class="md-icon-button md-raised">
                 <md-icon>edit</md-icon>
               </md-button>
               <md-button @click="deleteOperation(item.id, item.category)" class="md-icon-button md-raised">
@@ -106,7 +106,7 @@
         this.searched = ''
       },
       newLink () {
-        this.$router.push('/trigger/create')
+        this.$router.push({ name: 'trigger.create' })
       },
       loadData () {
         triggerServices.getList({page: this.page}).then(response => {

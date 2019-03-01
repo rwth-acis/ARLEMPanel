@@ -15,9 +15,10 @@ const modular = require('../models').modular
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
 const xmlGenerator = require('../helpers/xmlGenerator')
+const config = require('../../config/default.json')
 
 module.exports = (app) => {
-  app.get('/api/entity', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/entity', validationMiddleware.validate(), (req, res) => {
     if (req.params.term !== '') {
       entity.findAll({ where: { name: { $like: '%' + req.query.term + '%' } }, order: [['id', 'DESC']] }).then((objects) => {
         if (objects === null) {
@@ -37,7 +38,7 @@ module.exports = (app) => {
     }
   })
 
-  app.get('/api/entity/:type', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/entity/:type', validationMiddleware.validate(), (req, res) => {
     entity.findAll({ where: {type: req.params.type}, order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {
         res.json([])
@@ -47,7 +48,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/api/entity/:type/:workplace', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/entity/:type/:workplace', validationMiddleware.validate(), (req, res) => {
     workplaceResource.findAll({attributes: [], where: {entityType: req.params.type, workplaceId: req.params.workplace}, include: [{model: entity, where: {type: req.params.type}, required: true}]}).then((objects) => {
       if (objects === null) {
         res.json([])
@@ -57,7 +58,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/api/viewport', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/viewport', validationMiddleware.validate(), (req, res) => {
     viewport.findAll({ order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {
         res.json([])
@@ -67,7 +68,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/api/workplace', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/workplace', validationMiddleware.validate(), (req, res) => {
     const options = {
       page: req.query.page && req.query.page > 0 ? req.query.page : 1,
       paginate: 25,
@@ -93,7 +94,7 @@ module.exports = (app) => {
     }
   })
 
-  app.get('/api/workplace/:id', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/workplace/:id', validationMiddleware.validate(), (req, res) => {
     workplace.find({where: {id: req.params.id}, include: [{model: author}, {model: workplaceResource}]}).then(async (object) => {
       if (object === null) {
         res.status(401).json({ messages: 'Workplace does not exists' })
@@ -233,7 +234,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post('/api/workplace', validationMiddleware.validate(validationRules.workplace), (req, res) => {
+  app.post(config.baseUrl + '/api/workplace', validationMiddleware.validate(validationRules.workplace), (req, res) => {
     workplace.create({
       name: req.body.name,
       authorId: req.author.id
@@ -257,7 +258,7 @@ module.exports = (app) => {
     })
   })
 
-  app.put('/api/workplace/:id', validationMiddleware.validate(validationRules.workplace), (req, res) => {
+  app.put(config.baseUrl + '/api/workplace/:id', validationMiddleware.validate(validationRules.workplace), (req, res) => {
     workplace.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.updateAttributes({
@@ -288,7 +289,7 @@ module.exports = (app) => {
     })
   })
 
-  app.delete('/api/workplace/:id', validationMiddleware.validate(), (req, res) => {
+  app.delete(config.baseUrl + '/api/workplace/:id', validationMiddleware.validate(), (req, res) => {
     workplace.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.destroy().then((innerObject) => {

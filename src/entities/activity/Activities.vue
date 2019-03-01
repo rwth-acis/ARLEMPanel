@@ -1,7 +1,7 @@
 <template>
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
-        <page-header title="Activites" description="Activities are the main part of ARLME Panel" buttonText="Create Activity" buttonUrl="/activity/create"></page-header>
+        <page-header title="Activites" description="Activities are the main part of ARLME Panel" buttonText="Create Activity" buttonUrl="activity.create"></page-header>
         <div style="clear: both;padding: 20px">&nbsp;</div>
         <md-table v-model="searched" :md-sort.sync="currentSort" :md-sort-order.sync="currentSortOrder" :md-sort-fn="customSort"  md-card @md-selected="onSelect">
         <md-table-toolbar>
@@ -99,7 +99,7 @@
         this.searched = ''
       },
       newLink () {
-        this.$router.push('/activity/create')
+        this.$router.push({ name: 'activity.create' })
       },
       loadData () {
         activityServices.getList({page: this.page}).then(response => {
@@ -122,7 +122,7 @@
         this.showDeleteDialog = false
       },
       generate (id) {
-        this.$router.push('/activity/' + id + '/generate')
+        this.$router.push({ name: 'activity.generate', params: {id} })
       }
     },
     created () {

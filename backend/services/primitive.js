@@ -1,9 +1,10 @@
 const primitive = require('../models').primitive
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
+const config = require('../../config/default.json')
 
 module.exports = (app) => {
-  app.get('/api/trigger/primitive', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/trigger/primitive', validationMiddleware.validate(), (req, res) => {
     primitive.findAll({ order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {
         res.json([])
@@ -13,7 +14,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/api/trigger/primitive/:id', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/trigger/primitive/:id', validationMiddleware.validate(), (req, res) => {
     primitive.find({where: {id: req.params.id}}).then((object) => {
       if (object === null) {
         res.status(401).json({ messages: 'Primitive does not exists' })
@@ -23,7 +24,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post('/api/trigger/primitive', validationMiddleware.validate(validationRules.trigger.primitive), (req, res) => {
+  app.post(config.baseUrl + '/api/trigger/primitive', validationMiddleware.validate(validationRules.trigger.primitive), (req, res) => {
     primitive.create({
       name: req.body.name,
       category: req.body.category,
@@ -42,7 +43,7 @@ module.exports = (app) => {
     })
   })
 
-  app.put('/api/trigger/primitive/:id', validationMiddleware.validate(validationRules.trigger.primitive), (req, res) => {
+  app.put(config.baseUrl + '/api/trigger/primitive/:id', validationMiddleware.validate(validationRules.trigger.primitive), (req, res) => {
     primitive.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.updateAttributes({
@@ -67,7 +68,7 @@ module.exports = (app) => {
     })
   })
 
-  app.delete('/api/trigger/primitive/:id', validationMiddleware.validate(), (req, res) => {
+  app.delete(config.baseUrl + '/api/trigger/primitive/:id', validationMiddleware.validate(), (req, res) => {
     primitive.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.destroy().then((innerObject) => {

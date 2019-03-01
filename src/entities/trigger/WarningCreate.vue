@@ -57,14 +57,14 @@
           triggerServices.putPredicateUpdate(this.form, 'warning')
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Warning has been updated successfully.')
-              this.$router.push('/triggers')
+              this.$router.push({ name: 'trigger.list' })
             })
         } else {
           triggerServices.postPredicateCreate(this.form, 'warning')
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Warning has been added successfully.')
               if (this.independent && this.independent === true) {
-                this.$router.push('/triggers')
+                this.$router.push({ name: 'trigger.list' })
               } else {
                 this.$store.dispatch('addWorkplaceItem', {
                   'id': response.id,

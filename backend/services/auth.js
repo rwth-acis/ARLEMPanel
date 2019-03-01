@@ -5,9 +5,10 @@ const activity = require('../models').activity
 const entity = require('../models').entity
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRulues = require('../helpers/validationRules')
+const config = require('../../config/default.json')
 
 module.exports = (app) => {
-  app.patch('/api/signin', validationMiddleware.validate(validationRulues.auth.signin, false), (req, res) => {
+  app.patch(config.baseUrl + '/api/signin', validationMiddleware.validate(validationRulues.auth.signin, false), (req, res) => {
     author.findOne({where: {email: req.body.email, password: md5(req.body.password)}}).then(object => {
       if (object == null) {
         res.status(401).json(['Invalid credentails. Please try again'])
@@ -19,7 +20,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post('/api/signup', validationMiddleware.validate(validationRulues.auth.signup, false), (req, res) => {
+  app.post(config.baseUrl + '/api/signup', validationMiddleware.validate(validationRulues.auth.signup, false), (req, res) => {
     author.findOne({where: {email: req.body.email}}).then(object => {
       if (object == null) {
         author.create({name: req.body.name, email: req.body.email, password: md5(req.body.password)}).then(() => {
@@ -31,7 +32,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post('/api/forget', validationMiddleware.validate(validationRulues.auth.forgot, false), (req, res) => {
+  app.post(config.baseUrl + '/api/forget', validationMiddleware.validate(validationRulues.auth.forgot, false), (req, res) => {
     author.findOne({where: {email: req.body.email}}).then(object => {
       if (object == null) {
         res.status(401).json(['Account does not exists, please try again.'])
@@ -41,7 +42,7 @@ module.exports = (app) => {
     })
   })
 
-  app.patch('/api/change/:code', validationMiddleware.validate(validationRulues.auth.change, false), (req, res) => {
+  app.patch(config.baseUrl + '/api/change/:code', validationMiddleware.validate(validationRulues.auth.change, false), (req, res) => {
     author.findById(req.params.code).then(object => {
       if (object == null) {
         res.status(401).json(['Account does not exists, please try again.'])
@@ -53,7 +54,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/api/dashboard', validationMiddleware.validate(), async (req, res) => {
+  app.get(config.baseUrl + '/api/dashboard', validationMiddleware.validate(), async (req, res) => {
     res.json({workplaces: await workplace.count(), activities: await activity.count(), entities: await entity.count()})
   })
 }

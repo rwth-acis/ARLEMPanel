@@ -56,14 +56,14 @@
           configurableServices.putAppUpdate(this.form)
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'App has been updated successfully.')
-              this.$router.push('/configurables')
+              this.$router.push({ name: 'configurable.list' })
             })
         } else {
           configurableServices.postAppCreate(this.form)
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'App has been added successfully.')
               if (this.independent && this.independent === true) {
-                this.$router.push('/configurables')
+                this.$router.push({ name: 'configurable.list' })
               } else {
                 this.$store.dispatch('addWorkplaceItem', {
                   'id': response.id,

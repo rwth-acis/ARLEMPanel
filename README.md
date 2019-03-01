@@ -56,6 +56,25 @@ User will have to provide database configuation in the file backend/config/confi
 }
 ```
 
+### Running on Non-root URL
+
+User can run the web application on different base url by changing ```baseUrl``` parameter inside config/default.json file.
+
+```
+{
+  "baseUrl": "/mywebsite"
+}
+```
+
+User can run the web app on root url by placing an empty string for ```baseUrl```.
+
+```
+{
+  "baseUrl": ""
+}
+```
+
+
 ### Migration
 
 ``` bash

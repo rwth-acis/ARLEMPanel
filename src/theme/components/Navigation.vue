@@ -38,7 +38,7 @@
     methods: {
       signOut: function () {
         this.$store.dispatch('signOut').then(() => {
-          this.$router.push('/')
+          this.$router.push({ name: 'authentication' })
         })
       }
     }

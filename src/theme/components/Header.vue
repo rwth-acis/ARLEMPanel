@@ -5,7 +5,7 @@
       <h3 class="md-display-1">{{ description }}</h3>
     </div>
     <div v-if="buttonText" class="md-layout-item md-size-25">
-      <router-link :to="buttonUrl" class="md-elevation-17 big-button">{{ buttonText }}</router-link>
+      <router-link :to="{name: buttonUrl}" class="md-elevation-17 big-button">{{ buttonText }}</router-link>
     </div>
   </div>
 </template>

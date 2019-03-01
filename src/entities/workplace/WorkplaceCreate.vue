@@ -123,7 +123,7 @@
         })
           .then((response) => {
             this.$store.dispatch('showSnackBar', String('Workplace has added created successfully.'))
-            this.$router.push('/workplaces')
+            this.$router.push({ name: 'trigger.create' })
             this.items = []
             this.$store.dispatch('cleanWorkplaceItems')
           })

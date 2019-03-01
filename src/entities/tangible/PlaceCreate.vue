@@ -53,14 +53,14 @@
           tangibleServices.putPlaceUpdate(this.form)
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Place has been updated successfully.')
-              this.$router.push('/tangibles')
+              this.$router.push({ name: 'tangible.list' })
             })
         } else {
           tangibleServices.postPlaceCreate(this.form)
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Place has been created successfully.')
               if (this.independent && this.independent === true) {
-                this.$router.push('/tangibles')
+                this.$router.push({ name: 'tangible.list' })
               } else {
                 this.$store.dispatch('addWorkplaceItem', {
                   'id': response.id,

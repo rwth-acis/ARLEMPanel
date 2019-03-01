@@ -57,14 +57,14 @@
           tangibleServices.putPersonUpdate(this.form)
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Person has been updated successfully.')
-              this.$router.push('/tangibles')
+              this.$router.push({ name: 'trigger.list' })
             })
         } else {
           tangibleServices.postPersonCreate(this.form)
             .then((response) => {
               this.$store.dispatch('showSnackBar', 'Person has been created successfully.')
               if (this.independent && this.independent === true) {
-                this.$router.push('/tangibles')
+                this.$router.push({ name: 'trigger.list' })
               } else {
                 this.$store.dispatch('addWorkplaceItem', {
                   'id': response.id,

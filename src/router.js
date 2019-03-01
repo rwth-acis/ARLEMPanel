@@ -35,6 +35,10 @@ import ActivityGenerate from 'entities/activity/ActivityGenerate.vue'
 
 import NotFound from 'entities/auth/NotFound.vue'
 
+const config = require('../config/default.json')
+
+console.log(config.baseUrl + '/')
+
 Vue.use(VueRouter)
 Vue.use(VueMaterial)
 
@@ -42,28 +46,28 @@ const router = new VueRouter({
   mode: 'history',
   scrollBehavior: (to, from, savedPosition) => ({y: 0}),
   routes: [
-    { path: '/dashboard', component: Dashboard, name: 'member.dashboard' },
-    // { path: '/settings', component: Settings, name: 'member.settings' },
-    { path: '/workplaces', component: Workplaces, name: 'workplace.list' },
-    { path: '/workplace/create', component: WorkplaceCreate, name: 'workplace.create' },
-    { path: '/workplace/:id/generate', component: WorkplaceGenerate, name: 'workplace.generate' },
-    { path: '/tangibles', component: Tangibles, name: 'tangible.list' },
-    { path: '/tangible/create', component: TangibleCreate, name: 'tangible.create' },
-    { path: '/tangible/:type/edit/:id', component: TangibleCreate, name: 'tangible.update' },
-    { path: '/triggers', component: Triggers, name: 'trigger.list' },
-    { path: '/trigger/create', component: TriggerCreate, name: 'trigger.create' },
-    { path: '/trigger/:type/edit/:id', component: TriggerCreate, name: 'trigger.update' },
-    { path: '/configurables', component: Configurables, name: 'configurable.list' },
-    { path: '/configurable/create', component: ConfigurableCreate, name: 'configurable.create' },
-    { path: '/configurable/:type/edit/:id', component: ConfigurableCreate, name: 'configurable.update' },
-    { path: '/sensors', component: Sensors, name: 'sensor.list' },
-    { path: '/sensor/create', component: SensorsCreate, name: 'sensor.create' },
-    { path: '/sensor/edit/:id', component: SensorsCreate, name: 'sensor.update' },
-    { path: '/activites', component: Activities, name: 'activity.list' },
-    { path: '/activity/create', component: ActivityCreate, name: 'activity.list' },
-    { path: '/activity/:id/generate', component: ActivityGenerate, name: 'activity.generate' },
+    { path: config.baseUrl + '/dashboard', component: Dashboard, name: 'member.dashboard' },
+    // { path: config.baseUrl + '/settings', component: Settings, name: 'member.settings' },
+    { path: config.baseUrl + '/workplaces', component: Workplaces, name: 'workplace.list' },
+    { path: config.baseUrl + '/workplace/create', component: WorkplaceCreate, name: 'workplace.create' },
+    { path: config.baseUrl + '/workplace/:id/generate', component: WorkplaceGenerate, name: 'workplace.generate' },
+    { path: config.baseUrl + '/tangibles', component: Tangibles, name: 'tangible.list' },
+    { path: config.baseUrl + '/tangible/create', component: TangibleCreate, name: 'tangible.create' },
+    { path: config.baseUrl + '/tangible/:type/edit/:id', component: TangibleCreate, name: 'tangible.update' },
+    { path: config.baseUrl + '/triggers', component: Triggers, name: 'trigger.list' },
+    { path: config.baseUrl + '/trigger/create', component: TriggerCreate, name: 'trigger.create' },
+    { path: config.baseUrl + '/trigger/:type/edit/:id', component: TriggerCreate, name: 'trigger.update' },
+    { path: config.baseUrl + '/configurables', component: Configurables, name: 'configurable.list' },
+    { path: config.baseUrl + '/configurable/create', component: ConfigurableCreate, name: 'configurable.create' },
+    { path: config.baseUrl + '/configurable/:type/edit/:id', component: ConfigurableCreate, name: 'configurable.update' },
+    { path: config.baseUrl + '/sensors', component: Sensors, name: 'sensor.list' },
+    { path: config.baseUrl + '/sensor/create', component: SensorsCreate, name: 'sensor.create' },
+    { path: config.baseUrl + '/sensor/edit/:id', component: SensorsCreate, name: 'sensor.update' },
+    { path: config.baseUrl + '/activites', component: Activities, name: 'activity.list' },
+    { path: config.baseUrl + '/activity/create', component: ActivityCreate, name: 'activity.create' },
+    { path: config.baseUrl + '/activity/:id/generate', component: ActivityGenerate, name: 'activity.generate' },
     // { path: '/learners', component: Learners, name: 'learner.list' },
-    { path: '/', component: Authentication, name: 'authentication' },
+    { path: config.baseUrl + '/', component: Authentication, name: 'authentication' },
     { path: '*', component: NotFound, name: 'notfound' }
 
   ]

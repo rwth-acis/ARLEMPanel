@@ -5,7 +5,10 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const expressValidator = require('express-validator')
 const RateLimit = require('express-rate-limit')
+const config = require('./config/default.json')
 // const sv = require('./backend/helpers/validationMiddleware')
+
+console.log(config.baseUrl)
 
 var limiter = new RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -35,5 +38,5 @@ app.get('*', (req, res) => {
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {
-  console.log(`server started at http://0.0.0.0:${port}`)
+  console.log(`server started at http://127.0.0.1:${port}`)
 })

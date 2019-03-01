@@ -12,9 +12,10 @@ const workplace = require('../models').workplace
 const validationMiddleware = require('../helpers/validationMiddleware')
 const validationRules = require('../helpers/validationRules')
 const xmlGenerator = require('../helpers/xmlGenerator')
+const config = require('../../config/default.json')
 
 module.exports = (app) => {
-  app.get('/api/activity', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/activity', validationMiddleware.validate(), (req, res) => {
     const options = {
       page: req.query.page && req.query.page > 0 ? req.query.page : 1,
       paginate: 25,
@@ -30,7 +31,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/api/activity/:id', validationMiddleware.validate(), async (req, res) => {
+  app.get(config.baseUrl + '/api/activity/:id', validationMiddleware.validate(), async (req, res) => {
     var object = await activity.find({where: {id: req.params.id}, include: [{model: author}, {model: action, include: [{model: device}, {model: place}, {model: primitive}, {model: viewport}, {model: actionTrigger, include: [viewport, primitive, poi, modular]}]}]})
     if (object === null) {
       res.status(401).json({ messages: 'Activity does not exists' })
@@ -53,7 +54,7 @@ module.exports = (app) => {
     }
   })
 
-  app.post('/api/activity', validationMiddleware.validate(validationRules.activity), (req, res) => {
+  app.post(config.baseUrl + '/api/activity', validationMiddleware.validate(validationRules.activity), (req, res) => {
     var actionIds = []
     activity.create({
       name: req.body.name,
@@ -109,7 +110,7 @@ module.exports = (app) => {
     })
   })
 
-  app.put('/api/activity/:id', validationMiddleware.validate(validationRules.activity), (req, res) => {
+  app.put(config.baseUrl + '/api/activity/:id', validationMiddleware.validate(validationRules.activity), (req, res) => {
     activity.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.updateAttributes({
@@ -171,7 +172,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/api/activity/:id/action', validationMiddleware.validate(), (req, res) => {
+  app.get(config.baseUrl + '/api/activity/:id/action', validationMiddleware.validate(), (req, res) => {
     action.findAll({where: {activityId: req.params.id}}).then((objects) => {
       if (objects === null) {
         res.json([])
@@ -181,7 +182,7 @@ module.exports = (app) => {
     })
   })
 
-  app.delete('/api/activity/:id', validationMiddleware.validate(), (req, res) => {
+  app.delete(config.baseUrl + '/api/activity/:id', validationMiddleware.validate(), (req, res) => {
     activity.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.destroy().then((innerObject) => {

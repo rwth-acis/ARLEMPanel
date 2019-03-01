@@ -5,9 +5,11 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.17.1",
+    "config": "^3.0.1",
     "express": "^4.16.2",
     "express-rate-limit": "^2.11.0",
     "express-validator": "^5.2.0",
+    "fs": "^0.0.1-security",
     "joi": "^13.5.2",
     "jsontoxml": "^1.0.0",
     "md5": "^2.2.1",
