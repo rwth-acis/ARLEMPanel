@@ -1,4 +1,5 @@
 const path = require('path')
+const mainConfig = require('../config/default.json')
 
 const config = {
   entry: {
@@ -40,8 +41,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/',
-    filename: 'assets/js/[name].js'
+    filename: mainConfig.baseUrl.replace('/', '') + '/assets/js/[name].js'
   },
   resolve: {
     alias: {
