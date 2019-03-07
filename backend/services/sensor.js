@@ -5,7 +5,7 @@ const validationRules = require('../helpers/validationRules')
 const config = require('../../config/default.json')
 
 module.exports = (app) => {
-  app.get(config.baseUrl + '/api/sensor', validationMiddleware.validate(), (req, res) => {
+  app.get(config.apiBaseUrl + '/sensor', validationMiddleware.validate(), (req, res) => {
     const options = {
       page: req.query.page && req.query.page > 0 ? req.query.page : 1,
       paginate: 25,
@@ -21,7 +21,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get(config.baseUrl + '/api/sensor/select', validationMiddleware.validate(), (req, res) => {
+  app.get(config.apiBaseUrl + '/sensor/select', validationMiddleware.validate(), (req, res) => {
     const options = {
       include: [author],
       order: [['createdAt', 'DESC']]
@@ -35,7 +35,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get(config.baseUrl + '/api/sensor/:id', validationMiddleware.validate(), (req, res) => {
+  app.get(config.apiBaseUrl + '/sensor/:id', validationMiddleware.validate(), (req, res) => {
     sensor.find({where: {id: req.params.id}}).then((object) => {
       if (object === null) {
         res.status(401).json({ messages: 'Detectable does not exists' })
@@ -45,7 +45,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post(config.baseUrl + '/api/sensor', validationMiddleware.validate(validationRules.sensor), (req, res) => {
+  app.post(config.apiBaseUrl + '/sensor', validationMiddleware.validate(validationRules.sensor), (req, res) => {
     sensor.create({
       name: req.body.name,
       sensor: req.body.sensor,
@@ -61,7 +61,7 @@ module.exports = (app) => {
     })
   })
 
-  app.put(config.baseUrl + '/api/sensor/:id', validationMiddleware.validate(validationRules.sensor), (req, res) => {
+  app.put(config.apiBaseUrl + '/sensor/:id', validationMiddleware.validate(validationRules.sensor), (req, res) => {
     sensor.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.updateAttributes({
@@ -83,7 +83,7 @@ module.exports = (app) => {
     })
   })
 
-  app.delete(config.baseUrl + '/api/sensor/:id', validationMiddleware.validate(), (req, res) => {
+  app.delete(config.apiBaseUrl + '/sensor/:id', validationMiddleware.validate(), (req, res) => {
     sensor.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.destroy().then((innerObject) => {

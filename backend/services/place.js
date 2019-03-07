@@ -4,7 +4,7 @@ const validationRules = require('../helpers/validationRules')
 const config = require('../../config/default.json')
 
 module.exports = (app) => {
-  app.get(config.baseUrl + '/api/tangible/place', validationMiddleware.validate(), (req, res) => {
+  app.get(config.apiBaseUrl + '/tangible/place', validationMiddleware.validate(), (req, res) => {
     place.findAll({ order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {
         res.json([])
@@ -14,7 +14,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get(config.baseUrl + '/api/tangible/place/:id', validationMiddleware.validate(), (req, res) => {
+  app.get(config.apiBaseUrl + '/tangible/place/:id', validationMiddleware.validate(), (req, res) => {
     place.find({where: {id: req.params.id}}).then((object) => {
       if (object === null) {
         res.status(401).json({ messages: 'Place does not exists' })
@@ -24,7 +24,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post(config.baseUrl + '/api/tangible/place', validationMiddleware.validate(validationRules.tangilbe.place), (req, res) => {
+  app.post(config.apiBaseUrl + '/tangible/place', validationMiddleware.validate(validationRules.tangilbe.place), (req, res) => {
     place.create({
       name: req.body.name,
       detectableId: req.body.detectable,
@@ -38,7 +38,7 @@ module.exports = (app) => {
     })
   })
 
-  app.put(config.baseUrl + '/api/tangible/place/:id', validationMiddleware.validate(validationRules.tangilbe.place), (req, res) => {
+  app.put(config.apiBaseUrl + '/tangible/place/:id', validationMiddleware.validate(validationRules.tangilbe.place), (req, res) => {
     place.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.updateAttributes({
@@ -58,7 +58,7 @@ module.exports = (app) => {
     })
   })
 
-  app.delete(config.baseUrl + '/api/tangible/place/:id', validationMiddleware.validate(), (req, res) => {
+  app.delete(config.apiBaseUrl + '/tangible/place/:id', validationMiddleware.validate(), (req, res) => {
     place.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.destroy().then((innerObject) => {

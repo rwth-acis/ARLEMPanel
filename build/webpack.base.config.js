@@ -41,7 +41,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: mainConfig.baseUrl.replace('/', '') + '/assets/js/[name].js'
+    filename: (mainConfig.baseUrl.replace('/', '') !== '' ? mainConfig.baseUrl.replace('/', '') + '/' : '') + 'assets/js/[name].js'
   },
   resolve: {
     alias: {

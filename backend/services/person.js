@@ -4,7 +4,7 @@ const validationRules = require('../helpers/validationRules')
 const config = require('../../config/default.json')
 
 module.exports = (app) => {
-  app.get(config.baseUrl + '/api/tangible/person', validationMiddleware.validate(), (req, res) => {
+  app.get(config.apiBaseUrl + '/tangible/person', validationMiddleware.validate(), (req, res) => {
     person.findAll({ order: [['id', 'DESC']] }).then((objects) => {
       if (objects === null) {
         res.json([])
@@ -14,7 +14,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get(config.baseUrl + '/api/tangible/person/:id', validationMiddleware.validate(), (req, res) => {
+  app.get(config.apiBaseUrl + '/tangible/person/:id', validationMiddleware.validate(), (req, res) => {
     person.find({where: {id: req.params.id}}).then((object) => {
       if (object === null) {
         res.status(401).json({ messages: 'Person does not exists' })
@@ -24,7 +24,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post(config.baseUrl + '/api/tangible/person', validationMiddleware.validate(validationRules.tangilbe.person), (req, res) => {
+  app.post(config.apiBaseUrl + '/tangible/person', validationMiddleware.validate(validationRules.tangilbe.person), (req, res) => {
     person.create({
       name: req.body.name,
       twitter: req.body.twitter,
@@ -41,7 +41,7 @@ module.exports = (app) => {
     })
   })
 
-  app.put(config.baseUrl + '/api/tangible/person/:id', validationMiddleware.validate(validationRules.tangilbe.person), (req, res) => {
+  app.put(config.apiBaseUrl + '/tangible/person/:id', validationMiddleware.validate(validationRules.tangilbe.person), (req, res) => {
     person.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.updateAttributes({
@@ -64,7 +64,7 @@ module.exports = (app) => {
     })
   })
 
-  app.delete(config.baseUrl + '/api/tangible/person/:id', validationMiddleware.validate(), (req, res) => {
+  app.delete(config.apiBaseUrl + '/tangible/person/:id', validationMiddleware.validate(), (req, res) => {
     person.find({where: {id: req.params.id}}).then((object) => {
       if (object !== null) {
         object.destroy().then((innerObject) => {

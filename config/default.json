@@ -1,3 +1,4 @@
 {
-  "baseUrl": "/my"
+  "baseUrl": "/",
+  "apiBaseUrl": "/api"
 }
