@@ -27,7 +27,7 @@
             <md-table-cell md-label="Created" md-sort-by="created">{{ item.createdAt | moment("MMMM Do YYYY") }}</md-table-cell>
             <md-table-cell md-label="Action">
               <template v-if="user == item.author.id">
-                <md-button @click="$router.push({ name: 'trigger.update', params: { type: item.type, id: item.id } })" class="md-icon-button md-raised">
+                <md-button @click="$router.push({ name: 'tangible.update', params: { type: item.type, id: item.id } })" class="md-icon-button md-raised">
                   <md-icon>edit</md-icon>
                 </md-button>
                 <md-button @click="deleteOperation(item.id, item.type)" class="md-icon-button md-raised">
