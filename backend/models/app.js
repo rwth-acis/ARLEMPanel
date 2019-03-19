@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {})
   app.associate = (models) => {
     // associations can be defined here
+    models.app.belongsTo(models.author, {foreignKey: 'authorId'})
   }
   return app
 }

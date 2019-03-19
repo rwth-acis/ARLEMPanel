@@ -184,7 +184,7 @@ module.exports = (app) => {
               }
               let entity = await require('../models')['app'].find({where: {id: object.workplaceResources[i].entityId}, include: [author]})
               if (entity && entity !== null) {
-                workplace.triggers.apps.push(entity)
+                workplace.configurables.apps.push(entity)
               }
             } else if (object.workplaceResources[i].entityType === 'device') {
               if (!workplace.configurables) {

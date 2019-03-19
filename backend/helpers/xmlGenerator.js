@@ -93,9 +93,9 @@ module.exports = (workplace, type) => {
         for (let app of workplace.configurables.apps) {
           apps.ele('app')
             .att('id', app.id)
-            .att('name', person.name)
-            .att('type', person.type)
-            .att('manifest', person.manifest)
+            .att('name', app.name)
+            .att('type', app.type)
+            .att('manifest', app.manifest)
             .up()
         }
         apps.up()
